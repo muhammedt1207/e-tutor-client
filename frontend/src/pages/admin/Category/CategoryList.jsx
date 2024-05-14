@@ -1,39 +1,44 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SideBar from '../../../components/SideBar'
 import SearchBar from '../components/SearchBar'
 import BreadCrumbs from '../components/BreadCrumbs'
 import Sidebar from '../../../components/admin/Sidebar'
 import CategoryTable from './CategoryTable'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllCategories } from '../../../redux/action/admin/Categories'
+import AddOrEditCategory from './AddOrEditCategory'
+import { Modal } from '@material-ui/core'
 
 const CategoryList = () => {
+  const dispatch=useDispatch()
+  const [showModal, setShowModal] = useState(false)
+  const [editCategory,setEditCategory]=useState({})
+  const{data,error,loading}=useSelector((state)=>state.category)
+  const [categories, setCategories] = useState([]);
+ const [showTable,setShowTable] = useState(true)
 
-  const [categories, setCategories] = useState([
-    {
-      id: 1,
-      categoryName: 'Electronics',
-      createdBy: 'Admin1',
-      createdDate: '2024-05-10T12:30:00Z', // Example date format
-      status: 'Active'
-    },
-    {
-      id: 2,
-      categoryName: 'Clothing',
-      createdBy: 'Admin2',
-      createdDate: '2024-05-09T10:45:00Z', // Example date format
-      status: 'Inactive'
-    },
-    {
-      id: 3,
-      categoryName: 'Books',
-      createdBy: 'Admin1',
-      createdDate: '2024-05-08T14:20:00Z', // Example date format
-      status: 'Active'
-    },
-    // Add more categories as needed
-  ]);
-  
+  useEffect(()=>{
+   const result= dispatch(getAllCategories())
+    .then(()=>{
+      console.log(result,'......');
+      console.log(data,'category all datas',error);
+    })
+  },[])
+  const modal=async(data)=>{
+    console.log(data,'+++++++++++++++++++++++++++++++++');
+    setShowTable(false)
+    setShowModal(true)
+    setEditCategory(data)
+  }
+  const handleModalClose=async()=>{
+    setShowTable(true)
+    setShowModal(false)
+    
+  }
  
   return (
+    <>
+    {showTable && (
     <div className='flex'>
       <Sidebar/>
       <div className='w-full'>
@@ -44,7 +49,7 @@ const CategoryList = () => {
         
         </div>
       <div className='px-5'>
-        <button className=' bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 '>Add Category</button>
+        <button className=' bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-5 ' onClick={modal}>Add Category</button>
       </div>
       </div>
       <div className="p-5 w-full overflow-y-auto text-sm">
@@ -67,14 +72,15 @@ const CategoryList = () => {
               </tr>
             </thead>
             <tbody>
-              {categories && categories.map((request, index) => {
+              {data && data.map((category, index) => {
                 const isLast = index === categories.length - 1;
                 return (
                   <CategoryTable
                     isLast={isLast}
                     index={index+1}
-                    customer={request}
+                    category={category}
                     key={index}
+                    modal={modal}
                   />
                 );
               })}
@@ -82,7 +88,12 @@ const CategoryList = () => {
           </table>
       </div>
     </div>
-    </div>
+    
+    </div>)}
+    {showModal && (
+                <AddOrEditCategory category={editCategory} handleModal={handleModalClose}/>
+            )}
+    </>
   )
 }
 

@@ -37,16 +37,16 @@ const Sidebar = () => {
                     {isSmallScreen ? null : 'Categories'}
                 </ListItem>
                 </Link>
-                <ListItem>
                    <Link to='/sample'> 
+                <ListItem>
                    <ListItemPrefix>
                         <InboxIcon className="h-5 w-5" />
                     </ListItemPrefix>
                     {isSmallScreen ? null : 'Requests'}
                     <ListItemSuffix>
                     </ListItemSuffix>
-                    </Link>
                 </ListItem>
+                    </Link>
                 <ListItem>
                     <ListItemPrefix>
                         <UserCircleIcon className="h-5 w-5" />
