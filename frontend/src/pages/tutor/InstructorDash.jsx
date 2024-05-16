@@ -1,11 +1,22 @@
 import React from 'react'
 import SideBar from './components/SideBar'
+import { Outlet } from 'react-router-dom'
+import AddCourse from './course/AddCourse'
+import AdvanceInformation from './course/AdvanceInformation'
+import AddCurriculam from './course/AddCurriculam'
+import AddCourseHome from './course/AddCourseHome'
 
 const InstructorDash = () => {
   return (
-    <div>
+    <div className='flex flex-col '>
       <SideBar/>
-      <h1>tutor dash bar</h1>
+      <div className=''>
+        {/* <AddCurriculam/> */}
+        <AddCourseHome/>
+    {/* <AdvanceInformation/> */}
+      {/* <AddCourse/> */}
+      </div>
+      {/* <Outlet/> */}
     </div>
   )
 }

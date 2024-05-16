@@ -29,7 +29,7 @@ const Sidebar = () => {
                     </ListItemPrefix>
                     {isSmallScreen ? null : 'Dashboard'}
                 </ListItem>
-               <Link to='/categories'>
+               <Link to='/admin/categories'>
                  <ListItem>
                     <ListItemPrefix>
                         <ShoppingBagIcon className="h-5 w-5" />
@@ -37,7 +37,7 @@ const Sidebar = () => {
                     {isSmallScreen ? null : 'Categories'}
                 </ListItem>
                 </Link>
-                   <Link to='/sample'> 
+                   <Link to='/admin/requests'> 
                 <ListItem>
                    <ListItemPrefix>
                         <InboxIcon className="h-5 w-5" />
@@ -47,12 +47,14 @@ const Sidebar = () => {
                     </ListItemSuffix>
                 </ListItem>
                     </Link>
+                    <Link to='/admin/instrutors'>
                 <ListItem>
                     <ListItemPrefix>
                         <UserCircleIcon className="h-5 w-5" />
                     </ListItemPrefix>
                     {isSmallScreen ? null : 'Instructors'}
                 </ListItem>
+                </Link>
                 <ListItem>
                     <ListItemPrefix>
                         <Cog6ToothIcon className="h-5 w-5" />

@@ -8,6 +8,7 @@ import ImageUpdload from '../../../../util/ImageUpdload';
 import toast from 'react-hot-toast';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { CircularProgress } from '@material-ui/core';
+import VideoUpload from '../../../../util/VideoUploed';
 
 const ProfileSettings = () => {
     const { user,loading,error } = useSelector((state) => state.user);
@@ -83,7 +84,7 @@ const ProfileSettings = () => {
 
         reader.onloadend = async () => {
             const imageData = reader.result;
-            const imgUrl = await ImageUpdload(imageData);
+            const imgUrl = await VideoUpload(imageData);
             console.log(imgUrl, 'image uploaded');
             if (!imgUrl) {
                 toast.error('image upload failed')

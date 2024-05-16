@@ -15,7 +15,7 @@ const categorySlice=createSlice(
             .addCase(createCategories.fulfilled,(state,{payload})=>{
                 state.loading=false,
                 state.error=null,
-                state.data=payload.data
+                state.data=payload
             })
             .addCase(createCategories.pending,(state)=>{
                 state.loading=true
@@ -43,7 +43,7 @@ const categorySlice=createSlice(
             .addCase(editCategory.fulfilled,(state,{payload})=>{
                 state.loading=false,
                 state.error=null,
-                state.data=payload.data
+                state.data=payload
             })
             .addCase(editCategory.pending,(state)=>{
                 state.loading=true

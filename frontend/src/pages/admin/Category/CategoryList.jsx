@@ -23,7 +23,8 @@ const CategoryList = () => {
       console.log(result,'......');
       console.log(data,'category all datas',error);
     })
-  },[])
+    console.log(data,'data in useEffect');
+  },[showModal,showTable])
   const modal=async(data)=>{
     console.log(data,'+++++++++++++++++++++++++++++++++');
     setShowTable(false)
@@ -72,7 +73,7 @@ const CategoryList = () => {
               </tr>
             </thead>
             <tbody>
-              {data && data.map((category, index) => {
+              {data && data.length>0 && data.map((category, index) => {
                 const isLast = index === categories.length - 1;
                 return (
                   <CategoryTable

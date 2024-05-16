@@ -39,7 +39,7 @@ const AddOrEditCategory = ({ category,handleModal }) => {
         };
         console.log(data);
         let result
-        if (category) {
+        if (category._id) {
             console.log('sending edit category data', category._id);
             result=await dispatch(editCategory({id:category._id, categoryData:data}))
         } else {

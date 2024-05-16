@@ -3,6 +3,7 @@ import { CircularProgress } from '@material-ui/core';
 import { AiOutlineEdit } from 'react-icons/ai';
 import toast from 'react-hot-toast';
 import ImageUpdload from '../util/ImageUpdload';
+import VideoUpload from '../util/VideoUploed';
 
 const ImgInput = ({ submit, image }) => {
   const [imgLoading, setImgLoading] = useState(false);

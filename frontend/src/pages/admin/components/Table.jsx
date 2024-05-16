@@ -5,17 +5,17 @@ const Table = ({ customer,index }) => {
     console.log(customer,'---------------------------------------------------------------------------------');
   return (
     <tr className=' hover:bg-gray-200 active:bg-gray-300 cursor-pointer space-x-3 pt-6'>
-      <td className="row flex items-center gap-4 ml-5 px-7 ">
-        <div className=" overflow-clip flex justify-center items-center shrink-0">
+      <td className="row  items-center gap-4 ml-5 px-7 ">
+        <div className=" overflow-clip  justify-center items-center shrink-0">
         <p className="line-clamp-1 ">{index}</p>
         </div>
       </td>
-      <td className="admin-table-row px-9 ">
-        <p className="line-clamp-1 ">{customer.userName}</p>
-      </td>
-      <td className="admin-table-row flex justify-center capitalize shrink-0">
+      <td className="admin-table-row flex justify-center px-10 capitalize shrink-0">
         <div className="line-clamp-2 ">{customer.email}</div>
         {/* <StatusComponent status={customer.isActive ? "Active" : "Blocked"} /> */}
+      </td>
+      <td className="admin-table-row px-20 ml-28 ">
+        <p className="line-clamp-1 ml-40">{customer.profession[0]}</p>
       </td>
       {/* <td className="admin-table-row">
         {customer.createdAt

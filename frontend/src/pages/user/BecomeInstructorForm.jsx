@@ -6,11 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { instructorApplication } from '../../redux/action/instructor/instructorAction';
 import { useSelect } from '@material-tailwind/react';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const BecomeInstructorForm = () => {
     const dispatch=useDispatch()
     const navigate=useNavigate()
-    const {user}=useSelector((state)=>state.user)
+    const {user,error}=useSelector((state)=>state.user)
     const categoryOptions = [
         { value: 'programming', label: 'Programming' },
         { value: 'design', label: 'Design' },
@@ -45,6 +46,7 @@ const BecomeInstructorForm = () => {
         console.log('instructor application data:', data);
         dispatch(instructorApplication(data))
         .then(()=>{
+            toast.success('Application Sended')
             navigate('/')
         })
     };

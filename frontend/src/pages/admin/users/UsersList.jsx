@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux'
 import { URL } from '../../../Common/api'
 import RequestTable from '../components/RequestTable'
 
-const InstructorRequests = () => {
+const UsersList = () => {
     const dispatch=useDispatch()
     const [Requests,setRequests]=useState([])
     const [searchParams,setSearchParams]=useState('')
@@ -35,7 +35,7 @@ const InstructorRequests = () => {
     <div className='w-full'>
       <div className="flex justify-between items-center font-semibold">
         <div>
-          <h1 className="mt-5 ml-5 font-bold text-2xl">Instructor Requests</h1>
+          <h1 className="mt-5 ml-5 font-bold text-2xl">Customers</h1>
           <BreadCrumbs list={["Dahsboard", "Instructors Requests"]} />
         
         </div>
@@ -82,4 +82,4 @@ const InstructorRequests = () => {
   )
 }
 
-export default InstructorRequests
+export default UsersList

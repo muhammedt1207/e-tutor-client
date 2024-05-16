@@ -19,6 +19,10 @@ import ForgetPassword from './pages/auth/ForgetPassword.jsx'
 import InstructorDash from './pages/tutor/InstructorDash.jsx'
 import CategoryList from './pages/admin/Category/CategoryList.jsx'
 import AddOrEditCategory from './pages/admin/Category/AddOrEditCategory.jsx'
+import Instructors from './pages/admin/instructors/Instructors.jsx'
+import InstructorHome from './pages/tutor/InstructorHome.jsx'
+import AddCourse from './pages/tutor/course/AddCourse.jsx'
+import Courses from './pages/user/courses/Courses.jsx'
 function App() {
 const {user}=useSelector((state)=>state.user)
 const dispatch=useDispatch()
@@ -42,9 +46,9 @@ useEffect(()=>{
     element={
         user ? (
             user.role == 'admin' ? (
-                <Navigate to="/reqeusts" />
-            ) : user.role == 'tutor' ? (
-                <Navigate to="/tutor" />
+                <Navigate to="/admin" />
+            ) : user.role == 'instructor' ? (
+                <Navigate to="/instructor" />
             ) : (
                 <Navigate to='/home' />
             )
@@ -54,8 +58,8 @@ useEffect(()=>{
 />  
 {
   (user && user.role=='admin')?(
-    <Route path='/admin' element={<Navigate to='/admin-dash'/>} />
-  ):(<Route path='/admin' element={<Navigate to='/reqeusts'/>} />)
+    <Route path='/admin/*' element={<AdminRoutes/>} />
+  ):(<Route path='/admin' element={<Navigate to='/'/>} />)
 }
 <Route  path='/index' element={<UserHome/>} />
 <Route path='/home' element={<UserHome/>}/>
@@ -67,14 +71,14 @@ useEffect(()=>{
 
 
 {/* Admin Routes*/}
-<Route path='/admin-dash' element={<InstructorRequests/>}/>
+{/* <Route path='/admin-dash' element={<InstructorRequests/>}/>
 <Route path='/reqeusts' element={<InstructorRequests/>}/>
-<Route path='/categories' element={<CategoryList/>}/>
+<Route path='/categories' element={<CategoryList/>}/> */}
 
 
 {/* Instructor Routes*/}
-<Route path='/instructorDash' element={<InstructorDash/>}/>
-<Route path='/test' element={<AddOrEditCategory/>}/>
+<Route path='/instructor' element={<InstructorDash/>}/>
+<Route path='/test' element={<Courses/>}/>
  </Routes>
    </BrowserRouter>
     {/* <TopNavbar/> 
@@ -87,6 +91,28 @@ useEffect(()=>{
       {/* <Sample/> */}
       {/* <AdminDash/> */}
     </>
+  )
+}
+
+function AdminRoutes(){
+  return(
+    <Routes>
+      <Route path='/' element={<AdminDash/>}/>
+      <Route index element={<AdminDash/>}/>
+      <Route path='categories' element={<CategoryList/>} />
+      <Route path='requests' element={<InstructorRequests/>}/>
+      <Route path='instrutors' element={<Instructors/>}/>
+      <Route path='students' element={<Instructors/>}/>
+    </Routes>
+  )
+}
+function InstrucorRoutes(){
+  return(
+    <Routes>
+      <Route path='/' element={<InstructorDash/>} />
+      <Route index element={<InstructorHome/>}/>
+      <Route path='courses' element={<AddCourse/>}/>
+    </Routes>
   )
 }
 
