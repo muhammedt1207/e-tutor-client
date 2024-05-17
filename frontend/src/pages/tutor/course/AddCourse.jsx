@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { URL } from '../../../Common/api';
+import { appJson } from '../../../Common/configurations';
 
 const AddCourse = ({onNext}) => {
     const navigate = useNavigate();
@@ -23,6 +26,19 @@ const AddCourse = ({onNext}) => {
     //     fetchData();
     // }, []);
 
+    useEffect(()=>{
+        const categoryData =async()=>{
+            try {
+                const response =await axios.get(`${URL}/course/category`,appJson)
+                setCategories(response.data.data)
+                console.log(categories,'-------------------------------------------',response);
+            } catch (error) {
+                
+            }
+        }
+        categoryData()
+    },[])
+
     const initialValues = {
         title: '',
         subtitle: '',
@@ -33,7 +49,7 @@ const AddCourse = ({onNext}) => {
     const validationSchema = Yup.object().shape({
         title: Yup.string().required('Title is required'),
         subtitle: Yup.string().required('Subtitle is required'),
-        // category: Yup.string().required('Category is required'),
+        category: Yup.string().required('Category is required'),
         topic: Yup.string().required('Topic is required')
     });
 
@@ -70,7 +86,7 @@ const AddCourse = ({onNext}) => {
                                     <Field as="select" id="category" name="category" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option value="">Select a category</option>
                                         {categories.map((category) => (
-                                            <option key={category.id} value={category.id}>{category.name}</option>
+                                            <option key={category._id} value={category._id}>{category.categoryName}</option>
                                         ))}
                                     </Field>
                                     <ErrorMessage name="category" component="div" className="text-red-500 text-xs mt-1" />

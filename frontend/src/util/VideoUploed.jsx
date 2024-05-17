@@ -1,4 +1,5 @@
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const VideoUpload = async (video) => {
     const preset_key = import.meta.env.VITE_REACT_APP_PRESET_KEY; // Assuming you have preset key for video uploads
@@ -30,6 +31,7 @@ const VideoUpload = async (video) => {
             return null;
         }
     } catch (error) {
+        toast.error("can't upload video")
         console.error('Error uploading video:', error);
         throw error;
     }

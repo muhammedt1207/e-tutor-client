@@ -1,23 +1,75 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field, FieldArray, ErrorMessage } from 'formik';
-import defaultImg from '../../../assets/default.jpg';
 import { AiOutlineDelete, AiOutlinePlus, AiOutlineUpload } from 'react-icons/ai';
+import toast from 'react-hot-toast';
+import defaultImg from '../../../assets/default.jpg';
+import { Oval } from 'react-loader-spinner';
+import ImageUpdload from '../../../util/ImageUpdload';
+import VideoUpload from '../../../util/VideoUploed';
+import { DotLoader } from 'react-spinners';
 
 const AdvanceInformation = ({ onNext }) => {
+    const [thumbNailImg, setThumbNailImg] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [videoUrl, setVideoUrl] = useState('');
+
     const initialValues = {
         description: '',
         teachings: ['']
     };
 
     const onSubmit = (values) => {
-        console.log(values);
-        onNext(values);
-        // Handle form submission here
+        // if (!thumbNailImg) {
+        //     toast.error('Add Thumbnail');
+        //     return;
+        // } else if (!videoUrl) {
+        //     toast.error('Add Introduction video');
+        //     return;
+        // }
+
+        const data = {
+            videoUrl: videoUrl,
+            imageUrl: thumbNailImg,
+            ...values
+        };
+
+        onNext(data);
     };
 
     const handleAddInput = (values, setValues) => {
         const newTeachings = [...values.teachings, ''];
         setValues({ ...values, teachings: newTeachings });
+    };
+
+    const handleThumbnail = async (event) => {
+        event.stopPropagation();
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.jpg, .jpeg, .png';
+        input.click();
+
+        input.addEventListener('change', async (event) => {
+            const file = event.target.files[0];
+            const imgUrl = await ImageUpdload(file);
+            setThumbNailImg(imgUrl);
+        });
+    };
+
+    const handleVideoUpload = async (event) => {
+        event.stopPropagation();
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.mp4';
+        input.click();
+
+
+        input.addEventListener('change', async (event) => {
+            setLoading(true);
+            const file = event.target.files[0];
+            const url = await VideoUpload(file);
+            setVideoUrl(url);
+            setLoading(false);
+        });
     };
 
     return (
@@ -27,7 +79,7 @@ const AdvanceInformation = ({ onNext }) => {
                     initialValues={initialValues}
                     onSubmit={onSubmit}
                 >
-                    {({ values, isSubmitting, setValues }) => (
+                    {({ values, setValues }) => (
                         <Form>
                             <div>
                                 <h1 className='text-2xl font-semibold'>Advance Informations</h1>
@@ -37,28 +89,41 @@ const AdvanceInformation = ({ onNext }) => {
                                     <div className=''>
                                         <h2 className='text-xl font-semibold mt-6'>Course Thumbnail</h2>
                                         <div className='mt-6 flex'>
-                                            <img src={defaultImg} className='w-60 h-44 object-cover rounded-sm ' alt="" />
+                                            <img src={thumbNailImg || defaultImg} className='w-60 h-44 object-cover rounded-sm ' alt="" />
                                             <div className='ps-4 w-80 p-2'>
-                                                <p className=''>Upload your course Thumbnail here. <strong> Important guidelines:</strong>1200x800 pixel or 12:8 ratio. Support format: <strong> .jpg, .jpeg, or .png</strong></p>
-                                                <button className='p-2 mt-2 bg-orange-100 text-orange-500 flex items-center'>
+                                                <p className=''>Upload your course Thumbnail here. <strong>Important guidelines:</strong> 1200x800 pixel or 12:8 ratio. Support format: <strong>.jpg, .jpeg, or .png</strong></p>
+                                                <button type='button' className='p-2 mt-2 bg-orange-100 text-orange-500 flex items-center' onClick={(e) => handleThumbnail(e)}>
                                                     Upload Image <AiOutlineUpload className="ml-2 text-2xl" />
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
-                                    {/* Course Thumbnail */}
+                                    {/* Course Video */}
                                     <div className=''>
-                                        <h2 className='text-xl font-semibold mt-6'>Course Thumbnail</h2>
+                                        <h2 className='text-xl font-semibold mt-6'>Course Video</h2>
                                         <div className='mt-6 flex'>
-                                            <img src={defaultImg} className='w-60 h-44 object-cover rounded-sm ' alt="" />
+                                            {loading ? (
+                                                <div className='w-60 h-44 flex justify-center items-center'>
+                                                    <DotLoader color="#FFA500" />
+                                                </div>
+                                            ) : videoUrl ? (
+                                                <video className='w-60 h-44 rounded-sm' controls>
+                                                    <source src={videoUrl} type='video/mp4' />
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            ) : (
+                                                <img src={defaultImg} className='w-60 h-44 object-cover rounded-sm ' alt="" />
+                                            )}
                                             <div className='ps-4 w-80 p-2'>
-                                                <p className=''>Upload your course Thumbnail here. <strong> Important guidelines:</strong>1200x800 pixel or 12:8 ratio. Support format: <strong> .jpg, .jpeg, or .png</strong></p>
-                                                <button className='p-2 mt-2 bg-orange-100 text-orange-500 flex items-center'>Upload Video<AiOutlineUpload className="ml-2 text-2xl" /></button>
+                                                <p className=''>Upload your course video here. <strong>Important guidelines:</strong> Support format: <strong>.mp4</strong></p>
+                                                <button type='button' className='p-2 mt-2 bg-orange-100 text-orange-500 flex items-center' onClick={(e) => handleVideoUpload(e)}>
+                                                    Upload Video <AiOutlineUpload className="ml-2 text-2xl" />
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <hr className='' />
+                                <hr />
                                 <div className='pt-10 py-10'>
                                     <h1 className='text-xl font-semibold'>Course Description</h1>
                                     <Field
@@ -69,7 +134,7 @@ const AdvanceInformation = ({ onNext }) => {
                                     <ErrorMessage name="description" component="div" />
                                 </div>
                                 <hr />
-                                <div className='flex flex-col w-full   '>
+                                <div className='flex flex-col w-full'>
                                     <div className='flex w-full justify-between'>
                                         <h1 className='text-xl font-semibold'>What you will teach in this course</h1>
                                         <button type="button" onClick={() => handleAddInput(values, setValues)} className='flex items-center p-2 mt-2 bg-orange-100 text-orange-500'>
@@ -79,7 +144,7 @@ const AdvanceInformation = ({ onNext }) => {
                                     </div>
                                     <div className="w-full">
                                         <FieldArray name="teachings">
-                                            {({ push, remove }) => (
+                                            {({ remove }) => (
                                                 <>
                                                     {values.teachings.map((teaching, index) => (
                                                         <div key={index} className='mt-4 flex items-center'>
@@ -100,7 +165,7 @@ const AdvanceInformation = ({ onNext }) => {
                                     </div>
                                 </div>
                                 <div className='flex flex-row-reverse p-6'>
-                                    <button type="submit" className='p-4 bg-orange-500 text-white' >Save & Next</button>
+                                    <button type="submit" className='p-4 bg-orange-500 text-white'>Save & Next</button>
                                 </div>
                             </div>
                         </Form>

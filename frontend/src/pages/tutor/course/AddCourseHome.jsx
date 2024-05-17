@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AddCourse from './AddCourse';
 import AdvanceInformation from './AdvanceInformation';
 import AddCurriculum from './AddCurriculam';
+import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
+import { createCourse } from '../../../redux/action/instructor/courseAction';
 
 const AddCourseHome = () => {
+  const dispatch=useDispatch()
   const [currentStep, setCurrentStep] = useState(1);
   const [courseData, setCourseData] = useState({
     addCourseData: {},
@@ -18,8 +22,14 @@ const AddCourseHome = () => {
       addCourseData: data
     }));
     console.log(courseData,'11111');
-    setCurrentStep(prevStep => prevStep + 1);
+    setCurrentStep(prevStep => prevStep + 1); 
   };
+
+
+  useEffect(() => {
+    console.log(courseData, 'Updated course data');
+  }, [courseData])
+
 
   const handleNextAdvanceInformation = (data) => {
     console.log(data,'0000000000');
@@ -33,12 +43,16 @@ const AddCourseHome = () => {
   };
 
   const handleNextAddCurriculum = (data) => {
+    console.log(data,'data form add curriculam');
+    alert(data)
     setCourseData(prevData => ({
       ...prevData,
       addCurriculumData: data
     }));
     console.log(courseData,'33333');
-    setCurrentStep(prevStep => prevStep + 1);
+    toast.success('course added')
+    dispatch(createCourse(courseData))
+    
   };
 
   const handlePrev = () => {

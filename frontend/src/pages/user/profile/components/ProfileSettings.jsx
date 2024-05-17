@@ -84,7 +84,7 @@ const ProfileSettings = () => {
 
         reader.onloadend = async () => {
             const imageData = reader.result;
-            const imgUrl = await VideoUpload(imageData);
+            const imgUrl = await ImageUpdload(imageData);
             console.log(imgUrl, 'image uploaded');
             if (!imgUrl) {
                 toast.error('image upload failed')
