@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { useDispatch } from 'react-redux';
-import { acceptRequest } from '../../../redux/action/admin/AdminActions';
+import { acceptRequest } from '../../../redux/action/AdminActions';
 import Modal from './Modal';
 
 const RequestTable = ({ customer, index }) => {

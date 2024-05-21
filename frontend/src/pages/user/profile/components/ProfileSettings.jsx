@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changePassword, getUserData, logout, updateProfile } from '../../../../redux/action/Auth/userAction';
+import { changePassword, getUserData, logout, updateProfile } from '../../../../redux/action/userAction';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -10,31 +10,33 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import { CircularProgress } from '@material-ui/core';
 import VideoUpload from '../../../../util/VideoUploed';
 
+
 const ProfileSettings = () => {
-    const { user,loading,error } = useSelector((state) => state.user);
+    const { user, loading, error } = useSelector((state) => state.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [isUploadingImage, setIsUploadingImage] = useState(false);
-    const [img, setImg] = useState('')
-    const [imgLoading, setLoading] = useState(false)
+    const [img, setImg] = useState('');
+    const [imgPublicId, setImgPublicId] = useState('');
+    const [imgLoading, setLoading] = useState(false);
+    
     const logoutHandler = async () => {
         dispatch(logout());
-        navigate('/');
+        navigate('/index');
     };
-
 
     const initialValue = {
         _id: user?._id,
         userName: user?.userName || '',
         phoneNumber: user?.phoneNumber || '',
-    }
+    };
+
     const changeInitialValue = {
         email: user?.email,
         oldPassword: '',
         newPassword: '',
         confirmPassword: ''
-    }
-
+    };
 
     const passwordValidationSchema = Yup.object().shape({
         oldPassword: Yup.string().required('Old password is required'),
@@ -48,61 +50,61 @@ const ProfileSettings = () => {
     });
 
     const handleSubmit = (values) => {
-        console.log('1111');
         let updatedValues = { ...values };
         if (img) {
-            console.log('2222');
             updatedValues = { ...values, profileImageUrl: img };
         }
-        console.log('333');
-        console.log(updatedValues);
         dispatch(updateProfile(updatedValues))
             .then(() => {
-                toast.success('Update successfull')
-            })
-    }
+                toast.success('Update successful');
+            });
+    };
 
     const handleChangePasswordSubmit = (values) => {
-        const data={...values,email:user.email}
-        console.log('change password data :',data);
-        dispatch(changePassword(data)).then(()=>{
-            toast.success('Password Change Successful')
-        })
-    }
+        const data = { ...values, email: user.email };
+        dispatch(changePassword(data)).then(() => {
+            toast.success('Password Change Successful');
+        });
+    };
 
     useEffect(() => {
         if (!user) {
-            console.log('get user data working in profile settings');
             dispatch(getUserData());
         }
-    }, []);
+    }, [dispatch, user]);
 
     const handleImageUpload = async (event) => {
-        setLoading(true)
+        setLoading(true);
         const file = event.target.files[0];
         const reader = new FileReader();
 
         reader.onloadend = async () => {
             const imageData = reader.result;
-            const imgUrl = await ImageUpdload(imageData);
-            console.log(imgUrl, 'image uploaded');
+            const uploadResult = await ImageUpload(imageData);
+            const imgUrl = uploadResult?.url;
+            const imgPublicId = uploadResult?.public_id;
+
             if (!imgUrl) {
-                toast.error('image upload failed')
-                setLoading(false)
-                return
+                toast.error('Image upload failed');
+                setLoading(false);
+                return;
             }
-            setImg(imgUrl)
-            toast.success('Profile image uploaded')
-            setLoading(false)
+
+            setImg(imgUrl);
+            setImgPublicId(imgPublicId);
+            toast.success('Profile image uploaded');
+            setLoading(false);
+
+            if (user?.profileImageUrl && user?.profileImagePublicId) {
+                // await deleteImageFromCloudinary(user.profileImagePublicId);
+            }
         };
 
         if (file) {
             reader.readAsDataURL(file);
             setIsUploadingImage(true);
-
         }
     };
-
 
     return (
         <div>

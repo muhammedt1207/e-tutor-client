@@ -3,7 +3,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Signupbg from "../../assets/Saly-1.png";
 import { useDispatch, useSelector } from 'react-redux';
-import { googleSignup, signup } from '../../redux/action/Auth/userAction';
+import { googleSignup, signup } from '../../redux/action/userAction';
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 import OTPPage from './OtpComponent';

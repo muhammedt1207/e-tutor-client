@@ -3,23 +3,32 @@ import AddCourse from './AddCourse';
 import AdvanceInformation from './AdvanceInformation';
 import AddCurriculum from './AddCurriculam';
 import toast from 'react-hot-toast';
-import { useDispatch } from 'react-redux';
-import { createCourse } from '../../../redux/action/instructor/courseAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { createCourse } from '../../../redux/action/courseAction';
+import SuccessPage from './SuccessPage';
+import SideBar from '../components/SideBar';
+import { getUserData } from '../../../redux/action/userAction';
 
 const AddCourseHome = () => {
   const dispatch=useDispatch()
+  const {user}=useSelector((state)=>state.user)
   const [currentStep, setCurrentStep] = useState(1);
   const [courseData, setCourseData] = useState({
+    instructorData:{},
     addCourseData: {},
     advanceInformationData: {},
     addCurriculumData: {}
   });
 
-  const handleNextAddCourse = (data) => {
-    console.log(data,'10000000000000');
+  const handleNextAddCourse = (courseData) => {
+    console.log(courseData,'10000000000000',user);
     setCourseData(prevData => ({
       ...prevData,
-      addCourseData: data
+      addCourseData: courseData,
+      instructorData:{
+        instructorRef:user?.email,
+        instructorName:user?.userName
+      }
     }));
     console.log(courseData,'11111');
     setCurrentStep(prevStep => prevStep + 1); 
@@ -27,7 +36,11 @@ const AddCourseHome = () => {
 
 
   useEffect(() => {
+  dispatch(getUserData()).then(()=>{
+    console.log(user,'^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
+  })
     console.log(courseData, 'Updated course data');
+    console.log(user,'>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
   }, [courseData])
 
 
@@ -42,17 +55,17 @@ const AddCourseHome = () => {
     setCurrentStep(prevStep => prevStep + 1);
   };
 
-  const handleNextAddCurriculum = (data) => {
+  const handleNextAddCurriculum = async(data) => {
     console.log(data,'data form add curriculam');
-    alert(data)
-    setCourseData(prevData => ({
+   await setCourseData(prevData => ({
       ...prevData,
       addCurriculumData: data
     }));
     console.log(courseData,'33333');
-    toast.success('course added')
     dispatch(createCourse(courseData))
-    
+    toast.success('course added')
+   
+    // setCurrentStep(prevStep => prevStep + 1);
   };
 
   const handlePrev = () => {
@@ -61,9 +74,11 @@ const AddCourseHome = () => {
 
   return (
     <div>
+      <SideBar/>
       {currentStep === 1 && <AddCourse onNext={handleNextAddCourse} />}
       {currentStep === 2 && <AdvanceInformation onPrev={handlePrev} onNext={handleNextAdvanceInformation} />}
       {currentStep === 3 && <AddCurriculum onPrev={handlePrev} onNext={handleNextAddCurriculum} />}
+      {currentStep === 4 && <SuccessPage/>}
     </div>
   );
 };

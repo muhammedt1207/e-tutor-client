@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { changePassword, getUserData, googleSignup, login, logout, signup, updateProfile } from "../action/Auth/userAction";
+import { changePassword, getUserData, googleSignup, login, logout, signup, updateProfile } from "../action/userAction";
 
 
 const userSlice=createSlice({

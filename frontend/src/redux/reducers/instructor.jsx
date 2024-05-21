@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { instructorApplication } from "../action/instructor/instructorAction";
-import { getAllRequests } from "../action/admin/AdminActions";
+import { instructorApplication } from "../action/instructorAction";
+import { getAllRequests } from "../action/AdminActions";
 
 const InstructorSlice=createSlice({
     name:'instructor',

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React from 'react'
+import toast from 'react-hot-toast';
 const ImageUpdload = async (image) => {
     const preset_key = import.meta.env.VITE_REACT_APP_PRESET_KEY;
     const cloud_name = import.meta.env.VITE_REACT_APP_CLD_USER_NAME;
@@ -16,7 +17,7 @@ const ImageUpdload = async (image) => {
             console.log('shring the url data :',secure_url);
             return secure_url
         } else {
-
+            toast.error('Image format jpg or png allowed')
             return null;
         }
     } catch (error) {

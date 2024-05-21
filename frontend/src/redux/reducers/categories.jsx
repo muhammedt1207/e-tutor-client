@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createCategories, editCategory, getAllCategories } from "../action/admin/Categories";
+import { createCategories, editCategory, getAllCategories } from "../action/Categories";
 
 const categorySlice=createSlice(
     {

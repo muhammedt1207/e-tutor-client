@@ -12,6 +12,7 @@ const AdvanceInformation = ({ onNext }) => {
     const [thumbNailImg, setThumbNailImg] = useState('');
     const [loading, setLoading] = useState(false);
     const [videoUrl, setVideoUrl] = useState('');
+    const [loadingImage, setLoadingImage] = useState(false);
 
     const initialValues = {
         description: '',
@@ -47,11 +48,12 @@ const AdvanceInformation = ({ onNext }) => {
         input.type = 'file';
         input.accept = '.jpg, .jpeg, .png';
         input.click();
-
         input.addEventListener('change', async (event) => {
             const file = event.target.files[0];
+            setLoadingImage(true)
             const imgUrl = await ImageUpdload(file);
             setThumbNailImg(imgUrl);
+            setLoadingImage(false)
         });
     };
 
@@ -89,7 +91,13 @@ const AdvanceInformation = ({ onNext }) => {
                                     <div className=''>
                                         <h2 className='text-xl font-semibold mt-6'>Course Thumbnail</h2>
                                         <div className='mt-6 flex'>
-                                            <img src={thumbNailImg || defaultImg} className='w-60 h-44 object-cover rounded-sm ' alt="" />
+                                            {loadingImage ? (
+                                                <div className='w-60 h-44 flex justify-center items-center'>
+                                                    <DotLoader color="#FFA500" />
+                                                </div>
+                                            ) : (
+                                                <img src={thumbNailImg || defaultImg} className='w-60 h-44 object-cover rounded-sm ' alt="" />
+                                            )}
                                             <div className='ps-4 w-80 p-2'>
                                                 <p className=''>Upload your course Thumbnail here. <strong>Important guidelines:</strong> 1200x800 pixel or 12:8 ratio. Support format: <strong>.jpg, .jpeg, or .png</strong></p>
                                                 <button type='button' className='p-2 mt-2 bg-orange-100 text-orange-500 flex items-center' onClick={(e) => handleThumbnail(e)}>

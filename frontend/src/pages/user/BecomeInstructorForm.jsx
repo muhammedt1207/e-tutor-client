@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
-import { instructorApplication } from '../../redux/action/instructor/instructorAction';
+import { instructorApplication } from '../../redux/action/instructorAction';
 import { useSelect } from '@material-tailwind/react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';

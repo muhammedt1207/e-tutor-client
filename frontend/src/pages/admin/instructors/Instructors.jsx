@@ -4,13 +4,13 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import BreadCrumbs from "../components/BreadCrumbs";
 import { AiOutlinePlus } from "react-icons/ai";
 import SearchBar from "../components/SearchBar";
-import Table from "../components/Table";
 import axios from "axios";
 import FilterArray from "../components/FilterArray";
 import { URL } from "../../../Common/api";
 import SideBar from "../../tutor/components/SideBar";
 import Sidebar from "../../../components/admin/Sidebar";
 import instructor from "../../../redux/reducers/instructor";
+import Table from "../components/Table";
 
 
 

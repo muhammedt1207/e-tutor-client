@@ -7,7 +7,7 @@ import ImgInput from '../../../components/ImgInput';
 import BreadCrumbs from '../components/BreadCrumbs';
 import ImageUpdload from '../../../util/ImageUpdload';
 import { useDispatch, useSelector } from 'react-redux';
-import { createCategories, editCategory } from '../../../redux/action/admin/Categories';
+import { createCategories, editCategory } from '../../../redux/action/Categories';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
@@ -52,7 +52,8 @@ const AddOrEditCategory = ({ category,handleModal }) => {
             handleModal()
             // navigat(-1)
         } else {
-            const ErrorMessage = result.payload.response.data.error
+            const ErrorMessage = result.payload.response.data.message
+            console.log(ErrorMessage);
             toast.error(ErrorMessage)
         }
 

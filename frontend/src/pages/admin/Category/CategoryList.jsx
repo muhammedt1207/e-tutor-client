@@ -5,7 +5,7 @@ import BreadCrumbs from '../components/BreadCrumbs'
 import Sidebar from '../../../components/admin/Sidebar'
 import CategoryTable from './CategoryTable'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllCategories } from '../../../redux/action/admin/Categories'
+import { getAllCategories } from '../../../redux/action/Categories'
 import AddOrEditCategory from './AddOrEditCategory'
 import { Modal } from '@material-ui/core'
 

@@ -4,7 +4,7 @@ import { appJson } from '../../Common/configurations';
 import { Navigate, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
-import { signup } from '../../redux/action/Auth/userAction';
+import { signup } from '../../redux/action/userAction';
 
 const OTPPage = ({ email, signupDispatch,error }) => {
     const [otp, setOTP] = useState(['', '', '', '']);

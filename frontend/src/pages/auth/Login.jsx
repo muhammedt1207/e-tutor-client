@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup'
 import LoginImg from '../../assets/Saly-10.png'
-import { googleSignup, login } from '../../redux/action/Auth/userAction';
+import { googleSignup, login } from '../../redux/action/userAction';
 import { GoogleLogin } from '@react-oauth/google'
 import { jwtDecode } from 'jwt-decode'
 import { Link, useNavigate } from 'react-router-dom';

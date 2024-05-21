@@ -8,7 +8,7 @@ import TopNavbar from './components/TopNavbar.jsx'
 import Login from './pages/auth/Login.jsx'
 import BecomeInstructorPage from './pages/user/BecomeInstructorPage.jsx'
 import { useDispatch, useSelector } from 'react-redux'
-import { getUserData } from './redux/action/Auth/userAction.jsx'
+import { getUserData } from './redux/action/userAction.jsx'
 import {Route,Router,BrowserRouter, Routes, Navigate} from 'react-router-dom'
 import BecomeInstructorForm from './pages/user/BecomeInstructorForm.jsx'
 import Sample from './components/Sample.jsx'
@@ -23,6 +23,10 @@ import Instructors from './pages/admin/instructors/Instructors.jsx'
 import InstructorHome from './pages/tutor/InstructorHome.jsx'
 import AddCourse from './pages/tutor/course/AddCourse.jsx'
 import Courses from './pages/user/courses/Courses.jsx'
+import CoursesList from './pages/admin/Courses/CoursesList.jsx'
+import CourseView from './pages/user/courses/CourseView.jsx'
+import CourseCard from './pages/user/courses/components/CourseCard.jsx'
+import CourseDetailPage from './pages/admin/Courses/CourseDetailPage.jsx'
 function App() {
 const {user}=useSelector((state)=>state.user)
 const dispatch=useDispatch()
@@ -78,7 +82,7 @@ useEffect(()=>{
 
 {/* Instructor Routes*/}
 <Route path='/instructor' element={<InstructorDash/>}/>
-<Route path='/test' element={<Courses/>}/>
+<Route path='/test' element={<CourseView/>}/>
  </Routes>
    </BrowserRouter>
     {/* <TopNavbar/> 
@@ -103,6 +107,8 @@ function AdminRoutes(){
       <Route path='requests' element={<InstructorRequests/>}/>
       <Route path='instrutors' element={<Instructors/>}/>
       <Route path='students' element={<Instructors/>}/>
+      <Route path='courses' element={<CoursesList/>} />
+      <Route path='courseView/:id' element={<CourseDetailPage/>}/>
     </Routes>
   )
 }

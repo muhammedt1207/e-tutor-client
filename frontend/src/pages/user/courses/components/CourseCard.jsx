@@ -6,9 +6,9 @@ const CourseCard = () => {
     <div>
       
 
-<div class="max-w-sm bg-white border border-gray-200 rounded-sm shadow dark:bg-gray-800 dark:border-gray-700 w-5/6">
+<div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     <a href="#">
-        <img class="" src="https://flowbite.com/docs/images/blog/image-1.jpg" alt="" />
+        <img class="rounded-t-lg" src="https://flowbite.com/docs/images/blog/image-1.jpg" alt="" />
     </a>
     <div class="p-5">
         <a href="#">

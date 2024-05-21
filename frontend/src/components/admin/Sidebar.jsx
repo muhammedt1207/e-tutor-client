@@ -4,7 +4,7 @@ import { PresentationChartBarIcon, ShoppingBagIcon, UserCircleIcon, Cog6ToothIco
 import { useMediaQuery } from '@material-ui/core';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { logout } from '../../redux/action/Auth/userAction';
+import { logout } from '../../redux/action/userAction';
 
 const Sidebar = () => {
     const dispatch=useDispatch()
@@ -55,12 +55,14 @@ const Sidebar = () => {
                     {isSmallScreen ? null : 'Instructors'}
                 </ListItem>
                 </Link>
+                <Link to='/admin/courses'>
                 <ListItem>
                     <ListItemPrefix>
                         <Cog6ToothIcon className="h-5 w-5" />
                     </ListItemPrefix>
-                    {isSmallScreen ? null : 'Settings'}
+                    {isSmallScreen ? null : 'Courses'}
                 </ListItem>
+                </Link>
                 <ListItem onClick={handleLogout}>
                     <ListItemPrefix>
                         <PowerIcon className="h-5 w-5" />

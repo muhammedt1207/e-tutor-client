@@ -1,7 +1,7 @@
 import { createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
-import { appJson, config, multiForm } from "../../../Common/configurations";
+import { appJson, config, multiForm } from "../../Common/configurations";
 import axios from "axios";
-import { URL } from "../../../Common/api";
+import { URL } from "../../Common/api";
 
 
 export const signup = createAsyncThunk('user/signup', async (userCredentials, { rejectWithValue }) => {

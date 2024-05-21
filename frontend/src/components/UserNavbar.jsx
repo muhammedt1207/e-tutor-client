@@ -22,9 +22,10 @@ const UserNavbar = ({ toggleSidebar }) => {
         {user ? (
           <div className='flex items-center space-x-4'>
           <AiOutlineBell className='text-2xl text-gray-600'/>
-          <Link to='/userprofile'><Avatar src={Profile} alt="avatar" className='rounded-full w-10 h-10' /></Link>
+          <Link to='/userprofile'><Avatar src={user.profileImageUrl||Profile} alt="avatar" className='rounded-full w-10 h-10' /></Link>
           </div>
         ) : (
+
           <>
            
             <div className='flex space-x-2 ps-2'>

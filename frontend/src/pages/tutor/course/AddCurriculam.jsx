@@ -6,10 +6,10 @@ import toast from "react-hot-toast";
 
 const AddCurriculum = ({onNext}) => {
     // State variables
-    const [sections, setSections] = useState([{ name: '', lectures: [] }]);
+    const [sections, setSections] = useState([{ title: '', SubLesson: [] }]);
     const [newSectionName, setNewSectionName] = useState('');
-    const [lectureTitles, setLectureTitles] = useState([['']]);
-    const [newLectureVideo, setNewLectureVideo] = useState(null);
+    const [subLessonTitles, setSubLessonTitles] = useState([['']]);
+    const [newSubLessonVideo, setNewSubLessonVideo] = useState(null);
     const [uploadProgress, setUploadProgress] = useState({});
     const [videoUrls, setVideoUrls] = useState({});
 
@@ -18,21 +18,21 @@ const AddCurriculum = ({onNext}) => {
         setSections([...sections, newSection]);
 
         setNewSectionName('');
-        setLectureTitles([...lectureTitles, '']);
+        setSubLessonTitles([...subLessonTitles, '']);
     };
 
 
 const handleAddLecture = (sectionIndex) => {
     const updatedSections = [...sections];
-    const updatedLectureTitles = [...lectureTitles];
-    if (updatedSections[sectionIndex] && updatedSections[sectionIndex].lectures) {
-        const newLectureTitle = `Lecture ${updatedSections[sectionIndex].lectures.length + 1}`;
-        updatedLectureTitles[sectionIndex] = newLectureTitle;
-        const newLecture = { title: newLectureTitle, videoUrl: null }; 
-        updatedSections[sectionIndex].lectures.push(newLecture);
+    const updatedSubLessonTitles = [...subLessonTitles];
+    if (updatedSections[sectionIndex] && updatedSections[sectionIndex].SubLesson) {
+        const newSubLessonTitle = `Lecture ${updatedSections[sectionIndex].SubLesson.length + 1}`;
+        updatedSubLessonTitles[sectionIndex] = newSubLessonTitle;
+        const newSubLesson = { title: newSubLessonTitle, videoUrl: null }; 
+        updatedSections[sectionIndex].SubLesson.push(newSubLesson);
         setSections(updatedSections);
-        setLectureTitles(updatedLectureTitles);
-        setNewLectureVideo(null);
+        setSubLessonTitles(updatedSubLessonTitles);
+        setNewSubLessonVideo(null);
     } else {
         console.error('Invalid section index or structure:', sectionIndex, updatedSections);
     }
@@ -42,21 +42,21 @@ useEffect(()=>{
     console.log(sections,'...........,...**********');
 },[sections])
 
-const handleUploadVideo = async (sectionIndex, lectureIndex) => {
-    const videoUrl = await VideoUpload(newLectureVideo.file);
+const handleUploadVideo = async (sectionIndex, SubLessonIndex) => {
+    const videoUrl = await VideoUpload(newSubLessonVideo.file);
     if (!videoUrl) {
         toast.error("Can't upload video");
         return;
     }
     const updatedSections = [...sections];
-    updatedSections[sectionIndex].lectures[lectureIndex].videoUrl = videoUrl; 
+    updatedSections[sectionIndex].SubLesson[SubLessonIndex].videoUrl = videoUrl; 
     setSections(updatedSections);
     toast.success('Video uploaded');
 };
 
-    const handleTitleChange = (e, sectionIndex, lectureIndex) => {
+    const handleTitleChange = (e, sectionIndex, SubLessonIndex) => {
         const updatedSections = [...sections];
-        updatedSections[sectionIndex].lectures[lectureIndex].title = e.target.value;
+        updatedSections[sectionIndex].SubLesson[SubLessonIndex].title = e.target.value;
         setSections(updatedSections);
     };
 
@@ -66,8 +66,8 @@ const handleUploadVideo = async (sectionIndex, lectureIndex) => {
         setSections(updatedSections);
     };
 
-    const handleVideoChange = (e, sectionIndex, lectureIndex) => {
-        setNewLectureVideo({ file: e.target.files[0], sectionIndex, lectureIndex });
+    const handleVideoChange = (e, sectionIndex, SubLessonIndex) => {
+        setNewSubLessonVideo({ file: e.target.files[0], sectionIndex, SubLessonIndex });
     };
 
     // const handleUploadVideo = async (sectionIndex, lectureIndex) => {
@@ -115,7 +115,7 @@ const handleUploadVideo = async (sectionIndex, lectureIndex) => {
                             </div>
                         </div>
                         <div className='border  p-5'>
-                            {section.lectures.map((lecture, lectureIndex) => (
+                            {section && section.SubLesson.map((lecture, lectureIndex) => (
                                 <div key={lectureIndex} className='ps-10 p-4 flex items-center space-x-8 '>
                                     <AiOutlineMenu />
                                     <input

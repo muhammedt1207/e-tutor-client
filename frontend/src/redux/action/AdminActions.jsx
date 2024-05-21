@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { URL } from "../../../Common/api";
+import { URL } from "../../Common/api";
 import axios from "axios";
-import { appJson } from "../../../Common/configurations";
+import { appJson } from "../../Common/configurations";
 
 
 export const getAllRequests = createAsyncThunk(

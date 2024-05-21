@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { URL } from "../../../Common/api";
-import { appJson } from "../../../Common/configurations";
+import { URL } from "../../Common/api";
+import { appJson } from "../../Common/configurations";
 
 export const createCategories=createAsyncThunk('admin/addCategories',async(CategoryData,{rejectWithValue})=>{
     try {
