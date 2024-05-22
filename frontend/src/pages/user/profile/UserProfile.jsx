@@ -6,9 +6,9 @@ import { useSelect } from '@material-tailwind/react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 const UserProfile = () => {
-    const {user}=useSelector((state)=>state.user)
+    const { user } = useSelector((state) => state.user)
     const [selectedOption, setSelectedOption] = useState('dashboard');
-    console.log(user,'[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]][]');
+    console.log(user, '[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]][]');
     const renderComponent = () => {
         switch (selectedOption) {
             case 'dashboard':
@@ -35,13 +35,17 @@ const UserProfile = () => {
             <div className='bg-white z-50 relative mt-56  left-1/2 transform -translate-x-1/2 -translate-y-1/3  w-3/4 shadow-2xl'>
                 <div className='flex flex-row items-center justify-between'>
                     <div className='flex flex-row items-center '>
-                        <img src={user && user.profileImageUrl ?user.profileImageUrl:profile} alt="" className='rounded-full w-32 h-32 p-4  object-cover' />
-                        <h1 className='text-xl font-bold '>{user && user.userName? user.userName:'user name'}</h1>
+                        <img src={user && user.profileImageUrl ? user.profileImageUrl : profile} alt="" className='rounded-full w-32 h-32 p-4  object-cover' />
+                        <h1 className='text-xl font-bold '>{user && user.userName ? user.userName : 'user name'}</h1>
                     </div>
                     <div className='justify-end px-6'>
-                      <Link to='/becomeInstructor'>  <button className="bg-orange-50 hover:bg-orange-700 text-orange-400 font-bold flex items-center py-2 px-4">
-                            Become Instructor <AiOutlineArrowRight className="ml-2" />
-                        </button></Link>
+                        {user?.role === 'student' && (
+                            <Link to='/becomeInstructor'>  <button className="bg-orange-50 hover:bg-orange-700 text-orange-400 font-bold flex items-center py-2 px-4">
+                                Become Instructor <AiOutlineArrowRight className="ml-2" />
+                            </button></Link>
+                        )
+
+                        }
                     </div>
                 </div>
                 <hr />
@@ -55,7 +59,7 @@ const UserProfile = () => {
                 </div>
                 <hr />
                 <div>
-                    <ProfileSettings/>
+                    <ProfileSettings />
                 </div>
             </div>
             <div className=' w-full h-screen'>

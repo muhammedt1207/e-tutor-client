@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createCourse, getAllCourses, getCourse, updateCourseStatus } from "../action/courseAction";
+import { createCourse, getAllCourses, getCourse, publishedCourses, updateCourseStatus } from "../action/courseAction";
 
 
 const CourseSlice=createSlice({
@@ -60,6 +60,19 @@ const CourseSlice=createSlice({
             state.data=payload
         })
         .addCase(updateCourseStatus.rejected,(state,{payload})=>{
+            state.loading=false,
+            state.error=payload,
+            state.data=null
+        })
+        .addCase(publishedCourses.pending,(state)=>{
+            state.loading=true
+        })
+        .addCase(publishedCourses.fulfilled,(state,{payload})=>{
+            state.loading=false,
+            state.error=null,
+            state.data=payload.data
+        })
+        .addCase(publishedCourses.rejected,(state,{payload})=>{
             state.loading=false,
             state.error=payload,
             state.data=null

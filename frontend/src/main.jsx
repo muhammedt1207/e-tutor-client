@@ -6,6 +6,9 @@ import { store } from './redux/store.jsx'
 import { Provider } from 'react-redux'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import {Toaster} from 'react-hot-toast'
+import { Elements } from '@stripe/react-stripe-js'
+import { loadStripe } from '@stripe/stripe-js'
+const stripePromise = loadStripe('pk_test_51PHmWaSCFxhihy8IolYTxCsIFbRNHGc2byVYCqYRLo1aFs1XzXRnZ32zsE7fevPERYFgskgZvJME9IIBDQryioFp00F3kHHaTy')
 
 const client_id='548435251002-t64nb8dibdac4tbbug6hlvq219371u61.apps.googleusercontent.com'
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -14,8 +17,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
      store={store}>
      <GoogleOAuthProvider clientId='548435251002-t64nb8dibdac4tbbug6hlvq219371u61.apps.googleusercontent.com' >
   <Toaster positioin='top-center'/>
+  <Elements stripe={stripePromise}>
     <App />
-
+    </Elements>
     </GoogleOAuthProvider>
     </Provider>
   </React.StrictMode>,

@@ -4,9 +4,9 @@ import { format } from 'date-fns'
 import { AiOutlineEdit } from 'react-icons/ai';
 import AddOrEditCategory from './AddOrEditCategory';
 
-const CategoryTable = ({ index, category ,modal}) => {
-    const handleEdit=async()=>{
-modal(category)
+const CategoryTable = ({ index, category, modal }) => {
+    const handleEdit = async () => {
+        modal(category)
     }
     return (
         <>
@@ -31,14 +31,14 @@ modal(category)
                     <div className="flex items-center justify-center gap-2 text-lg ml-12">
                         <button
                             className="hover:text-gray-500 text- w-20 rounded-sm"
-                           onClick={handleEdit}
+                            onClick={handleEdit}
                         >
-                            <AiOutlineEdit/>
+                            <AiOutlineEdit />
                         </button>
                     </div>
                 </td>
             </tr>
-           
+
         </>
     )
 }

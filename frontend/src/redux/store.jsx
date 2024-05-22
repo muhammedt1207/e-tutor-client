@@ -3,6 +3,7 @@ import userAuth from './reducers/usereAuth'
 import instructor from './reducers/instructor'
 import categories from "./reducers/categories";
 import courses from "./reducers/courses";
+import paymentSlice from "./reducers/paymentSlice";
 
 
 export const store=configureStore({
@@ -11,5 +12,6 @@ export const store=configureStore({
         instructor:instructor,
         category:categories,
         courses:courses,
+        payment:paymentSlice
     }
 })

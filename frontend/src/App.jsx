@@ -27,6 +27,7 @@ import CoursesList from './pages/admin/Courses/CoursesList.jsx'
 import CourseView from './pages/user/courses/CourseView.jsx'
 import CourseCard from './pages/user/courses/components/CourseCard.jsx'
 import CourseDetailPage from './pages/admin/Courses/CourseDetailPage.jsx'
+import PaymentSuccess from './pages/user/courses/components/PaymentSuccess.jsx'
 function App() {
 const {user}=useSelector((state)=>state.user)
 const dispatch=useDispatch()
@@ -70,10 +71,11 @@ useEffect(()=>{
 <Route path='/signup' element={<Signup/>}/>
 <Route path='/forgot' element={<ForgetPassword/>} />
 <Route path='/login' element={<Login/>}/>
+<Route path='/course' element={<Courses/>}/>
+<Route path='/course/:id' element={<CourseView/>}/>
 <Route path='/becomeInstructor' element={<BecomeInstructorPage/>}/> 
 <Route path='/userprofile' element={<UserProfile/>}/>
-
-
+<Route path='/course/paymentSuccess' element={<PaymentSuccess/>}/>
 {/* Admin Routes*/}
 {/* <Route path='/admin-dash' element={<InstructorRequests/>}/>
 <Route path='/reqeusts' element={<InstructorRequests/>}/>
@@ -82,7 +84,6 @@ useEffect(()=>{
 
 {/* Instructor Routes*/}
 <Route path='/instructor' element={<InstructorDash/>}/>
-<Route path='/test' element={<CourseView/>}/>
  </Routes>
    </BrowserRouter>
     {/* <TopNavbar/> 

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
-const LessonList = ({ lessons,onSubLessonClick  }) => {
+const LessonList = ({ lessons, onSubLessonClick }) => {
     const [expandedLessons, setExpandedLessons] = useState([]);
-    const [lesson ,setLessons]=useState([])
+    const [lesson, setLessons] = useState([]);
+
     const toggleLesson = (index) => {
-        console.log(index ,'lesson will open');
         setExpandedLessons((prev) => {
             const updatedExpandedLessons = [...prev];
             updatedExpandedLessons[index] = !prev[index]; 
@@ -16,7 +16,6 @@ const LessonList = ({ lessons,onSubLessonClick  }) => {
         if (lessons) { 
             setExpandedLessons(lessons.map(() => false));
             setLessons(lessons);
-            console.log(lessons, '===========================;=;=');
         }
     }, [lessons]);
 
@@ -39,17 +38,17 @@ const LessonList = ({ lessons,onSubLessonClick  }) => {
                             )}
                         </div>
                     </div>
-                    {isExpanded && (
-                        <div className="border-t border-gray-200">
-                            {lessons[index].SubLesson.map((subLesson, subIndex) => (
-                                <div key={subIndex} className="p-4 flex justify-between items-center bg-gray-50"  onClick={() => onSubLessonClick(subLesson.videoUrl)}>
-                                    <div>
-                                        <h3 className="text-sm">{subLesson.title}</h3>
-                                    </div>
+                    <div
+                        className={`overflow-hidden transition-hight duration-500 ease-in-out ${isExpanded ? 'max-h-screen' : 'max-h-0'}`}
+                    >
+                        {lessons[index].SubLesson.map((subLesson, subIndex) => (
+                            <div key={subIndex} className="p-4 flex justify-between items-center bg-gray-50" onClick={() => onSubLessonClick(subLesson.videoUrl)}>
+                                <div>
+                                    <h3 className="text-sm">{subLesson.title}</h3>
                                 </div>
-                            ))}
-                        </div>
-                    )}
+                            </div>
+                        ))}
+                    </div>
                 </div>
             ))}
         </div>

@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CourseCard from './components/CourseCard';
 import { ArrowDownIcon } from '@heroicons/react/24/solid';
 import CategoryList from './components/CategoryList';
 import { FiChevronRight } from 'react-icons/fi';
+import { useDispatch, useSelector } from 'react-redux';
+import { publishedCourses } from '../../../redux/action/courseAction';
+import Skelton from './components/Skelton';
 
 const Courses = () => {
+    const dispatch=useDispatch()
     const [showCategories, setShowCategories] = useState(false);
     const [showFilters, setShowFilters] = useState(false);
-
+    const {data,loading}=useSelector((state)=>state.courses)
     const toggleCategories = () => {
         setShowCategories(!showCategories);
     };
@@ -15,6 +19,13 @@ const Courses = () => {
     const toggleFilters = () => {
         setShowFilters(!showFilters);
     };
+    useEffect(() => {
+        try {
+            dispatch(publishedCourses());
+        } catch (error) {
+            console.error(error);
+        }
+    }, []);
 
     return (
         <div className='w-full'>
@@ -39,9 +50,19 @@ const Courses = () => {
                     {showCategories && <CategoryList />}
                 </div>
                 <div className=' flex flex-wrap lg:flex-nowrap lg:pe-20 w-full lg:w-3/4 gap-6'>
-                    <CourseCard />
-                    <CourseCard />
-                    <CourseCard />
+                {loading ? (
+                        <>
+                            <Skelton />
+                            <Skelton />
+                            <Skelton />
+                            <Skelton />
+                        </>
+                    ) : (
+                       data && data?.map(course => (
+                            <CourseCard key={course._id} course={course} />
+                        ))
+                    )}
+                  
                 </div>
             </div>
         </div>

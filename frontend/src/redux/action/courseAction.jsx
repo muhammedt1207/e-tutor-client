@@ -42,3 +42,14 @@ export const updateCourseStatus=createAsyncThunk('course/updateCoursestatus',asy
         rejectWithValue(error)
     }
 })
+
+export const publishedCourses=createAsyncThunk('course/acceptedCourse',async(_,{rejectWithValue})=>{
+    try {
+        const {data}=await axios.get(`${URL}/course/course/acceptedCourses`,appJson)
+        console.log('published course',data);
+        return data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error)
+    }
+})

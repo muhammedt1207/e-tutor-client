@@ -20,13 +20,13 @@ const AdvanceInformation = ({ onNext }) => {
     };
 
     const onSubmit = (values) => {
-        // if (!thumbNailImg) {
-        //     toast.error('Add Thumbnail');
-        //     return;
-        // } else if (!videoUrl) {
-        //     toast.error('Add Introduction video');
-        //     return;
-        // }
+        if (!thumbNailImg) {
+            toast.error('Add Thumbnail');
+            return;
+        } else if (!videoUrl) {
+            toast.error('Add Introduction video');
+            return;
+        }
 
         const data = {
             videoUrl: videoUrl,
