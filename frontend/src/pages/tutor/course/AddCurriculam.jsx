@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineMenu, AiOutlinePlus, AiOutlineUpload } from "react-icons/ai";
-import VideoUpload from "../../../util/VideoUploed";
 import toast from "react-hot-toast";
+import VideoUpload from "../../../util/VideoUploed";
 
-const AddCurriculum = ({ onNext }) => {
-    // State variables
-    const [sections, setSections] = useState([{ title: '', SubLesson: [] }]);
-    const [subLessonTitles, setSubLessonTitles] = useState([['']]);
+const AddCurriculum = ({ onNext, initialData }) => {
+    console.log(initialData,'initial data in add curriculam');
+    const [sections, setSections] = useState(initialData.sections || [{ title: '', SubLesson: [] }]);
     const [uploadProgress, setUploadProgress] = useState({});
     const [videoUrls, setVideoUrls] = useState({});
     const fileInputRef = useRef(null);
@@ -15,43 +14,33 @@ const AddCurriculum = ({ onNext }) => {
     const handleAddSection = () => {
         const newSection = { title: '', SubLesson: [] };
         setSections([...sections, newSection]);
-        setSubLessonTitles([...subLessonTitles, '']);
     };
 
     const handleDeleteSection = (sectionIndex) => {
         const updatedSections = sections.filter((_, index) => index !== sectionIndex);
-        const updatedSubLessonTitles = subLessonTitles.filter((_, index) => index !== sectionIndex);
         setSections(updatedSections);
-        setSubLessonTitles(updatedSubLessonTitles);
-      };
+    };
 
-      const handleDeleteLecture = (sectionIndex, SubLessonIndex) => {
+    const handleDeleteLecture = (sectionIndex, SubLessonIndex) => {
         const updatedSections = [...sections];
-        const updatedSubLessonTitles = [...subLessonTitles];
         updatedSections[sectionIndex].SubLesson.splice(SubLessonIndex, 1);
-        // updatedSubLessonTitles[sectionIndex] = updatedSubLessonTitles[sectionIndex].filter((_, index) => index !== SubLessonIndex);
         setSections(updatedSections);
-        setSubLessonTitles(updatedSubLessonTitles);
-      };
+    };
 
     const handleAddLecture = (sectionIndex) => {
         const updatedSections = [...sections];
-        const updatedSubLessonTitles = [...subLessonTitles];
-        if (updatedSections[sectionIndex] && updatedSections[sectionIndex].SubLesson) {
-            const newSubLessonTitle = `Lecture ${updatedSections[sectionIndex].SubLesson.length + 1}`;
-            updatedSubLessonTitles[sectionIndex] = newSubLessonTitle;
-            const newSubLesson = { title: newSubLessonTitle, videoUrl: null };
+        if (updatedSections[sectionIndex]) {
+            if (!updatedSections[sectionIndex].SubLesson) {
+                updatedSections[sectionIndex].SubLesson = []; 
+            }
+            const newSubLesson = { title: `Lecture ${updatedSections[sectionIndex].SubLesson.length + 1}`, videoUrl: null };
             updatedSections[sectionIndex].SubLesson.push(newSubLesson);
             setSections(updatedSections);
-            setSubLessonTitles(updatedSubLessonTitles);
         } else {
             console.error('Invalid section index or structure:', sectionIndex, updatedSections);
         }
     };
-
-    useEffect(() => {
-        console.log(sections, '...........,...**********');
-    }, [sections]);
+    
 
     const handleUploadVideo = async (file) => {
         const { sectionIndex, SubLessonIndex } = currentUpload;
@@ -80,7 +69,7 @@ const AddCurriculum = ({ onNext }) => {
 
     const handleSectionNameChange = (e, sectionIndex) => {
         const updatedSections = [...sections];
-        updatedSections[sectionIndex].name = e.target.value;
+        updatedSections[sectionIndex].title = e.target.value;
         setSections(updatedSections);
     };
 
@@ -91,7 +80,10 @@ const AddCurriculum = ({ onNext }) => {
 
     const handleVideoChange = (e) => {
         const file = e.target.files[0];
-        if (!file) return;
+        if (!file || !file.type.startsWith('video/')) {
+            toast.error('Please upload a valid video file');
+            return;
+        }
         const { sectionIndex, SubLessonIndex } = currentUpload;
         setUploadProgress(prev => ({ ...prev, [sectionIndex + "_" + SubLessonIndex]: true }));
         handleUploadVideo(file);
@@ -100,8 +92,8 @@ const AddCurriculum = ({ onNext }) => {
     const handleUpload = () => {
         let isValid = true;
         sections.forEach(section => {
-            if (!section.name) {
-                toast.error("Section name is required");
+            if (!section.title) {
+                toast.error("Section title is required");
                 isValid = false;
             }
             section.SubLesson.forEach(subLesson => {
@@ -117,7 +109,6 @@ const AddCurriculum = ({ onNext }) => {
         });
 
         if (isValid) {
-            console.log('Uploaded file:', sections);
             onNext(sections);
         }
     };
@@ -135,7 +126,7 @@ const AddCurriculum = ({ onNext }) => {
                                     <h1 className='ps-10 flex items-center'><AiOutlineMenu />Section {sectionIndex + 1}:</h1>
                                     <input
                                         type="text"
-                                        value={section.name}
+                                        value={section.title}
                                         onChange={(e) => handleSectionNameChange(e, sectionIndex)}
                                         placeholder="Enter section name"
                                         required
@@ -148,31 +139,29 @@ const AddCurriculum = ({ onNext }) => {
                                 </div>
                             </div>
                             <div className='border p-5'>
-                                {section && section.SubLesson.map((lecture, lectureIndex) => (
-                                   <div key={lectureIndex} className="ps-10 p-4 flex items-center space-x-8 ">
-                                   <AiOutlineMenu />
-                                   <input
-                                     type="text"
-                                     
-                                     onChange={(e) => handleTitleChange(e, sectionIndex, lectureIndex)}
-                                     placeholder="Enter title"
-                                     required
-                                   />
-                                   <button
-                                     type="button"
-                                     className="flex bg-orange-100 p-2"
-                                     onClick={() => handleVideoButtonClick(sectionIndex, lectureIndex)}
-                                   >
-                                     {uploadProgress[sectionIndex + "_" + lectureIndex] ? "Uploading..." : "Upload Video"}
-                                     <AiOutlineUpload className="ml-2 text-2xl" />
-                                   </button>
-                                   {videoUrls[`${sectionIndex}_${lectureIndex}`] && (
-                                     <video src={videoUrls[`${sectionIndex}_${lectureIndex}`]} controls width="200" />
-                                   )}
-                           
-                                     <AiOutlineDelete     onClick={() => handleDeleteLecture(sectionIndex, lectureIndex)} />
-                                   
-                                 </div>
+                            {section && section.SubLesson && section.SubLesson.map((lecture, lectureIndex) => (
+                                    <div key={lectureIndex} className="ps-10 p-4 flex items-center space-x-8 ">
+                                        <AiOutlineMenu />
+                                        <input
+                                            type="text"
+                                            value={lecture.title}
+                                            onChange={(e) => handleTitleChange(e, sectionIndex, lectureIndex)}
+                                            placeholder="Enter title"
+                                            required
+                                        />
+                                        <button
+                                            type="button"
+                                            className="flex bg-orange-100 p-2"
+                                            onClick={() => handleVideoButtonClick(sectionIndex, lectureIndex)}
+                                        >
+                                            {uploadProgress[sectionIndex + "_" + lectureIndex] ? "Uploading..." : "Upload Video"}
+                                            <AiOutlineUpload className="ml-2 text-2xl" />
+                                        </button>
+                                        {videoUrls[`${sectionIndex}_${lectureIndex}`] && (
+                                            <video src={videoUrls[`${sectionIndex}_${lectureIndex}`]} controls width="200" />
+                                        )}
+                                        <AiOutlineDelete onClick={() => handleDeleteLecture(sectionIndex, lectureIndex)} />
+                                    </div>
                                 ))}
                             </div>
                         </div>

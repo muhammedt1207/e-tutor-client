@@ -59,7 +59,7 @@ const Courses = () => {
                     </div>
                     {showCategories && <CategoryList />}
                 </div>
-                <div className=' flex flex-wrap lg:flex-nowrap lg:pe-20 w-full lg:w-3/4 gap-6'>
+                <div className=' flex flex-wrap  lg:pe-20 w-full lg:w-3/4 gap-6'>
                     {loading ? (
                         <>
                             <Skelton />

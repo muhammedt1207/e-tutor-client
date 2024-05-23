@@ -10,7 +10,7 @@ const CourseCard = ({ course }) => {
     };
 
     return (
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <div className="max-w-sm bg-white border w-1/3 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <a href="#">
                 <img className="rounded-t-lg" src={course.thumbnail} alt="" />
             </a>
@@ -18,7 +18,7 @@ const CourseCard = ({ course }) => {
                 <a href="#">
                     <div className='flex justify-between'>
                         <button className='bg-red-100 text-red-600 rounded-md p-1'>{course.category.categoryName}</button>
-                        <p className='text-orange-500'>2344</p>
+                        <p className='text-orange-500'>{course.amount||2344}</p>
                     </div>
                     <h5 className="mb-2 text-2xl font-semibold tracking-tight p-2 text-gray-900 dark:text-white">{course.title}</h5>
                     <p className='ps-4'>by - <b>{course.instructorName}</b></p>

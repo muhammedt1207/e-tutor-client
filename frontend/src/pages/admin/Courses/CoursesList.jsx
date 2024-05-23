@@ -5,19 +5,25 @@ import Sidebar from '../../../components/admin/Sidebar';
 import SearchBar from '../components/SearchBar';
 import BreadCrumbs from '../components/BreadCrumbs';
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const CoursesList = () => {
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.courses);
-
+  
+  const handleStatusChange = (courseId, status) => {
+    console.log(courseId, status, 'ddddddddddddddddddfi');
+    dispatch(updateCourseStatus({ id: courseId, action: status }));
+    toast.success('Course Accepted');
+    return;
+  };
+  
   useEffect(() => {
     dispatch(getAllCourses());
-  }, [dispatch,data]);
-
-  const handleStatusChange = (courseId, status) => {
-    console.log(courseId,status,'ddddddddddddddddddfi');
-    dispatch(updateCourseStatus({id:courseId, action:status}));
-  };
+  }, [dispatch]);
+  const totalCourses = Array.isArray(data) ? data.length : 0;
+  const activeCourses = Array.isArray(data) ? data.filter(course => course.status === 'accepted').length : 0;
+  const pendingCourses = Array.isArray(data) ? data.filter(course => course.status === 'pending').length : 0;
 
   return (
     <div className='flex'>
@@ -34,15 +40,15 @@ const CoursesList = () => {
         <div className='flex gap-20 justify-around pt-10'>
           <div className='w-1/3 bg-green-100 border-green-700 border rounded-md h-32 flex flex-col justify-center items-center'>
             <h1 className='text-xl font-semibold'>Total Courses</h1>
-            <h1 className='text-4xl font-bold text-green-700'>{data?.length}</h1>
+            <h1 className='text-4xl font-bold text-green-700'>{totalCourses}</h1>
           </div>
           <div className='w-1/3 bg-blue-100 border-blue-700 border rounded-md h-32 flex flex-col justify-center items-center'>
             <h1 className='text-xl font-semibold'>Active Courses</h1>
-            <h1 className='text-4xl font-bold text-blue-700'>{data?.filter(course => course.status == 'accepted').length}</h1>
+            <h1 className='text-4xl font-bold text-blue-700'>{activeCourses}</h1>
           </div>
           <div className='w-1/3 bg-orange-100 border-orange-700 border rounded-md h-32 flex flex-col justify-center items-center'>
             <h1 className='text-xl font-semibold'>Pending Courses</h1>
-            <h1 className='text-4xl font-bold text-orange-700'>{data?.filter(course => course.status === 'pending').length}</h1>
+            <h1 className='text-4xl font-bold text-orange-700'>{pendingCourses}</h1>
           </div>
         </div>
 
@@ -62,7 +68,7 @@ const CoursesList = () => {
             </tr>
           </thead>
           <tbody>
-            {data?.map((course) => (
+            {Array.isArray(data) && data.map((course) => (
               <tr key={course._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {course.title}

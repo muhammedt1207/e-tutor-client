@@ -28,7 +28,7 @@ const LessonList = ({ lessons, onSubLessonClick }) => {
                     <div className="p-4 flex justify-between items-center cursor-pointer" onClick={() => toggleLesson(index)}>
                         <div>
                             <h2 className="text-lg font-semibold">{lessons[index].name}</h2> 
-                            <p className="text-sm text-gray-500">{lessons[index].SubLesson.length} Lectures</p>
+                            <p className="text-sm text-gray-500">{lessons[index].SubLesson?.length} Lectures</p>
                         </div>
                         <div className='p-4'>
                             {isExpanded ? (
@@ -41,7 +41,7 @@ const LessonList = ({ lessons, onSubLessonClick }) => {
                     <div
                         className={`overflow-hidden transition-hight duration-500 ease-in-out ${isExpanded ? 'max-h-screen' : 'max-h-0'}`}
                     >
-                        {lessons[index].SubLesson.map((subLesson, subIndex) => (
+                        {lessons[index].SubLesson?.map((subLesson, subIndex) => (
                             <div key={subIndex} className="p-4 flex justify-between items-center bg-gray-50" onClick={() => onSubLessonClick(subLesson.videoUrl)}>
                                 <div>
                                     <h3 className="text-sm">{subLesson.title}</h3>

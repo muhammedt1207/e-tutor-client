@@ -72,7 +72,7 @@ const CategoryList = () => {
              
               </tr>
             </thead>
-            <tbody>
+            <tbody className=''>
               {data && data.length>0 && data.map((category, index) => {
                 const isLast = index === categories.length - 1;
                 return (

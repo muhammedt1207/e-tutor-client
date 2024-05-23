@@ -64,7 +64,7 @@ const CourseList = () => {
                     'Accepted'}
               </td>
               <td className="px-6 py-4">
-              <Link to={`/admin/courseView/${course._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</Link>
+              <Link to={`/instructor/addCourse?courseId=${course._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</Link>
 
               </td>
             </tr>

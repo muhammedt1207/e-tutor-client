@@ -76,6 +76,12 @@ const ProfileSettings = () => {
     const handleImageUpload = async (event) => {
         setLoading(true);
         const file = event.target.files[0];
+        if (!file || !file.type.startsWith('image/')) {
+            toast.error('Please upload a valid image file');
+            setLoading(false);
+            return;
+        }
+        
         const reader = new FileReader();
 
         reader.onloadend = async () => {

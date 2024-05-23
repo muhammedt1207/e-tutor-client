@@ -6,7 +6,8 @@ import axios from 'axios';
 import { URL } from '../../../Common/api';
 import { appJson } from '../../../Common/configurations';
 
-const AddCourse = ({onNext}) => {
+const AddCourse = ({onNext,initialData}) => {
+    console.log(initialData,'initial data for ');
     const navigate = useNavigate();
     const [categories, setCategories] = useState([]);
 
@@ -40,12 +41,12 @@ const AddCourse = ({onNext}) => {
     },[])
 
     const initialValues = {
-        title: '',
-        subtitle: '',
-        category: '',
-        topic: '',
-        amount:''
-    };
+        title: initialData.title || '',
+        subtitle: initialData.subtitle || '',
+        category: initialData.category || '',
+        topic: initialData.topic || '',
+        amount: initialData.amount || ''
+      };
 
     const validationSchema = Yup.object().shape({
         title: Yup.string().required('Title is required'),
@@ -71,6 +72,7 @@ const AddCourse = ({onNext}) => {
                             initialValues={initialValues}
                             validationSchema={validationSchema}
                             onSubmit={handleSubmit}
+                            enableReinitialize
                         >
                             <Form>
                                 <div className="mb-6">

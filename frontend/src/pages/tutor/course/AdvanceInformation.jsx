@@ -8,15 +8,16 @@ import ImageUpdload from '../../../util/ImageUpdload';
 import VideoUpload from '../../../util/VideoUploed';
 import { DotLoader } from 'react-spinners';
 
-const AdvanceInformation = ({ onNext }) => {
-    const [thumbNailImg, setThumbNailImg] = useState('');
+const AdvanceInformation = ({ onNext,initialData }) => {
+    console.log(initialData,'initail data in advanced datasss');
+    const [thumbNailImg, setThumbNailImg] = useState(initialData.imageUrl||'');
     const [loading, setLoading] = useState(false);
-    const [videoUrl, setVideoUrl] = useState('');
+    const [videoUrl, setVideoUrl] = useState(initialData.videoUrl||'');
     const [loadingImage, setLoadingImage] = useState(false);
 
     const initialValues = {
-        description: '',
-        teachings: ['']
+        description:initialData.description ||'',
+        teachings:initialData.teachings|| ['']
     };
 
     const onSubmit = (values) => {
@@ -50,6 +51,11 @@ const AdvanceInformation = ({ onNext }) => {
         input.click();
         input.addEventListener('change', async (event) => {
             const file = event.target.files[0];
+            if (!file || !file.type.startsWith('image/')) {
+                toast.error('Please upload a valid image file');
+                setLoading(false);
+                return;
+            }
             setLoadingImage(true)
             const imgUrl = await ImageUpdload(file);
             setThumbNailImg(imgUrl);
@@ -61,18 +67,33 @@ const AdvanceInformation = ({ onNext }) => {
         event.stopPropagation();
         const input = document.createElement('input');
         input.type = 'file';
-        input.accept = '.mp4';
+        input.accept = 'video/mp4, video/x-m4v, video/*';
         input.click();
-
-
+    
         input.addEventListener('change', async (event) => {
-            setLoading(true);
             const file = event.target.files[0];
-            const url = await VideoUpload(file);
-            setVideoUrl(url);
-            setLoading(false);
+    
+            if (!file || !file.type.startsWith('video/')) {
+                toast.error('Please upload a valid video file');
+                return;
+            }
+    
+            setLoading(true);
+            try {
+                const url = await VideoUpload(file);
+                if (!url) {
+                    throw new Error('Video upload failed');
+                }
+                setVideoUrl(url);
+                toast.success('Video uploaded successfully');
+            } catch (error) {
+                toast.error(error.message || 'An error occurred during video upload');
+            } finally {
+                setLoading(false);
+            }
         });
     };
+    
 
     return (
         <div className='flex justify-center items-center lg:ml-46 ml-52 p-16 pe-10 '>
@@ -80,6 +101,7 @@ const AdvanceInformation = ({ onNext }) => {
                 <Formik
                     initialValues={initialValues}
                     onSubmit={onSubmit}
+                    enableReinitialize
                 >
                     {({ values, setValues }) => (
                         <Form>

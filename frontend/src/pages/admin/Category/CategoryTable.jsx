@@ -10,7 +10,8 @@ const CategoryTable = ({ index, category, modal }) => {
     }
     return (
         <>
-            <tr className='hover:bg-gray-200 active:bg-gray-300 cursor-pointer space-x-3 mt-6'>
+        
+            <tr className='hover:bg-gray-200 active:bg-gray-300 cursor-pointer space-x-3 my-6 py-4'>
                 <td className=" gap-4 ml-5 px-7">
                     <div className="overflow-clip flex justify-center items-center shrink-0">
                         <p className="line-clamp-1">{index}</p>
