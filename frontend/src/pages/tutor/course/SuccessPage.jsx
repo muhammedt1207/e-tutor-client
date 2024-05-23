@@ -2,6 +2,7 @@ import React from 'react'
 import { useSpring, animated } from 'react-spring';
 import SideBar from '../components/SideBar';
 import successImg from '../../../assets/success.jpg'
+import { Link } from 'react-router-dom';
 const SuccessPage = () => {
 
     return (
@@ -13,7 +14,7 @@ const SuccessPage = () => {
                   <img className='w-4/6' src={successImg} alt="" />
                   <h1 className="text-4xl font-bold text-green-600 mb-4">Congratulations!</h1>
                   <p className=' text-gray-600'>Your course has been added successfully. Our team will verify it shortly.</p>
-                  <button className="px-4 py-2 mt-5 bg-green-500 text-white rounded">Go to Dashboard</button>
+                  <Link to='/instructor/courses' > <button className="px-4 py-2 mt-5 bg-green-500 text-white rounded">Go to Dashboard</button></Link>
 
                 </div>
                 </div>

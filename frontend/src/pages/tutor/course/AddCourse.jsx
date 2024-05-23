@@ -43,14 +43,16 @@ const AddCourse = ({onNext}) => {
         title: '',
         subtitle: '',
         category: '',
-        topic: ''
+        topic: '',
+        amount:''
     };
 
     const validationSchema = Yup.object().shape({
         title: Yup.string().required('Title is required'),
         subtitle: Yup.string().required('Subtitle is required'),
         category: Yup.string().required('Category is required'),
-        topic: Yup.string().required('Topic is required')
+        topic: Yup.string().required('Topic is required'),
+        amount:Yup.number().required('Price is required')
     });
 
     const handleSubmit = (values) => {
@@ -95,6 +97,11 @@ const AddCourse = ({onNext}) => {
                                     <label htmlFor="topic" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course Topic</label>
                                     <Field type="text" id="topic" name="topic" placeholder='What is primarily taught in your course?' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                                     <ErrorMessage name="topic" component="div" className="text-red-500 text-xs mt-1" />
+                                </div>
+                                <div className="mb-6">
+                                    <label htmlFor="amount" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course Price</label>
+                                    <Field type="number" id="amount" name="amount" placeholder='price of the course' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                                    <ErrorMessage name="amount" component="div" className="text-red-500 text-xs mt-1" />
                                 </div>
                                 <div className="flex justify-between">
                                     <button type="button" className='py-4 px-8 border shadow-sm rounded-md my-3 bg-white' onClick={() => navigate(-1)}>Cancel</button>

@@ -8,10 +8,12 @@ import { publishedCourses } from '../../../redux/action/courseAction';
 import Skelton from './components/Skelton';
 
 const Courses = () => {
-    const dispatch=useDispatch()
+    const dispatch = useDispatch();
     const [showCategories, setShowCategories] = useState(false);
     const [showFilters, setShowFilters] = useState(false);
-    const {data,loading}=useSelector((state)=>state.courses)
+
+    const { data = [], loading } = useSelector((state) => state.courses);
+
     const toggleCategories = () => {
         setShowCategories(!showCategories);
     };
@@ -19,13 +21,21 @@ const Courses = () => {
     const toggleFilters = () => {
         setShowFilters(!showFilters);
     };
-    useEffect(() => {
+
+    const fetchCourse = async () => {
         try {
-            dispatch(publishedCourses());
+            await dispatch(publishedCourses());
         } catch (error) {
             console.error(error);
         }
-    }, []);
+    };
+
+    useEffect(() => {
+        fetchCourse();
+    }, [dispatch]);
+
+    // Log the data to see its structure
+    console.log('Courses data:', data);
 
     return (
         <div className='w-full'>
@@ -50,7 +60,7 @@ const Courses = () => {
                     {showCategories && <CategoryList />}
                 </div>
                 <div className=' flex flex-wrap lg:flex-nowrap lg:pe-20 w-full lg:w-3/4 gap-6'>
-                {loading ? (
+                    {loading ? (
                         <>
                             <Skelton />
                             <Skelton />
@@ -58,11 +68,10 @@ const Courses = () => {
                             <Skelton />
                         </>
                     ) : (
-                       data && data?.map(course => (
+                        Array.isArray(data) && data.map(course => (
                             <CourseCard key={course._id} course={course} />
                         ))
                     )}
-                  
                 </div>
             </div>
         </div>

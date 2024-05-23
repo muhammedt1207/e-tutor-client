@@ -11,12 +11,9 @@ const InstructorDash = () => {
     <div className='flex flex-col '>
       <SideBar/>
       <div className=''>
-        {/* <AddCurriculam/> */}
-        <AddCourseHome/>
-    {/* <AdvanceInformation/> */}
-      {/* <AddCourse/> */}
+     
       </div>
-      {/* <Outlet/> */}
+      <Outlet/>
     </div>
   )
 }

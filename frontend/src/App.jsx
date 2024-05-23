@@ -28,6 +28,8 @@ import CourseView from './pages/user/courses/CourseView.jsx'
 import CourseCard from './pages/user/courses/components/CourseCard.jsx'
 import CourseDetailPage from './pages/admin/Courses/CourseDetailPage.jsx'
 import PaymentSuccess from './pages/user/courses/components/PaymentSuccess.jsx'
+import AddCourseHome from './pages/tutor/course/AddCourseHome.jsx'
+import CourseList from './pages/tutor/course/CourseList.jsx'
 function App() {
 const {user}=useSelector((state)=>state.user)
 const dispatch=useDispatch()
@@ -65,6 +67,13 @@ useEffect(()=>{
   (user && user.role=='admin')?(
     <Route path='/admin/*' element={<AdminRoutes/>} />
   ):(<Route path='/admin' element={<Navigate to='/'/>} />)
+}
+{
+  (user && user.role=='instructor')?(
+    <Route path='/instructor/*' element={<InstrucorRoutes/>}/>
+  ):(
+    <Route path='instructor' element={<Navigate to='/'/>} />
+  )
 }
 <Route  path='/index' element={<UserHome/>} />
 <Route path='/home' element={<UserHome/>}/>
@@ -118,7 +127,8 @@ function InstrucorRoutes(){
     <Routes>
       <Route path='/' element={<InstructorDash/>} />
       <Route index element={<InstructorHome/>}/>
-      <Route path='courses' element={<AddCourse/>}/>
+      <Route path='courses' element={<CourseList/>}/>
+      <Route path='addCourse' element={<AddCourseHome/>}/>
     </Routes>
   )
 }

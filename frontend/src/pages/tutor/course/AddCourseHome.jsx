@@ -8,8 +8,10 @@ import { createCourse } from '../../../redux/action/courseAction';
 import SuccessPage from './SuccessPage';
 import SideBar from '../components/SideBar';
 import { getUserData } from '../../../redux/action/userAction';
+import { useParams } from 'react-router-dom';
 
 const AddCourseHome = () => {
+  const {courseId}=useParams()
   const dispatch=useDispatch()
   const {user}=useSelector((state)=>state.user)
   const [currentStep, setCurrentStep] = useState(1);
@@ -65,7 +67,7 @@ const AddCourseHome = () => {
     dispatch(createCourse(courseData))
     toast.success('course added')
    
-    // setCurrentStep(prevStep => prevStep + 1);
+    setCurrentStep(prevStep => prevStep + 1);
   };
 
   const handlePrev = () => {

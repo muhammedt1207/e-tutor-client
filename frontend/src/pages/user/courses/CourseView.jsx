@@ -10,7 +10,7 @@ import axios from 'axios';
 import { Elements, useElements, useStripe } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
-const stripePromise = loadStripe('pk_test_51PHmWaSCFxhihy8IolYTxCsIFbRNHGc2byVYCqYRLo1aFs1XzXRnZ32zsE7fevPERYFgskgZvJME9IIBDQryioFp00F3kHHaTy')
+const stripePromise = loadStripe('pk_test_51PHmWaSCFxhihy8IolYTxCsIFbRNHGc2byVYCqYRLo1aFs1XzXRnZ32zsE7fevPERYFgskgZvJME9IIBDQryioFp00F3kHHaTy');
 
 const CourseDetailPage = () => {
     const stripe = useStripe();
@@ -33,19 +33,27 @@ const CourseDetailPage = () => {
                 setCourse(result.payload.data);
                 setVideo(result.payload.data.trailer);
 
-                // Assuming you will check if the user has purchased the course
-                const userPurchased = false;
-                setIsPurchased(userPurchased);
+                if (user?._id) {
+                    checkEnrollment(id, user._id);
+                }
             } catch (error) {
                 console.error(error);
             }
         };
 
         fetchCourse();
-    }, [dispatch, id]);
+    }, [dispatch, id, user]);
+    const checkEnrollment = async (courseId, userId) => {
+        try {
+            const response = await axios.get(`${URL}/course/enrollment/check`, { params: { courseId, userId } });
+            console.log(response.data.data.isEnrolled,'enrollment data ');
+            setIsPurchased(response.data.data.isEnrolled);
+        } catch (error) {
+            console.error('Error checking enrollment status', error);
+        }
+    };
 
-
-    const handleBuyCourse = async () => {
+    const handleBuyCourse = async (event) => {
         event.preventDefault();
         if (!stripe || !elements) {
             return;
@@ -105,6 +113,7 @@ const CourseDetailPage = () => {
                             ))}
                         </div>
                     </div>
+
                     <div className='w-80'>
                         {isPurchased ? (
                             course.lessons ? (

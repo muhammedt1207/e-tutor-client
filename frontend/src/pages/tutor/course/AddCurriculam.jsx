@@ -18,6 +18,22 @@ const AddCurriculum = ({ onNext }) => {
         setSubLessonTitles([...subLessonTitles, '']);
     };
 
+    const handleDeleteSection = (sectionIndex) => {
+        const updatedSections = sections.filter((_, index) => index !== sectionIndex);
+        const updatedSubLessonTitles = subLessonTitles.filter((_, index) => index !== sectionIndex);
+        setSections(updatedSections);
+        setSubLessonTitles(updatedSubLessonTitles);
+      };
+
+      const handleDeleteLecture = (sectionIndex, SubLessonIndex) => {
+        const updatedSections = [...sections];
+        const updatedSubLessonTitles = [...subLessonTitles];
+        updatedSections[sectionIndex].SubLesson.splice(SubLessonIndex, 1);
+        // updatedSubLessonTitles[sectionIndex] = updatedSubLessonTitles[sectionIndex].filter((_, index) => index !== SubLessonIndex);
+        setSections(updatedSections);
+        setSubLessonTitles(updatedSubLessonTitles);
+      };
+
     const handleAddLecture = (sectionIndex) => {
         const updatedSections = [...sections];
         const updatedSubLessonTitles = [...subLessonTitles];
@@ -128,32 +144,35 @@ const AddCurriculum = ({ onNext }) => {
                                 <div className='flex pt-6 px-10 space-x-5'>
                                     <h1 className=' text-xl' onClick={() => handleAddLecture(sectionIndex)}><AiOutlinePlus /></h1>
                                     <p className=' text-xl'><AiOutlineEdit /></p>
-                                    <p className=' text-xl'><AiOutlineDelete /></p>
+                                    <p className=' text-xl' onClick={() => handleDeleteSection(sectionIndex)}><AiOutlineDelete /></p>
                                 </div>
                             </div>
                             <div className='border p-5'>
                                 {section && section.SubLesson.map((lecture, lectureIndex) => (
-                                    <div key={lectureIndex} className='ps-10 p-4 flex items-center space-x-8 '>
-                                        <AiOutlineMenu />
-                                        <input
-                                            type="text"
-                                            value={lecture.title}
-                                            onChange={(e) => handleTitleChange(e, sectionIndex, lectureIndex)}
-                                            placeholder="Enter title"
-                                            required
-                                        />
-                                        <button
-                                            type="button"
-                                            className="flex bg-orange-100 p-2"
-                                            onClick={() => handleVideoButtonClick(sectionIndex, lectureIndex)}
-                                        >
-                                            {uploadProgress[sectionIndex + "_" + lectureIndex] ? "Uploading..." : "Upload Video"}
-                                            <AiOutlineUpload className="ml-2 text-2xl" />
-                                        </button>
-                                        {videoUrls[`${sectionIndex}_${lectureIndex}`] && (
-                                            <video src={videoUrls[`${sectionIndex}_${lectureIndex}`]} controls width="200" />
-                                        )}
-                                    </div>
+                                   <div key={lectureIndex} className="ps-10 p-4 flex items-center space-x-8 ">
+                                   <AiOutlineMenu />
+                                   <input
+                                     type="text"
+                                     
+                                     onChange={(e) => handleTitleChange(e, sectionIndex, lectureIndex)}
+                                     placeholder="Enter title"
+                                     required
+                                   />
+                                   <button
+                                     type="button"
+                                     className="flex bg-orange-100 p-2"
+                                     onClick={() => handleVideoButtonClick(sectionIndex, lectureIndex)}
+                                   >
+                                     {uploadProgress[sectionIndex + "_" + lectureIndex] ? "Uploading..." : "Upload Video"}
+                                     <AiOutlineUpload className="ml-2 text-2xl" />
+                                   </button>
+                                   {videoUrls[`${sectionIndex}_${lectureIndex}`] && (
+                                     <video src={videoUrls[`${sectionIndex}_${lectureIndex}`]} controls width="200" />
+                                   )}
+                           
+                                     <AiOutlineDelete     onClick={() => handleDeleteLecture(sectionIndex, lectureIndex)} />
+                                   
+                                 </div>
                                 ))}
                             </div>
                         </div>
