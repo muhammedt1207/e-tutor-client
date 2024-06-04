@@ -33,8 +33,8 @@ const Login = () => {
   },[user])
   const handleSubmit = async (values, { setSubmitting }) => {
     console.log(values, '---------------------------');
-    dispatch(login(values))
-
+    const res=await dispatch(login(values))
+    console.log(res,'dispatch result');
     setSubmitting(false);
   };
   const loginWithGoogle=async(data)=>{
@@ -82,6 +82,7 @@ const Login = () => {
               </div>
               {error && <p className="text-red-500">{error}</p>}
            <Link to='/forgot'> <h1 className='text-blue-700'>Forgot password ?</h1></Link>
+           {error && (<p>{error}</p>)}
               <div className='flex flex-col  items-center'>
                 <button type="submit" disabled={isSubmitting} className='border border-orange-400 text-white px-8 py-2 rounded-md bg-orange-500 hover:bg-orange-400 hover:text-white transition duration-300 ease-in-out w-full mt-4 mb-5'>Sign in Account</button>
                 <GoogleLogin

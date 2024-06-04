@@ -27,6 +27,7 @@ export const getAllCourses= createAsyncThunk('course/getCourse',async(_,{rejectW
 export const getCourse=createAsyncThunk('course.getcourse',async(id,{rejectWithValue})=>{
     try {
         const {data}=await axios.get(`${URL}/course/course/${id}`,appJson)
+        console.log(data,'payload data ///////////////');
         return data
     } catch (error) {
         rejectWithValue(error)

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react'
 import toast from 'react-hot-toast';
-const ImageUpdload = async (image) => {
+const ImageUpload = async (image) => {
     const preset_key = import.meta.env.VITE_REACT_APP_PRESET_KEY;
     const cloud_name = import.meta.env.VITE_REACT_APP_CLD_USER_NAME;
     const formData = new FormData();
@@ -9,6 +9,7 @@ const ImageUpdload = async (image) => {
     formData.append('upload_preset', preset_key);
 
     try {
+        console.log('file uploading');
         const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, formData);
         console.log('image uploaded successfully :',res);
         const { format, secure_url } = res.data;
@@ -26,6 +27,6 @@ const ImageUpdload = async (image) => {
     }
 };
 
-export default ImageUpdload;
+export default ImageUpload;
 
 

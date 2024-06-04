@@ -5,7 +5,6 @@ import SideBar from '../../../components/SideBar';
 import Sidebar from '../../../components/admin/Sidebar';
 import ImgInput from '../../../components/ImgInput';
 import BreadCrumbs from '../components/BreadCrumbs';
-import ImageUpdload from '../../../util/ImageUpdload';
 import { useDispatch, useSelector } from 'react-redux';
 import { createCategories, editCategory } from '../../../redux/action/Categories';
 import toast, { Toaster } from 'react-hot-toast';

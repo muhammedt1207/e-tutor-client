@@ -4,9 +4,9 @@ import { AiOutlineDelete, AiOutlinePlus, AiOutlineUpload } from 'react-icons/ai'
 import toast from 'react-hot-toast';
 import defaultImg from '../../../assets/default.jpg';
 import { Oval } from 'react-loader-spinner';
-import ImageUpdload from '../../../util/ImageUpdload';
 import VideoUpload from '../../../util/VideoUploed';
 import { DotLoader } from 'react-spinners';
+import ImageUpload from '../../../util/ImageUpload';
 
 const AdvanceInformation = ({ onNext,initialData }) => {
     console.log(initialData,'initail data in advanced datasss');
@@ -57,7 +57,7 @@ const AdvanceInformation = ({ onNext,initialData }) => {
                 return;
             }
             setLoadingImage(true)
-            const imgUrl = await ImageUpdload(file);
+            const imgUrl = await ImageUpload(file);
             setThumbNailImg(imgUrl);
             setLoadingImage(false)
         });

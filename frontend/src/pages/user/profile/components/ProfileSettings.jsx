@@ -4,7 +4,7 @@ import { changePassword, getUserData, logout, updateProfile } from '../../../../
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import ImageUpdload from '../../../../util/ImageUpdload';
+import ImageUpdload from '../../../../util/ImageUpload';
 import toast from 'react-hot-toast';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { CircularProgress } from '@material-ui/core';

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { CircularProgress } from '@material-ui/core';
 import { AiOutlineEdit } from 'react-icons/ai';
 import toast from 'react-hot-toast';
-import ImageUpdload from '../util/ImageUpdload';
 import VideoUpload from '../util/VideoUploed';
+import ImageUpload from '../util/ImageUpload';
 const ImgInput = ({ submit, image }) => {
   const [imgLoading, setImgLoading] = useState(false);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
@@ -17,7 +17,7 @@ const ImgInput = ({ submit, image }) => {
     reader.onloadend = async () => {
       const imageData = reader.result;
       setPreviewImage(imageData);
-      const imgUrl = await ImageUpdload(imageData);
+      const imgUrl = await ImageUpload(imageData);
       console.log(imgUrl, 'image uploaded');
       if (!imgUrl) {
         toast.error('image upload failed');

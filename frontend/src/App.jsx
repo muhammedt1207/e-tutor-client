@@ -30,6 +30,7 @@ import CourseDetailPage from './pages/admin/Courses/CourseDetailPage.jsx'
 import PaymentSuccess from './pages/user/courses/components/PaymentSuccess.jsx'
 import AddCourseHome from './pages/tutor/course/AddCourseHome.jsx'
 import CourseList from './pages/tutor/course/CourseList.jsx'
+import InstructorView from './pages/admin/instructors/InstructorView.jsx'
 function App() {
 const {user}=useSelector((state)=>state.user)
 const dispatch=useDispatch()
@@ -89,7 +90,7 @@ useEffect(()=>{
 {/* <Route path='/admin-dash' element={<InstructorRequests/>}/>
 <Route path='/reqeusts' element={<InstructorRequests/>}/>
 <Route path='/categories' element={<CategoryList/>}/> */}
-
+<Route path='/test' element={<InstructorView/>}/>
 
 {/* Instructor Routes*/}
 <Route path='/instructor' element={<InstructorDash/>}/>

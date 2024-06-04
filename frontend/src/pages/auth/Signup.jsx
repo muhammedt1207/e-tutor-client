@@ -51,10 +51,8 @@ function Signup() {
         formData.append('confirmPassword', userData.password)
 
         try {
-            console.log(formData, '111111111111111111111');
             const result = await dispatch(signup(values))
             if (result.meta.requestStatus === 'fulfilled') {
-                console.log("signup result fufilled");
                 if (result.payload.success) {
                     setLoading(false);
                     toast.success('otp sent successfully')

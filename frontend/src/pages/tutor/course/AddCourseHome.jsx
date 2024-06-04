@@ -34,7 +34,7 @@ const AddCourseHome = () => {
       addCourseData: courseData,
       instructorData:{
         instructorRef:user?.email,
-        instructorName:user?.userName
+        instructorName:user.userName
       }
     }));
     console.log(courseData,'11111');

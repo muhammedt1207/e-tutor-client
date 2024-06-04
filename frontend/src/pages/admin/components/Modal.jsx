@@ -20,7 +20,7 @@ const Modal = ({ toggleBlockOrUnBlockModal, data }) => {
     
   };
   return (
-    <div className=" bg-white p-5 rounded-lg absolute top-80 left-96 ">
+    <div className=" bg-white p-5 rounded-lg absolute top-80 left-1/2 border z-50 shadow-2xl bg-opacity-100">
       <div className="flex w-full justify-between">
         <h1 className="text-lg font-bold ">Accept Request</h1>
         <AiOutlineClose
