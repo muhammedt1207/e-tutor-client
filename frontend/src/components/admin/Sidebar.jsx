@@ -19,16 +19,18 @@ const Sidebar = () => {
         <Card className={`p-4 ${isSmallScreen ? 'fixed bottom-0 left-0 right-0 w-full ' : 'h-screen md:max-w-[20rem] w-60 shadow-blue-gray-900/5 shadow-xl '} `}>
             <div className="mb-2 p-4">
                 <Typography variant="h5" color="blue-gray">
-                {isSmallScreen ? null : ' E-Tutor'}
+                {isSmallScreen ? null : ' E-tutor Admin'}
                 </Typography>
             </div>
             <List className={`md:flex ${isSmallScreen ? 'flex-row justify-between' : 'flex-col gap-4'}`}>
+               <Link to='/admin/dashboard'>
                 <ListItem>
                     <ListItemPrefix>
                         <PresentationChartBarIcon className="h-5 w-5" />
                     </ListItemPrefix>
                     {isSmallScreen ? null : 'Dashboard'}
                 </ListItem>
+                </Link>
                <Link to='/admin/categories'>
                  <ListItem>
                     <ListItemPrefix>

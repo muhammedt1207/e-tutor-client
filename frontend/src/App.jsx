@@ -31,6 +31,8 @@ import PaymentSuccess from './pages/user/courses/components/PaymentSuccess.jsx'
 import AddCourseHome from './pages/tutor/course/AddCourseHome.jsx'
 import CourseList from './pages/tutor/course/CourseList.jsx'
 import InstructorView from './pages/admin/instructors/InstructorView.jsx'
+import DashBoard from './pages/tutor/dashboard/DashBoard.jsx'
+import AdminDashBoard from './pages/admin/dashBoard/DashBoard.jsx'
 function App() {
 const {user}=useSelector((state)=>state.user)
 const dispatch=useDispatch()
@@ -90,7 +92,7 @@ useEffect(()=>{
 {/* <Route path='/admin-dash' element={<InstructorRequests/>}/>
 <Route path='/reqeusts' element={<InstructorRequests/>}/>
 <Route path='/categories' element={<CategoryList/>}/> */}
-<Route path='/test' element={<InstructorView/>}/>
+<Route path='/test' element={<DashBoard/>}/>
 
 {/* Instructor Routes*/}
 <Route path='/instructor' element={<InstructorDash/>}/>
@@ -114,6 +116,7 @@ function AdminRoutes(){
     <Routes>
       <Route path='/' element={<AdminDash/>}/>
       <Route index element={<AdminDash/>}/>
+      <Route path='dashboard' element={<AdminDashBoard/>}/>
       <Route path='categories' element={<CategoryList/>} />
       <Route path='requests' element={<InstructorRequests/>}/>
       <Route path='instrutors' element={<Instructors/>}/>
@@ -127,9 +130,10 @@ function InstrucorRoutes(){
   return(
     <Routes>
       <Route path='/' element={<InstructorDash/>} />
-      <Route index element={<InstructorHome/>}/>
+      <Route index element={<DashBoard/>}/>
       <Route path='courses' element={<CourseList/>}/>
       <Route path='addCourse' element={<AddCourseHome/>}/>
+      <Route path='dashboard' element={<DashBoard/>}/>
     </Routes>
   )
 }
