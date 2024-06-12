@@ -8,7 +8,7 @@ import { URL } from '../../../Common/api'
 import { useSelector } from 'react-redux'
 import SideBar from '../components/SideBar'
 
-const CourseList = () => {
+const ExamCourseList = () => {
     const {user}=useSelector((state)=>state.user)
     const [courses,setCourses]=useState([])
     useEffect(()=>{
@@ -26,12 +26,10 @@ const CourseList = () => {
     <div className=" shadow-md sm:rounded-lg   flex flex-col  w-full lg:ml-44 ml-52 px-16 pe-10">
       <div className="flex justify-between items-center font-semibold">
         <div>
-          <h1 className="mt-5 ml-5 font-bold text-2xl">Courses</h1>
-          <BreadCrumbs list={["Dashboard", "Courses"]} />
+          <h1 className="mt-5 ml-5 font-bold text-2xl">Exams</h1>
+          <BreadCrumbs list={["Dashboard", "Exam"]} />
         </div>
-        <div>
-            <Link to='/instructor/addCourse'><button className='py-4 px-8 bg-orange-500 text-white rounded-md'>Add Course</button></Link> 
-        </div>
+       
       </div>
       <div className="p-5 w-full overflow-y-auto text-sm">
         <SearchBar />
@@ -41,10 +39,8 @@ const CourseList = () => {
         <thead className="text-xs text-white rounded-3xl uppercase bg-gray-950 dark:bg-gray-700 dark:text-white">
           <tr>
             <th scope="col" className="px-6 py-3">Course Name</th>
-            <th scope="col" className="px-6 py-3">Category</th>
+            {/* <th scope="col" className="px-6 py-3">Category</th> */}
             
-            <th scope="col" className="px-6 py-3">Price</th>
-            <th scope="col" className="px-6 py-3">Status</th>
             <th scope="col" className="px-6 py-3">Action</th>
           </tr>
         </thead>
@@ -54,17 +50,12 @@ const CourseList = () => {
               <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 {course.title}
               </th>
-              <td className="px-6 py-4">
+              {/* <td className="px-6 py-4">
                 {course.category.categoryName}
-              </td>
-              <td className="px-6 py-4">${course.amount}</td>
+              </td> */}
+            
               <td className="px-6 py-4">
-                {course.status === 'pending' ? 'Pending' :
-                  course.status === 'blocked' ? 'Blocked' :
-                    'Accepted'}
-              </td>
-              <td className="px-6 py-4">
-              <Link to={`/instructor/addCourse?courseId=${course._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</Link>
+              <Link to={`/instructor/createExam?courseId=${course._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Exam</Link>
 
               </td>
             </tr>
@@ -76,4 +67,4 @@ const CourseList = () => {
   )
 }
 
-export default CourseList
+export default ExamCourseList

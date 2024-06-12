@@ -31,6 +31,8 @@
     "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
     "react-country-region-selector": "^3.6.1",
+    "react-date-range": "^2.0.1",
+    "react-datepicker2": "^3.3.13",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-google-charts": "^4.0.1",

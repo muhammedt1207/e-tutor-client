@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCourses, updateCourseStatus } from '../../../redux/action/courseAction';
 import Sidebar from '../../../components/admin/Sidebar';
@@ -6,24 +6,33 @@ import SearchBar from '../components/SearchBar';
 import BreadCrumbs from '../components/BreadCrumbs';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import CircularPagination from '../../../components/CircularPagination';
 
 const CoursesList = () => {
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.courses);
-  
+  const [currentPage, setCurrentPage] = useState(1);
+  const coursesPerPage = 5; // Number of courses per page
+
   const handleStatusChange = (courseId, status) => {
-    console.log(courseId, status, 'ddddddddddddddddddfi');
     dispatch(updateCourseStatus({ id: courseId, action: status }));
-    toast.success('Course Accepted');
-    return;
+    toast.success('Course status updated');
   };
-  
+
   useEffect(() => {
     dispatch(getAllCourses());
   }, [dispatch]);
+
   const totalCourses = Array.isArray(data) ? data.length : 0;
   const activeCourses = Array.isArray(data) ? data.filter(course => course.status === 'accepted').length : 0;
   const pendingCourses = Array.isArray(data) ? data.filter(course => course.status === 'pending').length : 0;
+
+  // Pagination logic
+  const indexOfLastCourse = currentPage * coursesPerPage;
+  const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
+  const currentCourses = Array.isArray(data) ? data.slice(indexOfFirstCourse, indexOfLastCourse) : [];
+
+  const totalPages = Math.ceil(totalCourses / coursesPerPage);
 
   return (
     <div className='flex'>
@@ -57,7 +66,7 @@ const CoursesList = () => {
         </div>
 
         <table className="w-full text-sm text-left rtl:text-right rounded-md text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-white rounded-3xl uppercase bg-gray-950 dark:bg-gray-700 dark:text-white">
+          <thead className="text-xs text-orange-500 rounded-3xl uppercase  border-y-2 dark:bg-gray-700 dark:text-white">
             <tr>
               <th scope="col" className="px-6 py-3">Course Name</th>
               <th scope="col" className="px-6 py-3">Category</th>
@@ -68,7 +77,7 @@ const CoursesList = () => {
             </tr>
           </thead>
           <tbody>
-            {Array.isArray(data) && data.map((course) => (
+            {currentCourses.map((course) => (
               <tr key={course._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {course.title}
@@ -98,6 +107,10 @@ const CoursesList = () => {
             ))}
           </tbody>
         </table>
+
+        <div className="flex justify-center mt-5">
+          <CircularPagination active={currentPage} setActive={setCurrentPage} total={totalPages} />
+        </div>
       </div>
     </div>
   );

@@ -30,18 +30,17 @@ const CourseDetailPage = () => {
     const [video, setVideo] = useState('');
     const [isPurchased, setIsPurchased] = useState(false);
     const [activeTab, setActiveTab] = useState('overview');
-    console.log(id,'course id getted by params');
+    console.log(id, 'course id getted by params');
     useEffect(() => {
         const fetchCourse = async () => {
             try {
-                if(id){
+                if (id) {
 
                     const result = await dispatch(getCourse(id));
-                    console.log(result,'..................');
+                    console.log(result, '..................');
                     setCourse(result.payload.data);
                     setVideo(result.payload.data.trailer);
                 }
-
                 if (user?._id) {
                     checkEnrollment(id, user._id);
                 }
@@ -55,16 +54,36 @@ const CourseDetailPage = () => {
 
     const checkEnrollment = async (courseId, userId) => {
         try {
-            
-
-                const response = await axios.get(`${URL}/course/enrollment/check`, { params: { courseId, userId } });
-                console.log(response.data.data.isEnrolled, 'enrollment data');
-                setIsPurchased(response.data.data.isEnrolled);
-            
+          const response = await axios.get(`${URL}/course/enrollment/check`, { params: { courseId, userId } });
+          const { data } = response.data;
+          
+          if (data.isEnrolled[0]) {
+            const enrollmentData = data.isEnrolled[1][0];
+      
+            setIsPurchased(true);
+      
+            if (course.lessons) {
+              const { currentLesson, currentSubLesson } = enrollmentData.progress;
+              const lessonIndex = course.lessons.findIndex(lesson => lesson._id === currentLesson);
+              
+              if (lessonIndex !== -1 && course.lessons[lessonIndex].SubLesson) {
+                const subLessonIndex = course.lessons[lessonIndex].SubLesson.findIndex(subLesson => subLesson._id === currentSubLesson);
+                
+                console.log(course.lessons[lessonIndex].SubLesson[subLessonIndex].videoUrl,'========');
+                if (subLessonIndex !== -1) {
+                  setVideo(course.lessons[lessonIndex].SubLesson[subLessonIndex].videoUrl);
+                }
+              }
+            }
+          } else {
+            setIsPurchased(false);
+          }
         } catch (error) {
-            console.error('Error checking enrollment status', error);
+          console.error('Error checking enrollment status', error);
         }
-    };
+      };
+      
+
 
     const handleBuyCourse = async (event) => {
         event.preventDefault();
@@ -102,7 +121,7 @@ const CourseDetailPage = () => {
             case 'overview':
                 return <CourseOverView course={course} />;
             case 'reviews':
-                return <Reviews courseId={course._id} userId={user.email} enrolled={isPurchased}/>;
+                return <Reviews courseId={course._id} userId={user.email} enrolled={isPurchased} />;
             case 'qna':
                 return <QnAComponent />;
             case 'instructor':
@@ -111,6 +130,8 @@ const CourseDetailPage = () => {
                 return null;
         }
     };
+
+
 
     return (
         <div>
@@ -125,7 +146,8 @@ const CourseDetailPage = () => {
                         {isPurchased && (
                             <div className='block lg:hidden w-full'>
                                 {course.lessons ? (
-                                    <LessonList lessons={course.lessons} onSubLessonClick={(videoUrl) => setVideo(videoUrl)} />
+                                    <LessonList lessons={course.lessons} onSubLessonClick={(videoUrl) => setVideo(videoUrl)} courseId={course._id}
+                                        userId={user._id} />
                                 ) : (
                                     <p>No lessons available</p>
                                 )}
@@ -144,13 +166,13 @@ const CourseDetailPage = () => {
                                 {renderContent()}
                             </div>
                         </div>
-                      
+
                     </div>
                     <div className='w-full lg:w-1/3'>
                         {isPurchased ? (
                             <div className='hidden lg:block'>
                                 {course.lessons ? (
-                                    <LessonList lessons={course.lessons} onSubLessonClick={(videoUrl) => setVideo(videoUrl)} />
+                                    <LessonList lessons={course.lessons} onSubLessonClick={(videoUrl) => setVideo(videoUrl)} courseId={course._id} userId={user._id} />
                                 ) : (
                                     <p>No lessons available</p>
                                 )}

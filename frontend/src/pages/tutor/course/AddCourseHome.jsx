@@ -77,10 +77,7 @@ const AddCourseHome = () => {
           imageUrl: data.thumbnail
         },
         addCurriculumData: {
-          sections: data.lessons?.map(lesson => ({
-            section: lesson.title,
-            lectures: lesson.SubLesson
-          }))
+          sections: data.lessons
         }
       });
       console.log(courseData,'edit course data');
@@ -98,25 +95,24 @@ const AddCourseHome = () => {
     setCurrentStep(prevStep => prevStep + 1);
   };
 
-  const handleNextAddCurriculum = async(data) => {
-    console.log(data,'data form add curriculam');
-   await setCourseData(prevData => ({
-      ...prevData,
+  const handleNextAddCurriculum = async (data) => {
+    console.log(data, 'data form add curriculum');
+      const updatedCourseData = {
+      ...courseData,
       addCurriculumData: data
-    }));
+    };
+    setCourseData(updatedCourseData);
+      console.log(updatedCourseData, 'data for uploading final data', courseId);
     if (isEditingMode) {
-      console.log(courseData,'data for uploading final data',courseId);
-      dispatch(editCourse({courseId:courseId||courseData._id,courseData: courseData})).then(()=>{
-
-        toast.success('Course updated');
-      })
+      await dispatch(editCourse({ courseId: courseId || updatedCourseData._id, courseData: updatedCourseData }));
+      toast.success('Course updated');
     } else {
-      dispatch(createCourse(courseData));
+      await dispatch(createCourse(updatedCourseData));
       toast.success('Course added');
     }
-   
-    setCurrentStep(prevStep => prevStep + 1);
+      setCurrentStep(prevStep => prevStep + 1);
   };
+  
 
   const handlePrev = () => {
     setCurrentStep(prevStep => prevStep - 1);

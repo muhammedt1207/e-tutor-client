@@ -1,16 +1,40 @@
-const CategoryList = () => {
-    const categories = ['Category 1', 'Category 2', 'Category 3'];
-  
-    return (
-      <div className='p-3'>
-        {categories.map((category) => (
-          <div key={category} className='flex items-center mb-2'>
-            <input type='checkbox' id={category} name={category} className='mr-2'/>
-            <label htmlFor={category}>{category}</label>
-          </div>
-        ))}
-      </div>
-    );
-  };
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { URL } from "../../../../Common/api";
 
-  export default CategoryList
+const CategoryList = ({ onCategorySelection, selectedCategories }) => {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategory = async () => {
+      try {
+        const res = await axios.get(`${URL}/course/category`);
+        const fetchedCategories = res.data.data.map((category) => category.categoryName);
+        setCategories(fetchedCategories);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    fetchCategory();
+  }, []);
+
+  return (
+    <div>
+      {categories.map((category) => (
+        <div key={category}>
+          <label>
+            <input
+              type="checkbox"
+              checked={selectedCategories.includes(category)}
+              onChange={() => onCategorySelection(category)}
+            />
+            {category}
+          </label>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default CategoryList;

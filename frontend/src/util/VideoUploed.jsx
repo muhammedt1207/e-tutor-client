@@ -1,3 +1,102 @@
+// import axios from 'axios';
+// import toast from 'react-hot-toast';
+
+// const CHUNK_SIZE = 10 * 1024 * 1024; 
+
+// const VideoUpload = async (video) => {
+//     console.log(video,'vidrooooooooooooooooooo');
+//   const preset_key = import.meta.env.VITE_REACT_APP_PRESET_KEY; 
+//   const cloud_name = import.meta.env.VITE_REACT_APP_CLD_USER_NAME; 
+//   let start = 0;
+//   let end = CHUNK_SIZE;
+//   let partNumber = 1;
+//   let uploadId = null;
+//   let secureUrl = null;
+//   const transformationParams = {
+//     quality: 'auto',
+//     resource_type: 'video',
+//   };
+
+//   while (start < video.size) {
+//     const chunk = video.slice(start, end);
+//     const formData = new FormData();
+//     formData.append('file', chunk);
+//     formData.append('upload_preset', preset_key);
+//     formData.append('cloud_name', cloud_name);
+//     formData.append('part_number', partNumber);
+//     formData.append('upload_id', uploadId);
+
+//     try {
+//       const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloud_name}/video/upload`, formData, {
+//         params: transformationParams,
+//         headers: {
+//           'Content-Type': 'multipart/form-data',
+//         },
+//       });
+
+//       if (!uploadId) {
+//         uploadId = res.data.upload_id;
+//       }
+
+//       start = end;
+//       end = start + CHUNK_SIZE;
+//       partNumber++;
+
+//       if (res.data.secure_url) {
+//         secureUrl = res.data.secure_url;
+//       }
+
+//       if (res.data.done) {
+//         const { format, secure_url } = res.data;
+//         console.log('Video uploaded successfully:', secure_url);
+//         if (['mp4', 'mov', 'avi'].includes(format)) {
+//           return secure_url;
+//         } else {
+//           console.log('Unsupported video format');
+//           return null;
+//         }
+//       }
+//     } catch (error) {
+//       toast.error("Can't upload video");
+//       console.error('Error uploading video:', error);
+//       throw error;
+//     }
+//   }
+
+//   return secureUrl;
+// };
+
+// export default VideoUpload;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -7,8 +106,7 @@ const VideoUpload = async (video) => {
     const formData = new FormData();
     formData.append('file', video);
     formData.append('upload_preset', preset_key);
-    console.log(formData);
-    console.log(video,'video data............');
+ 
     const transformationParams = {
         quality: 'auto', 
         resource_type: 'video', 

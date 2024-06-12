@@ -69,9 +69,9 @@ const BecomeInstructorForm = () => {
           console.log('image3 ');
           const uploadResult = await ImageUpload(imageData);
           console.log('image4 ');
-          const imgUrl = uploadResult?.url;
-          const imgPublicId = uploadResult?.public_id;
-      
+          const imgUrl = uploadResult
+       
+        console.log(imgUrl,'image url ');
           if (!imgUrl) {
             toast.error('Image upload failed');
             setLoading(false);
@@ -109,14 +109,14 @@ const BecomeInstructorForm = () => {
           console.log('image3 ');
           const uploadResult = await ImageUpload(imageData);
           console.log('image4 ');
-          const imgUrl = uploadResult?.url;
-          const imgPublicId = uploadResult?.public_id;
+          console.log(uploadResult);
+          const imgUrl = uploadResult
+          console.log(imgUrl, '1111111111111111111111111');
           if (!imgUrl) {
             toast.error('Image upload failed');
             setLoading(false);
             return;
           }
-          console.log(imgUrl, '1111111111111111111111111');
           toast.success('Profile image uploaded');
           setLoading(false);
           setQualificationFile(imgUrl);
