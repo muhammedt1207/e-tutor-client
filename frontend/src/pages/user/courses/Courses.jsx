@@ -32,7 +32,7 @@ const Courses = () => {
 
     useEffect(() => {
         fetchCourse();
-    }, [dispatch]);
+    }, [dispatch,showFilters]);
 
     const handleCategorySelection = (category) => {
         setSelectedCategories((prevCategories) =>
@@ -42,14 +42,11 @@ const Courses = () => {
         );
     };
 
-    const filteredCourses = data && data.filter((course) =>
-    
-        !selectedCategories ||
+    const filteredCourses = Array.isArray(data) && data.filter((course) =>
         selectedCategories.length === 0 ||
         (Array.isArray(course.categories) &&
-        
-          selectedCategories.some((category) => course.categories.includes(category)))
-      );
+            selectedCategories.some((category) => course.categories.includes(category)))
+    );
 
     return (
         <div className='w-full'>
@@ -72,7 +69,7 @@ const Courses = () => {
                         <ArrowDownIcon className={`w-6 transition-transform ${showCategories ? 'rotate-180' : 'rotate-0'}`} />
                     </div>
                     {showCategories && <CategoryList onCategorySelection={handleCategorySelection} selectedCategories={selectedCategories} />}                </div>
-                <div className=' flex flex-wrap   w-full lg gap-2'>
+                <div className=' flex flex-wrap   w-full  gap-2'>
                     {loading ? (
                         <>
                             <Skelton />

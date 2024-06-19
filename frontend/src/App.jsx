@@ -36,6 +36,10 @@ import AdminDashBoard from './pages/admin/dashBoard/DashBoard.jsx'
 import CreateExam from './pages/tutor/exams/CreateExam.jsx'
 import ExamCourseList from './pages/tutor/exams/ExamCourseList.jsx'
 import Exam from './pages/user/courses/Exam.jsx'
+import ExamSuccess from './pages/user/courses/components/ExamSuccess.jsx'
+import TeachersList from './pages/user/teachers/TeachersList.jsx'
+import TeacherView from './pages/user/teachers/TeacherView.jsx'
+import MemberShipSuccess from './pages/user/teachers/components/MemberShipSuccess.jsx'
 function App() {
 const {user}=useSelector((state)=>state.user)
 const dispatch=useDispatch()
@@ -91,12 +95,15 @@ useEffect(()=>{
 <Route path='/becomeInstructor' element={<BecomeInstructorPage/>}/> 
 <Route path='/userprofile' element={<UserProfile/>}/>
 <Route path='/course/paymentSuccess' element={<PaymentSuccess/>}/>
+<Route path='/teachers' element={<TeachersList/>}/>
+<Route path='/teacherView/:teacherId' element={<TeacherView/>}/>
+<Route path='/exam/:courseId' element={<Exam/>}/>
+<Route  path='/test' element={<TeacherView/>}/>
+<Route path='/membership/paymentSuccess' element={<MemberShipSuccess/>}/>
 {/* Admin Routes*/}
 {/* <Route path='/admin-dash' element={<InstructorRequests/>}/>
 <Route path='/reqeusts' element={<InstructorRequests/>}/>
 <Route path='/categories' element={<CategoryList/>}/> */}
-<Route path='/test/:courseId' element={<Exam/>}/>
-
 {/* Instructor Routes*/}
 <Route path='/instructor' element={<InstructorDash/>}/>
  </Routes>

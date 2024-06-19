@@ -4,6 +4,7 @@ import { getExamByCourseId } from '../../../redux/action/ExamsActions';
 import { useParams } from 'react-router-dom';
 import { URL } from '../../../Common/api';
 import axios from 'axios';
+import ExamSuccess from './components/ExamSuccess';
 
 const Exam = () => {
     const { courseId } = useParams();
@@ -11,11 +12,13 @@ const Exam = () => {
     const dispatch = useDispatch();
     const { exams, loading } = useSelector((state) => state.exams);
     const [questions, setQuestions] = useState([]);
-    const {user}=useSelector((state)=>state.user)
+    const { user } = useSelector((state) => state.user)
+    const [submissionSuccess, setSubmissionSuccess] = useState(false);
+    const [scorePercentage, setScorePercentage] = useState(0);
     useEffect(() => {
         const fetchExam = async () => {
             if (courseId) {
-                console.log(courseId,'./././././');
+                console.log(courseId, './././././');
                 dispatch(getExamByCourseId(courseId)).then((response) => {
                     console.log(response);
                     if (response.payload.success) {
@@ -55,43 +58,59 @@ const Exam = () => {
         }
     };
 
-    const handleOptionChange = (index) => {
+    // const handleOptionChange = (index) => {
+    //     setSelectedOptions({
+    //         ...selectedOptions,
+    //         [currentQuestionIndex]: index,
+    //     });
+    // };
+
+    const handleOptionChange = (optionText) => {
         setSelectedOptions({
             ...selectedOptions,
-            [currentQuestionIndex]: index,
+            [currentQuestionIndex]: optionText,
         });
     };
 
-    const handleFinish =async () => {
+    const handleFinish = async () => {
         const results = questions.map((question, index) => ({
             question: question.question,
-            selectedOption: question.options[selectedOptions[index]],
+            selectedOption: `option${selectedOptions[index] + 1}`
         }));
+
         try {
             const queryParams = new URLSearchParams({
                 courseId,
-                userId:user._id,
+                userId: '' + user._id,
             });
-    
+            console.log(results, '()()()()()()))(');
             const response = await axios.post(`${URL}/course/exam/submit?${queryParams}`, results);
-            if (response.data.data.success) {
-                console.log('Exam results submitted successfully');
+            console.log(response);
+            if (response.data.success) {
+                setSubmissionSuccess(true);
+                setScorePercentage(response.data.data.percentage);
             } else {
                 console.log('Error submitting exam results');
             }
         } catch (error) {
             console.error('Error submitting exam results:', error);
         }
-       
+
     };
 
     if (loading || !questions.length) {
-        return <div>Loading...</div>;
+        return <div className='flex justify-center items-center'>Loading...</div>;
     }
 
     const { question, options } = questions[currentQuestionIndex];
     const completionPercentage = Math.floor(((currentQuestionIndex + 1) / questions.length) * 100);
-
+    if (submissionSuccess) {
+        return (
+            <>
+            <ExamSuccess percentage={scorePercentage}/>
+            </>
+        );
+    }
     return (
         <div className="min-h-screen flex flex-col items-center justify-center">
             <div className="bg-white shadow-lg rounded-lg w-3/4">

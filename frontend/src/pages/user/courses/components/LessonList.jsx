@@ -71,7 +71,7 @@ const LessonList = ({ lessons, onSubLessonClick, courseId, userId }) => {
     };
 
     const handleExamClick = () => {
-        navigate(`/test/${courseId}`)
+        navigate(`/exam/${courseId}`)
         console.log("Taking the exam...");
     };
 

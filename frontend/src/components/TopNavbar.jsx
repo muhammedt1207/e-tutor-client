@@ -16,6 +16,7 @@ const TopNavbar = () => {
       <div className='bg-slate-700 flex space-x-5 ps-9 p-3'>
        <Link to='/'> <h1 className='text-slate-400 hover:text-slate-100'>home</h1></Link>
         <Link to='/course'>  <h1 className='text-slate-400 hover:text-slate-100'>Courses</h1></Link>
+        <Link to='/teachers'>  <h1 className='text-slate-400 hover:text-slate-100'>Instructers</h1></Link>
         <Link to='/becomeInstructor' ><h1 className='text-slate-400 hover:text-slate-100'>Become an Instructor</h1></Link>
       </div>
       <UserNavbar toggleSidebar={toggleSidebar}/>

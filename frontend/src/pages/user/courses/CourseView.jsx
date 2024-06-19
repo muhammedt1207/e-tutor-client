@@ -92,7 +92,7 @@ const CourseDetailPage = () => {
         }
         setProcessingTo(true);
         try {
-            const data = {
+            let data = {
                 courseName: course?.title,
                 courseThumbnail: course?.thumbnail,
                 amount: course?.amound || 2500 * 100,
@@ -102,6 +102,7 @@ const CourseDetailPage = () => {
             const response = await axios.post(`${URL}/payment/create-session`, data);
 
             const session = response.data;
+            data={...data,instructorRef:course.instructorRef}
             localStorage.setItem('data', JSON.stringify(data));
             console.log(session, 'payment session');
             const result = await stripe.redirectToCheckout({ sessionId: session.id });
