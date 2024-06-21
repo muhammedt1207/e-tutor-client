@@ -5,11 +5,11 @@ import ProfileSettings from './components/ProfileSettings';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PurchasedCourses from './components/PurchasedCourses';
+import TeacherComponent from './TeacherComponent';
 
 // Dummy components for demonstration purposes
 const DashboardComponent = () => <div>Dashboard Content</div>;
 const CoursesComponent = () => <div>Courses Content</div>;
-const TeacherComponent = () => <div>Teacher Content</div>;
 const MessageComponent = () => <div>Message Content</div>;
 const WishlistComponent = () => <div>Wishlist Content</div>;
 const SettingsComponent = () => <div>Settings Content</div>;

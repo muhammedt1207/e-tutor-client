@@ -47,7 +47,7 @@ const TeacherView = () => {
                     )}
 
                     {activeTab ==='Member Ship' && (
-                        <MemberShip instructorId={instructorId}/>
+                        <MemberShip instructorId={teacherData}/>
                     )}
                 </div>
             </div>

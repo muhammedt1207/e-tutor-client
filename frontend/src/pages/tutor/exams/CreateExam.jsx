@@ -6,9 +6,10 @@ import * as Yup from 'yup';
 import toast from 'react-hot-toast';
 import { URL } from '../../../Common/api';
 import axios from 'axios';
-import { useLocation, useParams } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const CreateExam = () => {
+    const navigate=useNavigate()
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search); 
     const courseId = searchParams.get('courseId');
@@ -88,6 +89,9 @@ const CreateExam = () => {
     try {
         const res=await axios.post(`${URL}/course/exam`,{courseId,questions})
         console.log(res.data);
+        if(res.data.success){
+            navigate(-1)
+        }
     } catch (error) {
         console.log(error);
     }

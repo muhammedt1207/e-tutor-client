@@ -40,6 +40,7 @@ import ExamSuccess from './pages/user/courses/components/ExamSuccess.jsx'
 import TeachersList from './pages/user/teachers/TeachersList.jsx'
 import TeacherView from './pages/user/teachers/TeacherView.jsx'
 import MemberShipSuccess from './pages/user/teachers/components/MemberShipSuccess.jsx'
+import ChatHome from './pages/tutor/chat/ChatHome.jsx'
 function App() {
 const {user}=useSelector((state)=>state.user)
 const dispatch=useDispatch()
@@ -146,6 +147,7 @@ function InstrucorRoutes(){
       <Route path='dashboard' element={<DashBoard/>}/>
       <Route path='createExam' element={<CreateExam/>} />
       <Route path='exam' element={<ExamCourseList/>} />
+      <Route path='chat' element={<ChatHome/>} />
       </Routes>
   )
 }

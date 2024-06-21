@@ -10,7 +10,7 @@ const MemberShip = ({ instructorId }) => {
   const [email, setEmail] = useState('');
   const [isProcessing, setProcessingTo] = useState(false);
   const [hasMembership, setHasMembership] = useState(false);
-  const {user}=useSelector((state)=>state.user)
+  const { user } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (user) {
@@ -24,8 +24,8 @@ const MemberShip = ({ instructorId }) => {
 
   const checkMembership = async () => {
     try {
-        console.log(user,'.........');
-      const response = await axios.get(`${URL}/payment/subscription/${user.email}/${instructorId.teacherId}`);
+      console.log(user, '.........');
+      const response = await axios.get(`${URL}/payment/subscription/${user.email}/${instructorId.email}`);
       console.log(response.data);
       setHasMembership(response.data.success);
     } catch (error) {
@@ -37,16 +37,16 @@ const MemberShip = ({ instructorId }) => {
     setProcessingTo(true);
 
     try {
-        const postData={
-            email,
-            instructorId:instructorId.teacherId
-        }
+      const postData = {
+        email,
+        instructorId: instructorId.email
+      };
       const response = await axios.post(`${URL}/payment/subscription/create-checkout-session`, postData);
 
       console.log(response, 'response from post');
       const data = {
         customerId: email,
-        instructorId
+        instructorId:instructorId.email
       };
       localStorage.setItem('MemberShipData', JSON.stringify(data));
 
@@ -69,35 +69,42 @@ const MemberShip = ({ instructorId }) => {
 
   return (
     <>
-    
-          {hasMembership ? (
-            <p className="text-green-500">You already have a membership for this instructor.</p>
-          ) : (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-3xl font-bold mb-4">Subscribe to Instructor</h1>
-      <div className="flex flex-col items-center mb-4">
-        <input
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={handleEmailChange}
-          className="px-4 py-2 border border-gray-300 rounded-md mb-2"
-        />
-          <button
-            onClick={handleSubscribe}
-            disabled={isProcessing}
-            className={`px-4 py-2 rounded-md ${
-              isProcessing ? 'bg-gray-300 text-gray-500' : 'bg-blue-500 text-white hover:bg-blue-600'
-            }`}
-          >
-            {isProcessing ? 'Processing...' : 'Subscribe'}
-          </button>
-      </div>
-      <p className="text-gray-500">
-        {hasMembership ? 'You already have a membership for this instructor.' : 'You will be redirected to Stripe to complete the subscription process.'}
-      </p>
-    </div>
-        )}
+      {hasMembership ? (
+        <p className="text-green-500">You already have a membership for this instructor.</p>
+      ) : (
+        <div className="flex flex-col items-center h-screen">
+          <h1 className="text-3xl font-bold mb-4">Take Membership with Instructor</h1>
+          <div className="mt-2 px-6 pb-4">
+            <p className=" text-gray-700">
+              By subscribing to the membership, you gain exclusive access to interact with the instructor through chat and video calls. 
+              This allows you to receive personalized guidance and support, ensuring you get the most out of your learning experience. 
+              Additionally, you'll have priority support keep you engaged and informed.
+            </p>
+          </div>
+          <div className="flex flex-col items-center mb-4">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={handleEmailChange}
+              className="px-4 py-2 border border-gray-300 rounded-md mb-2"
+              />
+              <p className='pb-2'>Monthly 129/- Rupee</p>
+            <button
+              onClick={handleSubscribe}
+              disabled={isProcessing}
+              className={`px-4 py-2 rounded-md ${
+                isProcessing ? 'bg-gray-300 text-gray-500' : 'bg-blue-500 text-white hover:bg-blue-600'
+              }`}
+            >
+              {isProcessing ? 'Processing...' : 'Subscribe'}
+            </button>
+          </div>
+          <p className="text-gray-500">
+            You will be redirected to Stripe to complete the subscription process.
+          </p>
+        </div>
+      )}
     </>
   );
 };
