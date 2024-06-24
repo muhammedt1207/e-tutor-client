@@ -108,7 +108,7 @@ const OTPPage = ({ email, signupDispatch,error }) => {
             }
         } catch (error) {
             console.log(error, 'signup error');
-            toast.error('Signup failed')
+            // toast.error('Signup failed')
         } finally {
             setLoading(false)
         } 

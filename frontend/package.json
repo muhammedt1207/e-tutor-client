@@ -50,6 +50,7 @@
     "react-select-country-list": "^2.2.3",
     "react-spinners": "^0.13.8",
     "react-spring": "^9.7.3",
+    "socket.io-client": "^4.7.5",
     "yup": "^1.4.0"
   },
   "devDependencies": {

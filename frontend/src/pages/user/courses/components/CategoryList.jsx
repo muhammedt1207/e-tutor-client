@@ -9,7 +9,10 @@ const CategoryList = ({ onCategorySelection, selectedCategories }) => {
     const fetchCategory = async () => {
       try {
         const res = await axios.get(`${URL}/course/category`);
-        const fetchedCategories = res.data.data.map((category) => category.categoryName);
+        const fetchedCategories = res.data.data.map((category) => ({
+          id: category._id,
+          name: category.categoryName,
+        }));
         setCategories(fetchedCategories);
       } catch (error) {
         console.error('Error fetching categories:', error);
@@ -22,14 +25,14 @@ const CategoryList = ({ onCategorySelection, selectedCategories }) => {
   return (
     <div>
       {categories.map((category) => (
-        <div key={category}>
-          <label>
+        <div key={category.id} className="flex ms-5">
+          <label className="flex space-x-2 text-lg ">
             <input
               type="checkbox"
-              checked={selectedCategories.includes(category)}
-              onChange={() => onCategorySelection(category)}
+              checked={selectedCategories.includes(category.id)}
+              onChange={() => onCategorySelection(category.id)}
             />
-            {category}
+            <p>{category.name}</p>
           </label>
         </div>
       ))}

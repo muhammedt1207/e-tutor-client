@@ -17,6 +17,7 @@ const AdminDashBoard = () => {
   const [totalUsers, setTotalUsers] = useState(0);
   const [totalInstructors, setTotalInstructors] = useState(0);
   const [topCourses, setTopCourses] = useState([]);
+  const [totalProfit,setTotalProfit] = useState(0)
   const [dateRange, setDateRange] = useState([
     {
       startDate: new Date(),
@@ -46,6 +47,12 @@ const AdminDashBoard = () => {
         setTopCourses(res.data.data.topCourses);
         setTotalUsers(totalUsersCount);
         setTotalInstructors(totalInstructorsCount);
+        const profitRes=await axios.get(`${URL}/payment/totalAmount`).then((res)=>{
+          console.log(res,'total profit');
+          const adminProfit=(res.data.data/100)*10
+          console.log(adminProfit,);
+          setTotalProfit(adminProfit)
+        })
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
       }
@@ -120,6 +127,17 @@ const AdminDashBoard = () => {
                 <h1 className="text-xl font-semibold">Total Enrollment</h1>
                 <h1 className="text-4xl font-bold ">
                   {totalEnrollments}
+                </h1>
+              </motion.div>
+              <motion.div
+                className="w-1/3 border shadow-lg rounded-md h-32 flex flex-col justify-center items-center"
+                initial={{ opacity: 0, y: -50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                <h1 className="text-xl font-semibold">Total Profit</h1>
+                <h1 className="text-4xl font-bold ">
+                  {totalProfit}
                 </h1>
               </motion.div>
               <motion.div

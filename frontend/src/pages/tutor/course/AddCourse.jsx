@@ -103,6 +103,7 @@ const AddCourse = ({onNext,initialData}) => {
                                 <div className="mb-6">
                                     <label htmlFor="amount" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course Price</label>
                                     <Field type="number" id="amount" name="amount" placeholder='price of the course' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                                    <p className='text-gray-500'>E-tutor will take 10% of the Course Profit</p>
                                     <ErrorMessage name="amount" component="div" className="text-red-500 text-xs mt-1" />
                                 </div>
                                 <div className="flex justify-between">

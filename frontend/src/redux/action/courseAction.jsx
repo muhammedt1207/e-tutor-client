@@ -44,16 +44,18 @@ export const updateCourseStatus=createAsyncThunk('course/updateCoursestatus',asy
     }
 })
 
-export const publishedCourses=createAsyncThunk('course/acceptedCourse',async(_,{rejectWithValue})=>{
+export const publishedCourses = createAsyncThunk('course/acceptedCourse', async (filters, { rejectWithValue }) => {
     try {
-        const {data}=await axios.get(`${URL}/course/course/acceptedCourses`,appJson)
-        console.log('published course',data);
-        return data
+        console.log(filters,'filters..');
+      const { data } = await axios.get(`${URL}/course/course/acceptedCourses`, {params:filters }, appJson);
+      console.log('published courses', data);
+      return data;
     } catch (error) {
-        console.log(error);
-        rejectWithValue(error)
+      console.error('Error fetching published courses', error);
+      return rejectWithValue(error);
     }
-})
+  });
+  
 
 export const editCourse=createAsyncThunk('course/editCourse',async({courseId,courseData},{rejectWithValue})=>{
     try {

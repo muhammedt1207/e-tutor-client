@@ -113,7 +113,7 @@ const LessonList = ({ lessons, onSubLessonClick, courseId, userId }) => {
             ))}
             {allLessonsCompleted && (
                 <div className="mt-10">
-                    <button onClick={handleExamClick} className="px-4 py-2 bg-blue-600 text-white rounded-lg">
+                    <button onClick={handleExamClick} className="px-4 py-2 bg-orange-500 text-white rounded-lg w-full">
                         Take Exam
                     </button>
                 </div>

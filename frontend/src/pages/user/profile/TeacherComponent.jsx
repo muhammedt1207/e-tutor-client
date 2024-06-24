@@ -10,9 +10,12 @@ import { URL } from '../../../Common/api';
 const TeacherComponent = () => {
   const [selectedChat, setSelectedChat] = useState(null);
   const [messages, setMessages] = useState([]);
+  const[recieverId,setRecieverId]=useState(null)
 
   const handleUserSelect = async (chat) => {
     setSelectedChat({ chat });
+    setRecieverId(chat.recieverId)
+    console.log(recieverId);
     await fetchMessages(chat.chatId);
   };
 
@@ -46,8 +49,8 @@ const TeacherComponent = () => {
         {selectedChat ? (
           <>
             <ChatHeader user={selectedChat} />
-            <ChatBubble selectedChat={selectedChat} messages={messages} />
-            <MessageInput chatId={selectedChat.chat.chatId} onMessageSent={handleNewMessage} />
+            <ChatBubble selectedChat={selectedChat} setMessages={setMessages} messages={messages} />
+            <MessageInput chatId={selectedChat.chat.chatId} recieversId={selectedChat.chat.receiverId} onMessageSent={handleNewMessage} />
           </>
         ) : (
           <h1>Select a chat to start messaging</h1>

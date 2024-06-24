@@ -52,8 +52,8 @@ const ChatHome = () => {
         {selectedChat ? (
           <>
             <ChatHeader user={selectedChat} />
-            <ChatBubble selectedChat={selectedChat} messages={messages} />
-            <MessageInput chatId={selectedChat.chat.chatId} onMessageSent={handleNewMessage} />
+            <ChatBubble selectedChat={selectedChat} setMessages={setMessages} messages={messages} />
+            <MessageInput chatId={selectedChat.chat.chatId} recieversId={selectedChat.chat.receiverId} onMessageSent={handleNewMessage} />
           </>
         ) : (
           <h1>Select a chat to start messaging</h1>

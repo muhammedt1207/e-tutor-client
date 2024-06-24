@@ -95,7 +95,7 @@ const CourseDetailPage = () => {
             let data = {
                 courseName: course?.title,
                 courseThumbnail: course?.thumbnail,
-                amount: course?.amound || 2500 * 100,
+                amount: course?.amound*100 || 2550 * 100,
                 userId: user?._id,
                 courseId: course?._id,
             };
@@ -162,7 +162,7 @@ const CourseDetailPage = () => {
                                     <button onClick={() => setActiveTab('overview')} className={`px-4 py-2 rounded-lg ${setActiveTab === 'overview' ? 'bg-blue-600 text-white' : 'bg-gray-300'}`}>Overview</button>
                                     <button onClick={() => setActiveTab('instructor')} className={`px-4 py-2 rounded-lg ${setActiveTab === 'instructor' ? 'bg-blue-600 text-white' : 'bg-gray-300'}`}>Instructor</button>
                                     <button onClick={() => setActiveTab('reviews')} className={`px-4 py-2 rounded-lg ${setActiveTab === 'reviews' ? 'bg-blue-600 text-white' : 'bg-gray-300'}`}>Reviews</button>
-                                    <button onClick={() => setActiveTab('qna')} className={`px-4 py-2 rounded-lg ${setActiveTab === 'qna' ? 'bg-blue-600 text-white' : 'bg-gray-300'}`}>Q&A</button>
+                                    {/* <button onClick={() => setActiveTab('qna')} className={`px-4 py-2 rounded-lg ${setActiveTab === 'qna' ? 'bg-blue-600 text-white' : 'bg-gray-300'}`}>Q&A</button> */}
                                 </div>
                                 {renderContent()}
                             </div>

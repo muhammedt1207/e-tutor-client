@@ -130,6 +130,7 @@ function AdminRoutes(){
       <Route path='dashboard' element={<AdminDashBoard/>}/>
       <Route path='categories' element={<CategoryList/>} />
       <Route path='requests' element={<InstructorRequests/>}/>
+      <Route path='instructor-view/:id' element={<InstructorView/>}/>
       <Route path='instrutors' element={<Instructors/>}/>
       <Route path='students' element={<Instructors/>}/>
       <Route path='courses' element={<CoursesList/>} />

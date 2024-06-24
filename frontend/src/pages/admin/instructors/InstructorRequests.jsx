@@ -55,7 +55,7 @@ const InstructorRequests = () => {
                 <th className="admin-table-head  w-20" >No</th>
                 <th className="admin-table-head w-44">Email</th>
                 <th className="admin-table-head ">Profession</th>
-                <th className="admin-table-head">Status</th>
+                <th className="admin-table-head">Actions</th>
              {/*<th className="admin-table-head">Joined</th>
                 <th className="admin-table-head">Action</th>*/}
               </tr>

@@ -13,34 +13,7 @@ const Reviews = ({ courseId, userId, enrolled }) => {
   });
   const [hasReviewed, setHasReviewed] = useState(false);
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const response = await axios.get(`${URL}/course/reviews/${courseId}`);
-        setReviews(response.data.data);
-
-        const userReview = response.data.data.find(review => review.userId === userId);
-        if (userReview) {
-          setHasReviewed(true);
-        }
-
-        const userIds = [...new Set(response.data.data.map(review => review.userId))];
-
-        const userDetailsResponse = await axios.post(`${URL}/auth/getUsers`, { userIds });
-        const users = userDetailsResponse.data.data.reduce((acc, user) => {
-          acc[user.email] = user;
-          return acc;
-        }, {});
-
-        setUserDetails(users);
-      } catch (error) {
-        console.error('Error fetching reviews or user details:', error);
-      }
-    };
-
-    fetchReviews();
-  }, [courseId, userId]);
-
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewReview({
@@ -48,14 +21,14 @@ const Reviews = ({ courseId, userId, enrolled }) => {
       [name]: value
     });
   };
-
+  
   const handleRatingChange = (rating) => {
     setNewReview({
       ...newReview,
       rating
     });
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -76,6 +49,33 @@ const Reviews = ({ courseId, userId, enrolled }) => {
       console.error('Error posting review:', error);
     }
   };
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get(`${URL}/course/reviews/${courseId}`);
+        setReviews(response.data.data);
+
+        const userReview = response.data.data.find(review => review.userId === userId);
+        if (userReview) {
+          setHasReviewed(true);
+        }
+
+        const userIds = [...new Set(response.data.data.map(review => review.userId))];
+
+        const userDetailsResponse = await axios.post(`${URL}/auth/getUsers`, { userIds });
+        const users = userDetailsResponse.data.data.reduce((acc, user) => {
+          acc[user.email] = user;
+          return acc;
+        }, {});
+        console.log('review fetched');
+        setUserDetails(users);
+      } catch (error) {
+        console.error('Error fetching reviews or user details:', error);
+      }
+    };
+
+    fetchReviews();
+  }, [courseId, userId]);
 
   // Calculate average rating
   const averageRating =

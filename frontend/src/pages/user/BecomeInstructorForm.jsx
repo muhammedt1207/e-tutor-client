@@ -19,7 +19,7 @@ const BecomeInstructorForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { user, error } = useSelector((state) => state.user);
-
+    console.log(user);
     const categoryOptions = [
         { value: 'programming', label: 'Programming' },
         { value: 'design', label: 'Design' },
@@ -34,7 +34,8 @@ const BecomeInstructorForm = () => {
         post: '',
         street: '',
         district: '',
-        email: '',
+        email: user.email,
+        
     };
 
     const validationSchema = Yup.object().shape({
@@ -46,7 +47,7 @@ const BecomeInstructorForm = () => {
         post: Yup.string().required('Please provide your post.'),
         street: Yup.string().required('Please provide your street.'),
         district: Yup.string().required('Please provide your district.'),
-        email: Yup.string().email('Please provide a valid email address.').required('Email is required.'),
+        // email: Yup.string().email('Please provide a valid email address.').required('Email is required.'),
     });
 
     const handleQualificationUpload = async (file) => {
@@ -119,7 +120,7 @@ const BecomeInstructorForm = () => {
           }
           toast.success('Profile image uploaded');
           setLoading(false);
-          setQualificationFile(imgUrl);
+          setIdFile(imgUrl);
         };
         reader.readAsDataURL(file);
     }
@@ -320,7 +321,7 @@ const BecomeInstructorForm = () => {
                                 <ErrorMessage name='district' component='div' className='text-red-500' />
                             </div>
                         </div>
-                        <div className='w-full pt-5'>
+                        {/* <div className='w-full pt-5'>
                             <h1 className='text-xl py-3'>Email</h1>
                             <hr />
                             <Field name='email'>
@@ -334,7 +335,7 @@ const BecomeInstructorForm = () => {
                                 )}
                             </Field>
                             <ErrorMessage name='email' component='div' className='text-red-500' />
-                        </div>
+                        </div> */}
                         <div className='w-full pt-5'>
                             <h1 className='text-xl py-3'>Upload ID Proof</h1>
                             <hr />
