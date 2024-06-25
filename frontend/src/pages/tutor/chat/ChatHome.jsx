@@ -31,6 +31,7 @@ const ChatHome = () => {
         sender: message.sender.userName,
         senderId:message.sender._id,
         content: message.content,
+        contentType:message.contentType||'text',
         time: new Date(message.createdAt).toLocaleTimeString(),
         seen: message.receiverSeen ? 1 : 0,
       }));
@@ -53,7 +54,7 @@ const ChatHome = () => {
           <>
             <ChatHeader user={selectedChat} />
             <ChatBubble selectedChat={selectedChat} setMessages={setMessages} messages={messages} />
-            <MessageInput chatId={selectedChat.chat.chatId} recieversId={selectedChat.chat.receiverId} onMessageSent={handleNewMessage} />
+            <MessageInput chatId={selectedChat.chat.chatId} recieversId={selectedChat.chat.receiverId} onMessageSent={handleNewMessage}  />
           </>
         ) : (
           <h1>Select a chat to start messaging</h1>

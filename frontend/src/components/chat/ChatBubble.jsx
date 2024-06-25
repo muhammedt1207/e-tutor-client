@@ -56,13 +56,48 @@ const ChatBubble = ({ messages, setMessages, selectedChat }) => {
     });
   }, [messages]);
 
+  const renderContent = (message) => {
+    switch (message.contentType) {
+      case 'image':
+        return (
+          <img 
+            src={message.content} 
+            alt="Sent image" 
+            className="w-48 rounded-lg"
+          />
+        );
+      case 'video':
+        return (
+          <video 
+            src={message.content} 
+            controls 
+            className="w-48 object-cover rounded-lg"
+          >
+            Your browser does not support the video tag.
+          </video>
+        );
+        case 'audio':
+        return (
+          <audio 
+            src={message.content} 
+            controls 
+            className=""
+          >
+            Your browser does not support the audio element.
+          </audio>
+        );
+      default:
+        return <div>{message.content}</div>;
+    }
+  };
+
   return (
     <div className="flex-1 p-4 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 200px)' }}>
       {messages && messages.map((message) => (
         <div key={message.id} className={`chat ${message.senderId === user._id ? 'chat-end' : 'chat-start'} mb-4`}>
           <div className={`chat-bubble ${message.senderId === user._id ? 'bg-black text-white' : 'bg-gray-700 text-white'}`}>
-            <div className="font-bold">{message.sender}</div>
-            <div>{message.content}</div>
+            <div className="font-bold">{message.senderid === user._id ? 'You' :message.sender}</div>
+            {renderContent(message)}
             <div className="text-xs text-gray-300 flex justify-between mt-2">
               <span>{message.time}</span>
               <span>{message.seen ? '✔️✔️' : '✔️'}</span> 

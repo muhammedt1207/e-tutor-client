@@ -32,6 +32,7 @@ const TeacherComponent = () => {
         sender: message.sender.userName,
         senderId:message.sender._id,
         content: message.content,
+        contentType:message.contentType,
         time: new Date(message.createdAt).toLocaleTimeString(),
         seen: message.receiverSeen ? 1 : 0,
       }));

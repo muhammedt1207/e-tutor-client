@@ -53,6 +53,10 @@ useEffect(()=>{
     .then(()=>console.log('user data fetched //////////////',user))
   }
 },[])
+const ProtectRouter=({element})=>{
+  const {user}=useSelector(state=>state.user)
+  return user ? element:<Navigate to='/login'/>
+}
   return (
     <>
    <BrowserRouter>  
@@ -93,31 +97,18 @@ useEffect(()=>{
 <Route path='/login' element={<Login/>}/>
 <Route path='/course' element={<Courses/>}/>
 <Route path='/course/:id' element={<CourseView/>}/>
-<Route path='/becomeInstructor' element={<BecomeInstructorPage/>}/> 
+<Route path='/becomeInstructor' element={<ProtectRouter element={<BecomeInstructorPage/>}/>}/> 
 <Route path='/userprofile' element={<UserProfile/>}/>
-<Route path='/course/paymentSuccess' element={<PaymentSuccess/>}/>
+<Route path='/course/paymentSuccess' element={<ProtectRouter element={<PaymentSuccess/>}/>}/>
 <Route path='/teachers' element={<TeachersList/>}/>
-<Route path='/teacherView/:teacherId' element={<TeacherView/>}/>
-<Route path='/exam/:courseId' element={<Exam/>}/>
+<Route path='/teacherView/:teacherId' element={<ProtectRouter element={<TeacherView/>}/>}/>
+<Route path='/exam/:courseId' element={<ProtectRouter element={<Exam/>}/>}/>
 <Route  path='/test' element={<TeacherView/>}/>
-<Route path='/membership/paymentSuccess' element={<MemberShipSuccess/>}/>
-{/* Admin Routes*/}
-{/* <Route path='/admin-dash' element={<InstructorRequests/>}/>
-<Route path='/reqeusts' element={<InstructorRequests/>}/>
-<Route path='/categories' element={<CategoryList/>}/> */}
-{/* Instructor Routes*/}
+<Route path='/membership/paymentSuccess' element={<ProtectRouter element={<MemberShipSuccess/>}/>}/>
+{/* Instroctor Routes*/}
 <Route path='/instructor' element={<InstructorDash/>}/>
  </Routes>
    </BrowserRouter>
-    {/* <TopNavbar/> 
-      <UserNavbar/> */}
-      {/* <Signup/> */}
-      {/* <UserHome/> */}
-      {/* <Login/> */}
-      {/* /<BecomeInstructorPage/> */}
-      {/* <BecomeInstructorForm/> */}
-      {/* <Sample/> */}
-      {/* <AdminDash/> */}
     </>
   )
 }

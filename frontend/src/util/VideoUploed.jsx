@@ -121,9 +121,9 @@ const VideoUpload = async (video) => {
         console.log('Video uploaded successfully:', res);
         const { format, secure_url } = res.data;
         console.log(secure_url);
-        if (['mp4', 'mov', 'avi'].includes(format)) { 
+        return secure_url;
+        if (['mp4', 'mov', 'avi','webm'].includes(format)) { 
             console.log('Video uploaded successfully:', secure_url);
-            return secure_url;
         } else {
             console.log('Unsupported video format');
             return null;
