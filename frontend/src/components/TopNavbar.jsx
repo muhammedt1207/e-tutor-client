@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import UserNavbar from './UserNavbar'
 import SideBar from './SideBar'
+import CertificateGenerator from '../util/CertificateGenerator'
 
 const TopNavbar = () => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -18,6 +19,7 @@ const TopNavbar = () => {
         <Link to='/course'>  <h1 className='text-slate-400 hover:text-slate-100'>Courses</h1></Link>
         <Link to='/teachers'>  <h1 className='text-slate-400 hover:text-slate-100'>Instructers</h1></Link>
         <Link to='/becomeInstructor' ><h1 className='text-slate-400 hover:text-slate-100'>Become an Instructor</h1></Link>
+        <CertificateGenerator userName={'muhammed'} courseName={'react full course '}/>
       </div>
       <UserNavbar toggleSidebar={toggleSidebar}/>
     </div>

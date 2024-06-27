@@ -45,7 +45,7 @@ const MemberShip = ({ instructorId }) => {
 
       console.log(response, 'response from post');
       const data = {
-        customerId: email,
+        customerId: email || user.email,
         instructorId:instructorId.email
       };
       localStorage.setItem('MemberShipData', JSON.stringify(data));
@@ -85,7 +85,7 @@ const MemberShip = ({ instructorId }) => {
             <input
               type="email"
               placeholder="Enter your email"
-              value={email}
+              value={user.email}
               onChange={handleEmailChange}
               className="px-4 py-2 border border-gray-300 rounded-md mb-2"
               />

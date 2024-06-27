@@ -13,7 +13,7 @@ export const useSocket = () => {
   if (!context) {
     throw new Error('useSocket must be used within a SocketProvider');
   }
-  return context.socket;
+  return context;
 };
 
 export const SocketProvider = ({ children }) => {

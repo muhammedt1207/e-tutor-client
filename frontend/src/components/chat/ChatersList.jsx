@@ -8,7 +8,7 @@ import { useSocket } from '../../contexts/SocketContext';
 const ChatersList = ({ onUserSelect }) => {
   const [chats, setChats] = useState([]);
   const { user } = useSelector((state) => state.user);
-  const socket  = useSocket();
+  const {socket}  = useSocket();
   const [isLoading, setIsLoading] = useState(true);
   const [isConnected, setIsConnected] = useState(false);
   const [onlineUsers, setOnlineUsers] = useState([]);
@@ -24,6 +24,10 @@ const ChatersList = ({ onUserSelect }) => {
             (p) => p._id !== user._id
           );
           console.log(chat.participants, 'participants........');
+          const participantLastSeen = chat.lastSeen.find(
+            (ls) => ls.participant.toString() === participant._id
+          );
+  
           return {
             name: participant.userName,
             chatId: chat._id,
@@ -35,7 +39,8 @@ const ChatersList = ({ onUserSelect }) => {
                 : 'No messages yet',
             profileImageUrl: participant.profileImageUrl,
             receiverId: participant._id,
-            lastSeen: participant.lastSeen
+            senderId:user._id,
+            lastSeen: participantLastSeen ? new Date(participantLastSeen.seenAt).toLocaleTimeString() : 'Never'
           };
         });
 

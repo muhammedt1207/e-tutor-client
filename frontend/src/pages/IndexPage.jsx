@@ -24,6 +24,7 @@ const IndexPage = () => {
       <CategoryCard/>
   
     </div>
+   
     </div>
     </>
   )

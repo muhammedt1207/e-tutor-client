@@ -4,7 +4,7 @@ import { useSocket } from '../../contexts/SocketContext';
 
 const ChatBubble = ({ messages, setMessages, selectedChat }) => {
   const { user } = useSelector(state => state.user);
-  const socket = useSocket();
+  const {socket} = useSocket();
   const [isSocketReady, setIsSocketReady] = useState(false);
   const messagesEndRef = useRef(null);
 
@@ -25,7 +25,7 @@ const ChatBubble = ({ messages, setMessages, selectedChat }) => {
   useEffect(() => {
     if (isSocketReady) {
       const handleNewMessage = (message) => {
-        console.log(message,message.obj.chatId,selectedChat.chat.chatId);
+        console.log(message,message.obj.chatId,selectedChat.chat.chatId,'new message emit message');
         if (message.obj.chatId === selectedChat.chat.chatId) {
           setMessages(prevMessages => [...prevMessages, message.obj]);
           scrollToBottom();

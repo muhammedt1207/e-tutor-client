@@ -41,6 +41,7 @@ import TeachersList from './pages/user/teachers/TeachersList.jsx'
 import TeacherView from './pages/user/teachers/TeacherView.jsx'
 import MemberShipSuccess from './pages/user/teachers/components/MemberShipSuccess.jsx'
 import ChatHome from './pages/tutor/chat/ChatHome.jsx'
+import Notifications from './pages/tutor/notifications/Notifications.jsx'
 function App() {
 const {user}=useSelector((state)=>state.user)
 const dispatch=useDispatch()
@@ -99,12 +100,12 @@ const ProtectRouter=({element})=>{
 <Route path='/course/:id' element={<CourseView/>}/>
 <Route path='/becomeInstructor' element={<ProtectRouter element={<BecomeInstructorPage/>}/>}/> 
 <Route path='/userprofile' element={<UserProfile/>}/>
-<Route path='/course/paymentSuccess' element={<ProtectRouter element={<PaymentSuccess/>}/>}/>
+<Route path='/course/paymentSuccess' element={<PaymentSuccess/>}/>
 <Route path='/teachers' element={<TeachersList/>}/>
 <Route path='/teacherView/:teacherId' element={<ProtectRouter element={<TeacherView/>}/>}/>
 <Route path='/exam/:courseId' element={<ProtectRouter element={<Exam/>}/>}/>
-<Route  path='/test' element={<TeacherView/>}/>
-<Route path='/membership/paymentSuccess' element={<ProtectRouter element={<MemberShipSuccess/>}/>}/>
+<Route  path='/test' element={<Notifications/>}/>
+<Route path='/membership/paymentSuccess' element={<MemberShipSuccess/>}/>
 {/* Instroctor Routes*/}
 <Route path='/instructor' element={<InstructorDash/>}/>
  </Routes>
@@ -132,9 +133,10 @@ function AdminRoutes(){
 function InstrucorRoutes(){
   return(
     <Routes>
-      <Route path='/' element={<InstructorDash/>} />
+      <Route path='/' element={<DashBoard/>} />
       <Route index element={<DashBoard/>}/>
       <Route path='courses' element={<CourseList/>}/>
+      <Route path='notification' element={<Notifications/>}/>
       <Route path='addCourse' element={<AddCourseHome/>}/>
       <Route path='dashboard' element={<DashBoard/>}/>
       <Route path='createExam' element={<CreateExam/>} />

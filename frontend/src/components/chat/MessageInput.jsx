@@ -15,7 +15,7 @@ import VideoUpload from '../../util/VideoUploed';
 const MessageInput = ({ chatId, recieversId, onMessageSent }) => {
   const [message, setMessage] = useState('');
   const { user } = useSelector((state) => state.user);
-  const socket = useSocket();
+  const  {socket}  = useSocket();
   const [typing, setTyping] = useState(false);
   const [fileUploading, setFileUploading] = useState(false);
   const [fileType, setFileType] = useState(null);
@@ -25,12 +25,19 @@ const MessageInput = ({ chatId, recieversId, onMessageSent }) => {
   const [recording, setRecording] = useState(false);
 
   useEffect(() => {
+    if (socket && chatId) {
+      socket.emit('joinRoom', chatId);
+    }
+  }, [socket, chatId]);
+  useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (typing) {
-        socket.emit('stopTyping', { roomId: chatId, sender: user._id });
-        setTyping(false);
+        if (socket) {
+          socket.emit('stopTyping', { roomId: chatId, sender: user._id });
+          setTyping(false);
+        }
       }
-    }, 1000);
+    }, 3000);
 
     return () => clearTimeout(timeoutId);
   }, [message, typing, chatId, socket, user._id]);
@@ -39,7 +46,9 @@ const MessageInput = ({ chatId, recieversId, onMessageSent }) => {
     setMessage(e.target.value);
     if (!typing) {
       setTyping(true);
-      socket.emit('typing', { roomId: chatId, sender: user._id });
+      if (socket) {
+        socket.emit('typing', { roomId: chatId, sender: user._id });
+      }
     }
   };
 
@@ -106,7 +115,7 @@ const MessageInput = ({ chatId, recieversId, onMessageSent }) => {
   };
 
   const handleSendMessage = async () => {
-    console.log(message,'message');
+    console.log(message, 'message');
     if (!message.trim() && !fileUrl) {
       toast.error('Message cannot be empty');
       return;
@@ -155,7 +164,9 @@ const MessageInput = ({ chatId, recieversId, onMessageSent }) => {
       setMessage('');
       setFileUrl(null);
       setFileType(null);
-      socket.emit('stopTyping', { roomId: chatId, sender: user._id });
+      if(socket){
+        socket.emit('stopTyping', { roomId: chatId, sender: user._id });
+      }
       setTyping(false);
     } catch (error) {
       toast.error('Failed to send message. Please try again.');
@@ -189,13 +200,13 @@ const MessageInput = ({ chatId, recieversId, onMessageSent }) => {
 
   const onStop = async (recordedBlob) => {
     setFileUploading(true);
-    console.log(recordedBlob,'audio recording,,,,,,,');
+    console.log(recordedBlob, 'audio recording,,,,,,,');
     try {
       const audioUrl = await VideoUpload(recordedBlob.blob);
       setFileUrl(audioUrl);
       setFileType('audio');
       setMessage(audioUrl);
-      console.log(audioUrl,'audio url recorded');
+      console.log(audioUrl, 'audio url recorded');
       toast.success('Audio uploaded successfully');
     } catch (error) {
       console.error('Error uploading audio:', error);
@@ -226,10 +237,10 @@ const MessageInput = ({ chatId, recieversId, onMessageSent }) => {
           />
         </div>
       )}
+        {fileUploading && <span className="">Uploading...</span>}
       <div className="flex items-center relative">
         <PaperClipIcon className="w-8 ms-2 cursor-pointer absolute text-gray-400" onClick={handleFileUpload} />
         <BiHappyHeartEyes className="text-3xl cursor-pointer absolute ms-10 text-gray-400" onClick={toggleEmojiPicker} />
-        {fileUploading && <span className="">Uploading...</span>}
         <input
           type="text"
           placeholder="Your message"

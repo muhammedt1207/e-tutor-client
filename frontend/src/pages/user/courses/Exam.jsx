@@ -107,7 +107,7 @@ const Exam = () => {
     if (submissionSuccess) {
         return (
             <>
-            <ExamSuccess percentage={scorePercentage}/>
+            <ExamSuccess percentage={scorePercentage} userName={user.userName}/>
             </>
         );
     }

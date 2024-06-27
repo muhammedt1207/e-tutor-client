@@ -14,7 +14,7 @@ const MemberShipSuccess = () => {
 
     useEffect(() => {
         if (!localStorage.getItem('MemberShipData')) {
-            navigate('/');  
+            navigate('/teachers');  
             return;
         }
 

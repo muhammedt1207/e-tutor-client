@@ -7,27 +7,36 @@ import BreadCrumbs from '../components/BreadCrumbs';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import CircularPagination from '../../../components/CircularPagination';
+import { useSocket } from '../../../contexts/SocketContext';
 
 const CoursesList = () => {
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.courses);
   const [currentPage, setCurrentPage] = useState(1);
-  const coursesPerPage = 5; // Number of courses per page
+  const coursesPerPage = 5; 
+  const { socket } = useSocket();
 
   const handleStatusChange = (courseId, status) => {
-    dispatch(updateCourseStatus({ id: courseId, action: status }));
-    toast.success('Course status updated');
+    dispatch(updateCourseStatus({ id: courseId, action: status }))
+      .then(() => {
+        toast.success('Course status updated');
+        console.log('course status changedd notification');
+        socket.emit('sendNotification', {
+          recipientId: '66352c6fabeff6893a9401da', 
+          content: `Course ${courseId} has been ${status}`,
+          type: 'courseStatus'
+        });
+      });
   };
 
   useEffect(() => {
     dispatch(getAllCourses());
-  }, [dispatch]);
+  }, [dispatch,socket]);
 
   const totalCourses = Array.isArray(data) ? data.length : 0;
   const activeCourses = Array.isArray(data) ? data.filter(course => course.status === 'accepted').length : 0;
   const pendingCourses = Array.isArray(data) ? data.filter(course => course.status === 'pending').length : 0;
 
-  // Pagination logic
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
   const currentCourses = Array.isArray(data) ? data.slice(indexOfFirstCourse, indexOfLastCourse) : [];

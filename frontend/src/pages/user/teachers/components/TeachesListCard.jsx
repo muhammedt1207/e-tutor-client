@@ -11,7 +11,7 @@ const TeachesListCard = ({teacher}) => {
     }
 
   return (
-    <div className="max-w-sm bg-white border w-full mt-5 m-5 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ">
+    <div data-aos='fade-up' className="max-w-sm bg-white border w-full mt-5 m-5 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ">
     <a href="#">
         <img className="rounded-md w-full h-60 object-cover" src={teacher.profileImageUrl||'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6LXNJFTmLzCoExghcATlCWG85kI8dsnhJng&s'} alt="" />
     </a>

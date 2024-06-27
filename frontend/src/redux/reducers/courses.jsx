@@ -57,7 +57,7 @@ const CourseSlice=createSlice({
         .addCase(updateCourseStatus.fulfilled,(state,{payload})=>{
             state.loading=false,
             state.error=null,
-            state.data=payload
+            state.data=state.data
         })
         .addCase(updateCourseStatus.rejected,(state,{payload})=>{
             state.loading=false,

@@ -1,32 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSocket } from '../../contexts/SocketContext';
+import { BsFillCameraVideoFill } from 'react-icons/bs';
+import VideoCall from './VideoCall';
+import toast from 'react-hot-toast';
 
 const ChatHeader = ({ user }) => {
-  const socket = useSocket();
+  const { socket } = useSocket();
   const [typingStatus, setTypingStatus] = useState(null);
   const [onlineStatus, setOnlineStatus] = useState(false);
   const [lastSeen, setLastSeen] = useState(null);
+  const [isInCall, setIsInCall] = useState(false);
+  const [incomingCall, setIncomingCall] = useState(null);
 
   useEffect(() => {
     if (socket && user) {
       const handleTyping = ({ sender, roomId }) => {
-        console.log('Typing event received', sender, user.chat.receiverId, roomId, user.chat.chatId);
         if (sender === user.chat.receiverId && roomId === user.chat.chatId) {
-          console.log('Setting typing status to true');
           setTypingStatus(true);
         }
       };
 
       const handleStopTyping = ({ sender, roomId }) => {
-        console.log('Stop typing event received', sender, user.chat.receiverId, roomId, user.chat.chatId);
         if (sender === user.chat.receiverId && roomId === user.chat.chatId) {
-          console.log('Setting typing status to false');
           setTypingStatus(false);
         }
       };
 
       const handleUserOnline = (onlineUsers) => {
-        console.log(onlineUsers,user.chat,'online users ');
         setOnlineStatus(onlineUsers.includes(user.chat.receiverId));
       };
 
@@ -39,14 +39,41 @@ const ChatHeader = ({ user }) => {
       socket.on('typing', handleTyping);
       socket.on('stopTyping', handleStopTyping);
       socket.on('getOnlineUsers', handleUserOnline);
-      console.log('gitting online users🕘🕙');
       socket.on('userLastSeen', handleLastSeen);
+
+      socket.on('incomingCall', (data) => {
+        setIncomingCall(data);
+        toast((t) => (
+          <span>
+            Incoming call 
+            <button className='bg-green-600 rounded-sm p-1' onClick={() => acceptCall(data, t)}>Accept</button>
+            <button className='bg-red-600 p-1 ms-1 rounded-md' onClick={() => declineCall(data, t)}>Decline</button>
+          </span>
+        ), { duration: 10000 });
+      });
+
+      socket.on('callAccepted', (data) => {
+        setIsInCall(true);
+      });
+
+      socket.on('callDeclined', () => {
+        toast.error('Call was declined');
+      });
+
+      socket.on('callEnded', () => {
+        toast.info('The call has ended');
+        setIsInCall(false);
+      });
 
       return () => {
         socket.off('typing', handleTyping);
         socket.off('stopTyping', handleStopTyping);
         socket.off('getOnlineUsers', handleUserOnline);
         socket.off('userLastSeen', handleLastSeen);
+        socket.off('incomingCall');
+        socket.off('callAccepted');
+        socket.off('callDeclined');
+        socket.off('callEnded');
       };
     }
   }, [socket, user]);
@@ -63,6 +90,34 @@ const ChatHeader = ({ user }) => {
     }
   };
 
+  const startCall = () => {
+    socket.emit('offer', { 
+      roomId: user.chat.chatId, 
+      senderId: user._id, 
+      receiverId: user.chat.receiverId 
+    });
+    setIsInCall(true);
+  };
+
+  const acceptCall = (data, toastId) => {
+    toast.dismiss(toastId);
+    socket.emit('callAccepted', { roomId: data.roomId, to: data.from });
+    setIsInCall(true);
+  };
+
+  const declineCall = (data, toastId) => {
+    toast.dismiss(toastId);
+    socket.emit('callDeclined', { roomId: data.roomId, to: data.from });
+  };
+
+  const handleEndCall = () => {
+    setIsInCall(false);
+  };
+
+  if (isInCall) {
+    return <VideoCall user={user} onEndCall={handleEndCall} />;
+  }
+
   return (
     <div className="bg-white p-4 shadow-sm flex items-center justify-between">
       <div className="flex items-center">
@@ -77,9 +132,9 @@ const ChatHeader = ({ user }) => {
         </div>
       </div>
       <div className="flex space-x-2">
-        {/* Optional buttons for additional actions */}
-        {/* <button className="btn btn-circle btn-outline"><i className="fa fa-search"></i></button>
-        <button className="btn btn-circle btn-outline"><i className="fa fa-ellipsis-h"></i></button> */}
+        <button className="btn btn-circle btn-outline" onClick={startCall}>
+          <BsFillCameraVideoFill />
+        </button>
       </div>
     </div>
   );
