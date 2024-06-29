@@ -15,7 +15,7 @@ const Courses = () => {
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [search, setSearch] = useState('');
     const [sortBy, setSortBy] = useState(''); // State for sorting
-
+    
     const { data = [], loading } = useSelector((state) => state.courses);
 
     const toggleCategories = () => {

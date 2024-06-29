@@ -80,7 +80,7 @@ const UserProfile = () => {
                     >
                         Teacher
                     </button>
-                    <button
+                    {/* <button
                         className={`toggle-btn ${selectedOption === 'message' ? 'border-b-4 border-orange-500' : ''}`}
                         onClick={() => setSelectedOption('message')}
                     >
@@ -91,7 +91,7 @@ const UserProfile = () => {
                         onClick={() => setSelectedOption('settings')}
                     >
                         Settings
-                    </button>
+                    </button> */}
                 </div>
                 <hr />
                 <div className='border shadow-lg'>

@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import Notification from './Notification'; // Adjust the path as per your project structure
 import { useSelector } from 'react-redux';
 import io from 'socket.io-client';
+import toast from 'react-hot-toast';
 
 const SocketContext = createContext({
-    socket:null,
-    messages:[],
-    onlineUsers:[]
+  socket: null,
+  onlineUsers: []
 });
 
 export const useSocket = () => {
@@ -19,29 +20,62 @@ export const useSocket = () => {
 export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
+  const [incomingCallMessage, setIncomingCallMessage] = useState(null);
   const { user } = useSelector(state => state.user);
 
   useEffect(() => {
     if (user && user._id) {
       const newSocket = io("http://localhost:8087", {
-        query: { userId: user._id }, 
+        query: { userId: user._id },
         withCredentials: true,
       });
 
-      setSocket(newSocket);
-
       newSocket.on("connect", () => {
-        console.log("Connected to server🌐🌐🌐");
-        setSocket(newSocket); 
+        console.log("Connected to server");
+        setSocket(newSocket);
       });
 
       newSocket.on("disconnect", () => {
         console.log("Disconnected from server");
+        setSocket(null);
       });
 
       newSocket.on("getOnlineUsers", (users) => {
+        console.log("Online users:", users);
         setOnlineUsers(users);
       });
+
+      newSocket.on('incomingCall', (data) => {
+        console.log('Incoming call:', data);
+        toast((t) => (
+          <div className="bg-green-100 p-4 rounded-md">
+            <p className="font-medium">Incoming call</p>
+            <div className="mt-2">
+              <button
+                className="bg-blue-500 text-white px-3 py-1 rounded mr-2"
+                onClick={() => {
+                  window.location.href = data.data.link;
+                  toast.dismiss(t.id);
+                }}
+              >
+                Join
+              </button>
+              <button
+                className="bg-red-500 text-white px-3 py-1 rounded"
+                onClick={() => toast.dismiss(t.id)}
+              >
+                Decline
+              </button>
+            </div>
+          </div>
+        ), {
+          duration: 20000, // 10 seconds
+          position: 'top-right',
+        });
+      });
+    
+
+      setSocket(newSocket);
 
       return () => {
         newSocket.disconnect();

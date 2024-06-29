@@ -29,7 +29,7 @@ const CategoryList = ({ onCategorySelection, selectedCategories }) => {
           <label className="flex space-x-2 text-lg ">
             <input
               type="checkbox"
-              checked={selectedCategories.includes(category.id)}
+              checked={selectedCategories && selectedCategories.includes(category.id)}
               onChange={() => onCategorySelection(category.id)}
             />
             <p>{category.name}</p>

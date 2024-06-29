@@ -11,10 +11,13 @@ import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // Main style file
 import 'react-date-range/dist/theme/default.css'; // Theme css file
 import OfferModal from './OfferModal';
+import CircularPagination from '../../../components/CircularPagination';
 
 const CourseList = () => {
   const { user } = useSelector((state) => state.user);
   const [courses, setCourses] = useState([]);
+  const [filteredCourses, setFilteredCourses] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentCourse, setCurrentCourse] = useState(null);
   const [offer, setOffer] = useState('');
@@ -26,7 +29,9 @@ const CourseList = () => {
     }
   ]);
 
-  
+  const [currentPage, setCurrentPage] = useState(1);
+  const [coursesPerPage] = useState(10); // Number of courses per page
+
   const handleOpenModal = (course) => {
     setCurrentCourse(course);
     setIsModalOpen(true);
@@ -44,7 +49,7 @@ const CourseList = () => {
       }
     ]);
   };
-  
+
   const handleSubmitOffer = async () => {
     try {
       const response = await axios.patch(`${URL}/course/offer/${currentCourse._id}`, {
@@ -58,17 +63,39 @@ const CourseList = () => {
       console.error('Error submitting offer:', error);
     }
   };
+
   useEffect(() => {
-    const fetchCourse = async () => {
+    const fetchCourses = async () => {
       const result = await axios.get(`${URL}/course/course/instructor/${user.email}`);
       console.log(result.data.data);
       setCourses(result.data.data);
+      setFilteredCourses(result.data.data); // Initially set filtered courses to all courses
     };
-    fetchCourse();
-  }, [user.email,isModalOpen]);
+    fetchCourses();
+  }, [user.email, isModalOpen]);
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    if (query === '') {
+      setFilteredCourses(courses);
+    } else {
+      setFilteredCourses(
+        courses.filter((course) =>
+          course.title.toLowerCase().includes(query.toLowerCase())
+        )
+      );
+    }
+    setCurrentPage(1); // Reset to first page on new search
+  };
+
+  // Compute courses to display on the current page
+  const indexOfLastCourse = currentPage * coursesPerPage;
+  const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
+  const currentCourses = filteredCourses.slice(indexOfFirstCourse, indexOfLastCourse);
+  const totalPages = Math.ceil(filteredCourses.length / coursesPerPage);
 
   return (
-    <div className='flex '>
+    <div className='flex'>
       <SideBar />
 
       <div className="shadow-md sm:rounded-lg flex flex-col w-full lg:ml-44 ml-52 px-16 pe-10">
@@ -84,7 +111,12 @@ const CourseList = () => {
           </div>
         </div>
         <div className="p-5 w-full overflow-y-auto text-sm">
-          <SearchBar />
+          <SearchBar
+            handleSearch={handleSearch}
+            search={searchQuery}
+            setSearch={setSearchQuery}
+            placeholder="Search Courses"
+          />
         </div>
 
         <table className="w-full text-sm text-left rtl:text-right rounded-md text-gray-500 dark:text-gray-400">
@@ -100,7 +132,7 @@ const CourseList = () => {
             </tr>
           </thead>
           <tbody>
-            {courses?.map((course) => (
+            {currentCourses.map((course) => (
               <tr key={course._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {course.title}
@@ -122,6 +154,10 @@ const CourseList = () => {
             ))}
           </tbody>
         </table>
+
+        <div className="flex justify-center mt-4">
+          <CircularPagination active={currentPage} setActive={setCurrentPage} total={totalPages} />
+        </div>
       </div>
 
       {isModalOpen && (
@@ -129,6 +165,6 @@ const CourseList = () => {
       )}
     </div>
   );
-}
+};
 
 export default CourseList;

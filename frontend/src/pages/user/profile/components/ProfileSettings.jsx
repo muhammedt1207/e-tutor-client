@@ -21,6 +21,7 @@ const ProfileSettings = () => {
     const [imgLoading, setLoading] = useState(false);
     
     const logoutHandler = async () => {
+        console.log('user lougout working');
         dispatch(logout());
         navigate('/index');
     };
@@ -211,7 +212,7 @@ const ProfileSettings = () => {
                             </div>
 
                             <button type='submit' className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 mt-10 px-4">Save Changes</button>
-                            <button className="bg-red-500 m-5 hover:bg-orange-700 text-white font-bold py-2 mt-10 px-4" onClick={logoutHandler}>Logout</button>
+                            <button type='button' className="bg-red-500 m-5 hover:bg-orange-700 text-white font-bold py-2 mt-10 px-4" onClick={logoutHandler}>Logout</button>
                         </Form>
                     </Formik>
                 </div>

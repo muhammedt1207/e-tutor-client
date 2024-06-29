@@ -1,27 +1,27 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSocket } from '../../contexts/SocketContext';
 import { BsFillCameraVideoFill } from 'react-icons/bs';
-import VideoCall from './VideoCall';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const ChatHeader = ({ user }) => {
   const { socket } = useSocket();
+  const navigate=useNavigate()
   const [typingStatus, setTypingStatus] = useState(null);
   const [onlineStatus, setOnlineStatus] = useState(false);
   const [lastSeen, setLastSeen] = useState(null);
-  const [isInCall, setIsInCall] = useState(false);
-  const [incomingCall, setIncomingCall] = useState(null);
+  const [isCalling, setIsCalling] = useState(false); // State to track video call status
 
   useEffect(() => {
     if (socket && user) {
       const handleTyping = ({ sender, roomId }) => {
-        if (sender === user.chat.receiverId && roomId === user.chat.chatId) {
+        if (sender === user.chat.receiverId) {
           setTypingStatus(true);
         }
       };
 
       const handleStopTyping = ({ sender, roomId }) => {
-        if (sender === user.chat.receiverId && roomId === user.chat.chatId) {
+        if (sender === user.chat.receiverId) {
           setTypingStatus(false);
         }
       };
@@ -41,42 +41,25 @@ const ChatHeader = ({ user }) => {
       socket.on('getOnlineUsers', handleUserOnline);
       socket.on('userLastSeen', handleLastSeen);
 
-      socket.on('incomingCall', (data) => {
-        setIncomingCall(data);
-        toast((t) => (
-          <span>
-            Incoming call 
-            <button className='bg-green-600 rounded-sm p-1' onClick={() => acceptCall(data, t)}>Accept</button>
-            <button className='bg-red-600 p-1 ms-1 rounded-md' onClick={() => declineCall(data, t)}>Decline</button>
-          </span>
-        ), { duration: 10000 });
-      });
 
-      socket.on('callAccepted', (data) => {
-        setIsInCall(true);
-      });
+    
 
-      socket.on('callDeclined', () => {
-        toast.error('Call was declined');
-      });
-
-      socket.on('callEnded', () => {
-        toast.info('The call has ended');
-        setIsInCall(false);
-      });
+    
 
       return () => {
         socket.off('typing', handleTyping);
         socket.off('stopTyping', handleStopTyping);
         socket.off('getOnlineUsers', handleUserOnline);
         socket.off('userLastSeen', handleLastSeen);
-        socket.off('incomingCall');
-        socket.off('callAccepted');
-        socket.off('callDeclined');
-        socket.off('callEnded');
       };
     }
   }, [socket, user]);
+
+  const startCall = () => {
+    navigate(`/call?id=${user.chat.receiverId}&senderId=${user.chat.receiverId}`)
+  };
+
+  
 
   const renderStatus = () => {
     if (typingStatus) {
@@ -89,34 +72,6 @@ const ChatHeader = ({ user }) => {
       return 'Offline';
     }
   };
-
-  const startCall = () => {
-    socket.emit('offer', { 
-      roomId: user.chat.chatId, 
-      senderId: user._id, 
-      receiverId: user.chat.receiverId 
-    });
-    setIsInCall(true);
-  };
-
-  const acceptCall = (data, toastId) => {
-    toast.dismiss(toastId);
-    socket.emit('callAccepted', { roomId: data.roomId, to: data.from });
-    setIsInCall(true);
-  };
-
-  const declineCall = (data, toastId) => {
-    toast.dismiss(toastId);
-    socket.emit('callDeclined', { roomId: data.roomId, to: data.from });
-  };
-
-  const handleEndCall = () => {
-    setIsInCall(false);
-  };
-
-  if (isInCall) {
-    return <VideoCall user={user} onEndCall={handleEndCall} />;
-  }
 
   return (
     <div className="bg-white p-4 shadow-sm flex items-center justify-between">
@@ -132,9 +87,13 @@ const ChatHeader = ({ user }) => {
         </div>
       </div>
       <div className="flex space-x-2">
-        <button className="btn btn-circle btn-outline" onClick={startCall}>
-          <BsFillCameraVideoFill />
-        </button>
+        {!isCalling ? (
+          <button className="btn btn-circle btn-outline" onClick={startCall}>
+            <BsFillCameraVideoFill />
+          </button>
+        ) : (
+          <span className="text-gray-600">Calling...</span>
+        )}
       </div>
     </div>
   );

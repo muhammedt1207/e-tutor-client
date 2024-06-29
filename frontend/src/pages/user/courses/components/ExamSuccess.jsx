@@ -10,7 +10,7 @@ const ExamSuccess = ({percentage,userName}) => {
     <h1 className='text-2xl font-bold text-orange-500 p-5'>Exam Successfully Completed</h1>
     <h2 className='text-lg font-semibold pb-2'>You Got {percentage}% mark on the exam</h2>
     {
-      percentage>40 && (<CertificateGenerator userName={userName} courseName={'React'}/>)
+      percentage>40 && (<CertificateGenerator userName={userName} courseName={'The Complete Digital Marketing Course'}/>)
     }
     {/* <CertificatePdf/> */}
       </div>

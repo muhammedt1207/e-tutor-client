@@ -9,7 +9,7 @@ const AddCurriculum = ({ onNext, initialData = { sections: [] } }) => {
         initialData?.sections?.length > 0
             ? initialData.sections.map(section => ({
                   name: section.name,
-                  subLessons: section.SubLesson.map(lecture => ({
+                  subLessons: section.subLessons?.map(lecture => ({
                       title: lecture.title,
                       videoUrl: lecture.videoUrl,
                   })),

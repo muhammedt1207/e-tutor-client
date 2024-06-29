@@ -34,7 +34,7 @@ const TeacherComponent = () => {
         content: message.content,
         contentType:message.contentType,
         time: new Date(message.createdAt).toLocaleTimeString(),
-        seen: message.receiverSeen ? 1 : 0,
+        seen: message.receiverSeen ,
       }));
       setMessages(fetchedMessages);
     } catch (error) {
@@ -54,7 +54,7 @@ const TeacherComponent = () => {
             <MessageInput chatId={selectedChat.chat.chatId} recieversId={selectedChat.chat.receiverId} onMessageSent={handleNewMessage} />
           </>
         ) : (
-          <h1>Select a chat to start messaging</h1>
+          <h1 className='flex justify-center items-center text-lg font-medium'>Select a chat to start messaging !</h1>
         )}
       </div>
     </div>

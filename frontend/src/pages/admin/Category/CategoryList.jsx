@@ -9,7 +9,7 @@ import { getAllCategories } from '../../../redux/action/Categories'
 import AddOrEditCategory from './AddOrEditCategory'
 import { Modal } from '@material-ui/core'
 
-const CategoryList = () => {
+const CategoryLists = () => {
   const dispatch=useDispatch()
   const [showModal, setShowModal] = useState(false)
   const [editCategory,setEditCategory]=useState({})
@@ -98,4 +98,4 @@ const CategoryList = () => {
   )
 }
 
-export default CategoryList
+export default CategoryLists

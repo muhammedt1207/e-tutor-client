@@ -47,6 +47,7 @@ export const googleSignup = createAsyncThunk('user/googleSignup', async (userCre
 export const logout = createAsyncThunk('user/logout', async (_, { rejectedWithValue }) => {
     try {
         const { data } = await axios.delete(`${URL}/auth/logout`, config)
+        console.log(data);
         return data
     } catch (error) {
         return error

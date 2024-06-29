@@ -15,10 +15,10 @@ import VideoUpload from '../../util/VideoUploed';
 const MessageInput = ({ chatId, recieversId, onMessageSent }) => {
   const [message, setMessage] = useState('');
   const { user } = useSelector((state) => state.user);
-  const  {socket}  = useSocket();
+  const { socket } = useSocket();
   const [typing, setTyping] = useState(false);
   const [fileUploading, setFileUploading] = useState(false);
-  const [fileType, setFileType] = useState(null);
+  const [fileType, setFileType] = useState('text');
   const [fileUrl, setFileUrl] = useState(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState('');
@@ -29,11 +29,12 @@ const MessageInput = ({ chatId, recieversId, onMessageSent }) => {
       socket.emit('joinRoom', chatId);
     }
   }, [socket, chatId]);
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (typing) {
         if (socket) {
-          socket.emit('stopTyping', { roomId: chatId, sender: user._id });
+          socket.emit('stopTyping', { receiverId: recieversId, sender: user._id });
           setTyping(false);
         }
       }
@@ -47,7 +48,7 @@ const MessageInput = ({ chatId, recieversId, onMessageSent }) => {
     if (!typing) {
       setTyping(true);
       if (socket) {
-        socket.emit('typing', { roomId: chatId, sender: user._id });
+        socket.emit('typing', { receiverId: recieversId, sender: user._id });
       }
     }
   };
@@ -67,7 +68,6 @@ const MessageInput = ({ chatId, recieversId, onMessageSent }) => {
           return;
         }
 
-        // Check file size (15MB limit)
         if (file.size > 15 * 1024 * 1024) {
           toast.error('File size exceeds 15MB limit');
           return;
@@ -75,7 +75,6 @@ const MessageInput = ({ chatId, recieversId, onMessageSent }) => {
 
         setFileUploading(true);
 
-        // Determine file type
         let type;
         if (file.type.startsWith('image/')) {
           type = 'image';
@@ -163,7 +162,7 @@ const MessageInput = ({ chatId, recieversId, onMessageSent }) => {
       onMessageSent(newMessage);
       setMessage('');
       setFileUrl(null);
-      setFileType(null);
+      setFileType('text');
       if(socket){
         socket.emit('stopTyping', { roomId: chatId, sender: user._id });
       }
@@ -176,7 +175,7 @@ const MessageInput = ({ chatId, recieversId, onMessageSent }) => {
 
   const handleRemoveFile = () => {
     setFileUrl(null);
-    setFileType(null);
+    setFileType('text');
     setMessage('');
   };
 
@@ -237,7 +236,7 @@ const MessageInput = ({ chatId, recieversId, onMessageSent }) => {
           />
         </div>
       )}
-        {fileUploading && <span className="">Uploading...</span>}
+      {fileUploading && <span className="">Uploading...</span>}
       <div className="flex items-center relative">
         <PaperClipIcon className="w-8 ms-2 cursor-pointer absolute text-gray-400" onClick={handleFileUpload} />
         <BiHappyHeartEyes className="text-3xl cursor-pointer absolute ms-10 text-gray-400" onClick={toggleEmojiPicker} />
@@ -245,7 +244,7 @@ const MessageInput = ({ chatId, recieversId, onMessageSent }) => {
           type="text"
           placeholder="Your message"
           className="input input-bordered flex-1 pl-20 pr-24"
-          value={message}
+          value={fileType === 'text' ? message : ''}
           onChange={handleInputChange}
         />
         <button
