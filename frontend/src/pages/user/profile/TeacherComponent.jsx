@@ -26,16 +26,16 @@ const TeacherComponent = () => {
   const fetchMessages = async (chatId) => {
     try {
       const res = await axios.get(`${URL}/chat/${chatId}`);
-      console.log(res.data.data,'<><><<<<><><><>><<><>><><><>>>>>>><><><><><><><><');
       const fetchedMessages = res.data.data.messages.map((message) => ({
         id: message._id,
-        sender: message.sender.userName,
-        senderId:message.sender._id,
-        content: message.content,
-        contentType:message.contentType,
-        time: new Date(message.createdAt).toLocaleTimeString(),
-        seen: message.receiverSeen ,
-      }));
+        sender: message?.sender.userName,
+        senderId:message?.sender._id,
+        content: message?.content,
+        contentType:message?.contentType,
+        time: new Date(message?.createdAt).toLocaleTimeString(),
+        seen:message?.recieverSeen||true,
+      }
+    ));
       setMessages(fetchedMessages);
     } catch (error) {
       console.error('Error fetching messages:', error);

@@ -3,12 +3,14 @@ import paymentSuccessImg from '../../../../assets/paymentSuccess.jpg';
 import { useNavigate } from 'react-router-dom';
 import { URL } from '../../../../Common/api';
 import axios from 'axios';
+import { useSocket } from '../../../../contexts/SocketContext';
 
 const PaymentSuccess = () => {
   const items = localStorage.getItem('data');
   const [courseId, setCourseId] = useState('');
   const data = JSON.parse(items);
   console.log(data, 'resp');
+  const {socket}=useSocket()
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,6 +27,11 @@ const PaymentSuccess = () => {
     try {
       const response = await axios.post(`${URL}/payment/savePayment`, data);
       console.log(response, 'save payment response');
+      socket.emit('sendNotification', {
+        recipientId: '66352c6fabeff6893a9401da', 
+        content: `Course ${data.courseName} is Purchased `,
+        type: 'coursePurchase'
+      });
       localStorage.removeItem('data');
     } catch (error) {
       console.error('Error saving payment:', error);

@@ -27,6 +27,7 @@ const ChatHeader = ({ user }) => {
       };
 
       const handleUserOnline = (onlineUsers) => {
+        console.log(onlineUsers,'this online users...');
         setOnlineStatus(onlineUsers.includes(user.chat.receiverId));
       };
 

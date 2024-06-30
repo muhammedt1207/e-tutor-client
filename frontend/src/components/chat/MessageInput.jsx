@@ -226,7 +226,7 @@ const MessageInput = ({ chatId, recieversId, onMessageSent }) => {
               Your browser does not support the video tag.
             </video>
           ) : (
-            <audio src={fileUrl} controls className="w-full">
+            <audio src={message} controls className="w-full p-2 ">
               Your browser does not support the audio element.
             </audio>
           )}

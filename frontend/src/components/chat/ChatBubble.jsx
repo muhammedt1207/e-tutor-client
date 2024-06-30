@@ -66,6 +66,7 @@ const ChatBubble = ({ messages, setMessages, selectedChat }) => {
 
   const handleReadReceipt = (messageId) => {
     console.log('handle read message :',messageId,selectedChat.chat);
+    
     socket.emit('messageSeen', { messageId, chatId: selectedChat.chat.chatId,recieverId:selectedChat.chat.receiverId });
   };
 
@@ -101,13 +102,13 @@ const ChatBubble = ({ messages, setMessages, selectedChat }) => {
         );
       case 'audio':
         return (
-          <audio
+          <video
             src={message.content}
             controls
-            className=""
+            className="h-12 w-72"
           >
             Your browser does not support the audio element.
-          </audio>
+          </video>
         );
       default:
         return <div>{message.content}</div>;
@@ -117,9 +118,9 @@ const ChatBubble = ({ messages, setMessages, selectedChat }) => {
   return (
     <div className="flex-1 p-4 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 200px)' }}>
       {messages && messages.map((message) => (
-        <div key={message.id} className={`chat ${message.senderId === user._id ? 'chat-end' : 'chat-start'} mb-4`}>
-          <div className={`chat-bubble ${message.senderId === user._id ? 'bg-black text-white' : 'bg-gray-700 text-white'}`}>
-            <div className="font-bold">{message.senderId === user._id ? 'You' : message.sender}</div>
+        <div key={message.id} className={`chat ${message?.senderId === user._id ? 'chat-end' : 'chat-start'} mb-4`}>
+          <div className={`chat-bubble ${message?.senderId === user._id ? 'bg-black text-white' : 'bg-gray-700 text-white'}`}>
+            <div className="font-bold">{message?.senderId === user._id ? 'You' : message?.sender}</div>
             {renderContent(message)}
             <div className="text-xs text-gray-300 flex justify-between mt-2">
               <span>{message.time}</span>

@@ -11,6 +11,7 @@ import { FaTruckLoading } from 'react-icons/fa';
 import CategoryList from './pages/user/courses/components/CategoryList.jsx';
 import Instructors from './pages/admin/instructors/Instructors.jsx';
 import CategoryLists from './pages/admin/Category/CategoryList.jsx';
+import Footer from './components/Footer.jsx';
 
 const Signup = lazy(() => import('./pages/auth/Signup.jsx'));
 const UserHome = lazy(() => import('./pages/user/UserHome.jsx'));
@@ -107,8 +108,9 @@ function App() {
           <Route path='/call' element={<VideoCallPage />} />
           <Route path='/membership/paymentSuccess' element={<MemberShipSuccess />} />
           {/* Instructor Routes */}
-          <Route path='/instructor' element={<DashBoard />} />
+      <Route path='/instructor' element={<DashBoard />} />
         </Routes>
+          <Footer/>
       </Suspense>
     </BrowserRouter>
   );
