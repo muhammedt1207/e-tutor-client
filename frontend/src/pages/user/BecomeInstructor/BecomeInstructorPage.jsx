@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import TutorImg from '../../assets/tutor.png'
-import UserNavbar from '../../components/UserNavbar'
-import TopNavbar from '../../components/TopNavbar'
+import TutorImg from '../../../../src/assets/tutor.png'
 import BecomeInstructorForm from './BecomeInstructorForm'
 const BecomeInstructorPage = () => {
 
