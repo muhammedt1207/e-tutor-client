@@ -17,7 +17,7 @@ const Signup = lazy(() => import('./pages/auth/Signup.jsx'));
 const UserHome = lazy(() => import('./pages/user/UserHome.jsx'));
 const Login = lazy(() => import('./pages/auth/Login.jsx'));
 const ForgetPassword = lazy(() => import('./pages/auth/ForgetPassword.jsx'));
-const BecomeInstructorPage = lazy(() => import('./pages/user/BecomeInstructorPage.jsx'));
+const BecomeInstructorPage = lazy(() => import('./pages/user/BecomeInstructor/BecomeInstructorPage.jsx'));
 const UserProfile = lazy(() => import('./pages/user/profile/UserProfile.jsx'));
 const Courses = lazy(() => import('./pages/user/courses/Courses.jsx'));
 const CourseView = lazy(() => import('./pages/user/courses/CourseView.jsx'));
@@ -132,6 +132,7 @@ function AdminRoutes() {
     </Routes>
   );
 }
+
 
 function InstrucorRoutes() {
   return (

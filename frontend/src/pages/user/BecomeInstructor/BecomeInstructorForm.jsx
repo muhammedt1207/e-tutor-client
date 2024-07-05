@@ -3,11 +3,11 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
-import { instructorApplication } from '../../redux/action/instructorAction';
+import { instructorApplication } from '../../../redux/action/instructorAction';
 import { useNavigate } from 'react-router-dom';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import toast from 'react-hot-toast';
-import ImageUpload from '../../util/ImageUpload';
+import ImageUpload from '../../../util/ImageUpload';
 
 const BecomeInstructorForm = () => {
     const [idFile, setIdFile] = useState(null);

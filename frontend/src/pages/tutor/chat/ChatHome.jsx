@@ -25,13 +25,13 @@ const ChatHome = () => {
   const fetchMessages = async (chatId) => {
     try {
       const res = await axios.get(`${URL}/chat/${chatId}`);
-      console.log(res.data.data,'<><><<<<><><><>><<><>><><><>>>>>>><><><><><><><><');
+      console.log(res.data.data, '<><><<<<><><><>><<><>><><><>>>>>>><><><><><><><><');
       const fetchedMessages = res.data.data.messages.map((message) => ({
         id: message._id,
         sender: message.sender.userName,
-        senderId:message.sender._id,
+        senderId: message.sender._id,
         content: message.content,
-        contentType:message.contentType||'text',
+        contentType: message.contentType || 'text',
         time: new Date(message.createdAt).toLocaleTimeString(),
         seen: message.receiverSeen ? 1 : 0,
       }));
@@ -44,22 +44,22 @@ const ChatHome = () => {
 
   return (
     <div className="flex h-screen">
-        <SideBar/>
-        <div className='sm:rounded-lg flex lg:ml-44 ml-52 w-[85vw] p-5 border shadow-md h-full pe-4 ps-16'>
-
-      
-      <ChatersList onUserSelect={handleUserSelect} />
-      <div className="flex-1 flex flex-col">
-        {selectedChat ? (
-          <>
-            <ChatHeader user={selectedChat} />
-            <ChatBubble selectedChat={selectedChat} setMessages={setMessages} messages={messages} />
-            <MessageInput chatId={selectedChat.chat.chatId} recieversId={selectedChat.chat.receiverId} onMessageSent={handleNewMessage}  />
-          </>
-        ) : (
-          <h1>Select a chat to start messaging</h1>
-        )}
-      </div>
+      <SideBar />
+      <div className='sm:rounded-lg flex lg:ml-44 ml-52 w-[85vw] p-5 border shadow-md h-full pe-4 ps-16'>
+        <ChatersList onUserSelect={handleUserSelect} />
+        <div className="flex-1 flex flex-col">
+          {selectedChat ? (
+            <>
+              <ChatHeader user={selectedChat} />
+              <ChatBubble selectedChat={selectedChat} setMessages={setMessages} messages={messages} />
+              <MessageInput chatId={selectedChat.chat.chatId} recieversId={selectedChat.chat.receiverId} onMessageSent={handleNewMessage} />
+            </>
+          ) : (
+            <div className='flex justify-center items-center'>
+              <h1 className='font-semibold'>Select a chat to start messaging !</h1>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

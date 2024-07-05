@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: etutorfrontend-deployment
+  labels:
+    app: etutorfrontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: etutorfrontend
+  template:
+    metadata:
+      labels:
+        app: etutorfrontend
+    spec:
+      containers:
+        - name: etutorfrontend
+          image: muhammedt1207/etutor-client:latest
+          ports:
+            - containerPort: 5173
+          envFrom:
+            - configMapRef:
+                name: etutorfrontend-config

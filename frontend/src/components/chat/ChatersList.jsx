@@ -103,7 +103,7 @@ const ChatersList = ({ onUserSelect }) => {
   }
 
   return (
-    <div className="w-2/6 bg-gray-100 p-4">
+    <div className=" bg-gray-100 p-4">
       <div className="flex items-center mb-4">
         <input
           type="text"
@@ -128,7 +128,7 @@ const ChatersList = ({ onUserSelect }) => {
               <div className="text-sm text-gray-600">{chat.lastMessage}</div>
               <div className="text-xs text-gray-500">{chat.time}</div>
             </div>
-            <div>
+            <div> 
               {onlineUsers.includes(chat.receiverId) ? (
                 <span className="text-green-500">Online</span>
               ) : (

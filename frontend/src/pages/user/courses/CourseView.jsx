@@ -42,6 +42,7 @@ const CourseDetailPage = () => {
                     setVideo(result.payload.data.trailer);
                 }
                 if (user?._id) {
+                    console.log('checking enrollments....');
                     checkEnrollment(id, user._id);
                 }
             } catch (error) {
@@ -56,7 +57,7 @@ const CourseDetailPage = () => {
         try {
           const response = await axios.get(`${URL}/course/enrollment/check`, { params: { courseId, userId } });
           const { data } = response.data;
-          
+          console.log(data);
           if (data.isEnrolled[0]) {
             const enrollmentData = data.isEnrolled[1][0];
       
@@ -144,8 +145,9 @@ const CourseDetailPage = () => {
                                 Your browser does not support the video tag.
                             </video>
                         </div>
+                        <h1 className='text-4xl font-bold p-5 '>{course.title}</h1>
                         {isPurchased && (
-                            <div className='block lg:hidden w-full'>
+                            <div className='block lg:hidden w-full h-auto '>
                                 {course.lessons ? (
                                     <LessonList lessons={course.lessons} onSubLessonClick={(videoUrl) => setVideo(videoUrl)} courseId={course._id}
                                         userId={user._id} />
@@ -154,7 +156,6 @@ const CourseDetailPage = () => {
                                 )}
                             </div>
                         )}
-                        <h1 className='text-4xl font-bold p-5 '>{course.title}</h1>
 
                         <div className='flex pt-10 justify-between w-4/6'>
                             <div className='w-full'>
@@ -169,7 +170,7 @@ const CourseDetailPage = () => {
                         </div>
 
                     </div>
-                    <div className='w-full lg:w-1/3'>
+                    <div className='w-full lg:w-1/3 mx-5'>
                         {isPurchased ? (
                             <div className='hidden lg:block'>
                                 {course.lessons ? (

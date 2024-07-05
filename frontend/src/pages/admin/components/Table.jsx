@@ -20,7 +20,10 @@ const Table = ({ customer,index }) => {
         {/* <StatusComponent status={customer.isActive ? "Active" : "Blocked"} /> */}
       </td>
       <td className="admin-table-row px-20 ml-28 ">
-        <p className="line-clamp-1 ml-40">{customer.profession[0]}</p>
+        <p className="line-clamp-1 ml-4">{customer.totalSales}</p>
+      </td>
+      <td className="admin-table-row px-20 ml-28 ">
+        <p className="line-clamp-1 ml-28">{customer.profession[0]}</p>
       </td>
       {/* <td className="admin-table-row">
         {customer.createdAt

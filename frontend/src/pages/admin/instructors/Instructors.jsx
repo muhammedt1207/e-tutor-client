@@ -59,11 +59,28 @@ const Instructors = () => {
   };
 
   const loadData = async () => {
-    const { data } = await axios.get(`${URL}/user/acceptedInstructor`);
-    const customerData = data.data;
-    setInstructors(customerData);
-    setTotalAvailableCustomers(data.totalAvailableCustomers);
+    try {
+      const { data: instructorData } = await axios.get(`${URL}/user/acceptedInstructor`);
+      const { data: salesData } = await axios.get(`${URL}/payment/getTotalSalesByIstrutor`);
+      
+      const instructors = instructorData.data;
+      const sales = salesData.data;
+      console.log(sales,instructors);
+      const mergedData = instructors.map(instructor => {
+        const instructorSales = sales.find(sale => sale.instructorRef === instructor.email) || { totalSales: 0 };
+        return {
+          ...instructor,
+          totalSales: instructorSales.totalSales,
+        };
+      });
+      console.log(mergedData,'*****');
+      setInstructors(mergedData);
+      setTotalAvailableCustomers(instructorData.totalAvailableCustomers);
+    } catch (error) {
+      console.error('Error loading data:', error);
+    }
   };
+  
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -101,6 +118,7 @@ const Instructors = () => {
                 <tr className="border-b border-gray-200 text-orange-500">
                   <th className="admin-table-head w-20">No</th>
                   <th className="admin-table-head">Email</th>
+                  <th>Total Profit</th>
                   <th className="admin-table-head">Profession</th>
                 </tr>
               </thead>

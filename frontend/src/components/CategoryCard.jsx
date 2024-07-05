@@ -6,7 +6,7 @@ import { getAllCategories } from '../redux/action/Categories';
 
 const TopCategories = ({ category }) => {
   return (
-    <div className="bg-white shadow-md w-full rounded-lg p-4 m-2 lg:w-1/4 px-28 lg:justify-center">
+    <div className="bg-white shadow-md w-full h-20  rounded-lg p-4 m-2 lg:w-1/4 px-28 lg:justify-center">
       <h3 className="text-lg font-bold mb-2">{category.categoryName}</h3>
       {/* <p className="text-gray-600">{category.count} Courses</p> */}
     </div>

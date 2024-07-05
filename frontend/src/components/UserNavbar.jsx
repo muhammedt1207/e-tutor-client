@@ -15,7 +15,9 @@ const UserNavbar = ({ toggleSidebar }) => {
     <div className='flex border'>
 
       <div className='w-1/2 flex items-center'>
-       <Link to='/'> <img className='w-16 ps-4' src={logo} alt="" /></Link>
+       <Link to='/'>
+         <img className='w-16 ps-4' src={logo} alt="" />
+         </Link>
         <h1 className='text-3xl font-semibold '>E-tutor</h1>
       </div>
       <div className='w-1/2 justify-end flex items-center px-4'>
