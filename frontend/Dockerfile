@@ -10,6 +10,6 @@ COPY . .
 
 RUN yarn run build
 
-EXPOSE 5173
+EXPOSE 3001
 
 CMD ["yarn", "run", "dev"]
