@@ -12,11 +12,8 @@ export default defineConfig({
   define:{
     global:{}
   },
-  server: {
-    port: 3001 // Change this to the desired port
-  },
   build: {
-    chunkSizeWarningLimit: 2000,
+    chunkSizeWarningLimit: 5000,
     rollupOptions: {
       output: {
         manualChunks(id) {
