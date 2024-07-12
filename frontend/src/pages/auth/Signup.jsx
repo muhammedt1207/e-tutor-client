@@ -63,13 +63,13 @@ function Signup() {
                 }
             } else if (result.meta.requestStatus == "rejected") {
                 const errorResponse = result.payload
-                toast.error(errorResponse.response.data.error || "Signup failed!")
+                toast.error(errorResponse?.response.data.error || "Signup failed!")
             }
         } catch (error) {
             console.log(error)
             toast.error("signup failed")
         } finally {
-            loadingg(false)
+            setLoading(false)
         }
 
     };
