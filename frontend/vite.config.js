@@ -12,6 +12,10 @@ export default defineConfig({
   define:{
     global:{}
   },
+  server: {
+    port: 80, 
+    host: '0.0.0.0' 
+  },
   build: {
     chunkSizeWarningLimit: 5000,
     rollupOptions: {
