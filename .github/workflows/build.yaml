@@ -29,6 +29,6 @@ jobs:
       - name: Build and Push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: ../frontend/Dockerfile
           push: true
           tags: muhammedt1207/etutor-client:latest
