@@ -12,8 +12,6 @@ const InstructorDetails = ({ instroctorId }) => {
       try {
         const response = await axios.get(`${URL}/auth/findUser/${instroctorId}`);
         const userResponse = await axios.get(`${URL}/user/user/${instroctorId}`);
-        console.log(response, 'Response from auth/findUser');
-        console.log(userResponse, 'Response from user/user');
 
         const combinedData = {
           ...response.data.data,

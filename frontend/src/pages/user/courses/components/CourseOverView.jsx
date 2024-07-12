@@ -2,7 +2,6 @@ import React from 'react'
 import { MdOutlineCheckCircle } from 'react-icons/md';
 
 const CourseOverView = ({course}) => {
-    console.log(course,'course data in course overview');
   return (
     <>
         <div className='flex pt-10 justify-between w-full'>

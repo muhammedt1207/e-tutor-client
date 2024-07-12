@@ -22,7 +22,6 @@ const PaymentSuccess = () => {
   }, []);
 
   const postingData = async () => {
-    console.log(data, 'posting data');
     setCourseId(data.courseId);
     try {
       const response = await axios.post(`${URL}/payment/savePayment`, data);

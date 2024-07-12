@@ -5,7 +5,7 @@ on:
     branches: ['main']
     paths:
       - "frontend/**"
-  workflow_dispatch:  
+  workflow_dispatch:  # Add this line correctly indented
 
 jobs:
   push_to_registry:
@@ -29,6 +29,6 @@ jobs:
       - name: Build and Push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: ../frontend/Dockerfile
+          context: ./frontend  # Set the correct context
           push: true
           tags: muhammedt1207/etutor-client:latest
