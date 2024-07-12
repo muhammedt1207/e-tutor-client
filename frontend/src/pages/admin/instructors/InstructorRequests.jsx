@@ -18,11 +18,8 @@ const InstructorRequests = () => {
           `${URL}/user/instructor`
          ,config 
         );
-        console.log(data,"///////////////")
         const customerData = data.data
-        console.log(customerData,'..............');
         setRequests(customerData);
-        console.log(Requests,'z6zz6666^^^^^^^^^^^^^^^^^');
       };
       
       useEffect(() => {
