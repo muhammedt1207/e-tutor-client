@@ -20,13 +20,10 @@ const CategoryLists = () => {
   useEffect(()=>{
    const result= dispatch(getAllCategories())
     .then(()=>{
-      console.log(result,'......');
-      console.log(data,'category all datas',error);
     })
     console.log(data,'data in useEffect');
   },[showModal,showTable])
   const modal=async(data)=>{
-    console.log(data,'+++++++++++++++++++++++++++++++++');
     setShowTable(false)
     setShowModal(true)
     setEditCategory(data)

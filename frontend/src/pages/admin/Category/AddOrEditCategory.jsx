@@ -19,7 +19,6 @@ const AddOrEditCategory = ({ category,handleModal }) => {
         categoryName: category?.categoryName || '',
         status: category?.status || ''
     };
-    console.log(category, '++++++++++===++++=======+++==++==+++');
     const validationSchema = Yup.object().shape({
         categoryName: Yup.string().required('Category name is required'),
         status: Yup.string().required('Status is required')
@@ -44,7 +43,6 @@ const AddOrEditCategory = ({ category,handleModal }) => {
         } else {
             result = await dispatch(createCategories(data))
         }
-        console.log(result,'updated or edited result');
         if (result.meta.requestStatus === 'fulfilled') {
             toast.success('category added')
             console.log('category added successfully ');
@@ -59,7 +57,6 @@ const AddOrEditCategory = ({ category,handleModal }) => {
     };
 
     const imgHandle = async (image) => {
-        console.log(image, 'handle submit get that image url');
         setImg(image)
     };
     return (
