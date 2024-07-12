@@ -4,13 +4,13 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  resolve:{
-    alias:{
-      src:'./src'
+  resolve: {
+    alias: {
+      src: './src'
     }
   },
-  define:{
-    global:{}
+  define: {
+    global: {}
   },
   build: {
     chunkSizeWarningLimit: 5000,
@@ -26,5 +26,11 @@ export default defineConfig({
         }
       }
     }
+  },
+  server: {
+    host: true,
+    strictPort: true,
+    port: 5173
+
   }
 })
