@@ -12,6 +12,9 @@ export default defineConfig({
   define: {
     global: {}
   },
+  optimizeDeps: {
+    include: ['react', 'react-dom']
+  },
   build: {
     chunkSizeWarningLimit: 5000,
     rollupOptions: {
