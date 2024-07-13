@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import Notification from './Notification'; // Adjust the path as per your project structure
 import { useSelector } from 'react-redux';
 import io from 'socket.io-client';
 import toast from 'react-hot-toast';
@@ -25,7 +24,7 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     if (user && user._id) {
-      const newSocket = io("http://localhost:8087", {
+      const newSocket = io("https://gizmocart.shop", {
         query: { userId: user._id },
         withCredentials: true,
       });
