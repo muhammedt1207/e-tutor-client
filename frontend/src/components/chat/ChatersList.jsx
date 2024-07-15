@@ -7,6 +7,7 @@ import { useSocket } from '../../contexts/SocketContext';
 
 const ChatersList = ({ onUserSelect }) => {
   const [chats, setChats] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const { user } = useSelector((state) => state.user);
   const { socket } = useSocket();
   const [isLoading, setIsLoading] = useState(true);
@@ -40,7 +41,7 @@ const ChatersList = ({ onUserSelect }) => {
             profileImageUrl: participant.profileImageUrl,
             receiverId: participant._id,
             senderId: user._id,
-            lastSeen: participantLastSeen ? new Date(participantLastSeen.seenAt).toLocaleTimeString() : 'Never'
+            lastSeen: participantLastSeen ? new Date(participantLastSeen.seenAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }) : 'Never'
           };
         });
 
@@ -83,11 +84,11 @@ const ChatersList = ({ onUserSelect }) => {
     fetchChattersList();
 
     if (isConnected && typeof socket.on === 'function') {
-      socket.on('new message', ({ chatId, message }) => {
+      socket.on('newMessage', ({ obj }) => {
         setChats(prevChats => {
           const updatedChats = prevChats.map(chat =>
-            chat.chatId === chatId
-              ? { ...chat, lastMessage: message.content, time: new Date(message.createdAt), seen: chat.seen + 1 }
+            chat.chatId === obj.chatId
+              ? { ...chat, lastMessage: obj.content, time: new Date(obj.time), seen: chat.seen + 1 }
               : chat
           );
           updatedChats.sort((a, b) => b.time - a.time);
@@ -98,7 +99,7 @@ const ChatersList = ({ onUserSelect }) => {
 
     return () => {
       if (isConnected && typeof socket.off === 'function') {
-        socket.off('new message');
+        socket.off('newMessage');
       }
     };
   }, [socket, isConnected]);
@@ -107,6 +108,10 @@ const ChatersList = ({ onUserSelect }) => {
     return <div>Loading...</div>;
   }
 
+  const filteredChats = chats.filter(chat =>
+    chat.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="bg-gray-100 p-4">
       <div className="flex items-center mb-4">
@@ -114,10 +119,12 @@ const ChatersList = ({ onUserSelect }) => {
           type="text"
           placeholder="Search"
           className="input input-bordered w-full"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
       <div>
-        {chats.map((chat, index) => (
+        {filteredChats.map((chat, index) => (
           <div
             key={index}
             className="flex items-center p-5 bg-white shadow-sm mb-2 rounded-lg cursor-pointer"
@@ -131,14 +138,14 @@ const ChatersList = ({ onUserSelect }) => {
             <div className="flex-1">
               <div className="font-bold">{chat.name}</div>
               <div className="text-sm text-gray-600 sm:hidden">{chat.lastMessage}</div>
-              <div className="text-xs text-gray-500 sm:hidden">{chat.time.toLocaleTimeString()}</div>
+              <div className="text-xs text-gray-500 sm:hidden">{chat.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</div>
             </div>
             <div className='sm:hidden'>
               {onlineUsers.includes(chat.receiverId) ? (
                 <span className="text-green-500">Online</span>
               ) : (
-                <span className="text-gray-500">  
-                 {chat.lastSeen === 'Never' ? 'Never' : chat.lastSeen.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+                <span className="text-gray-500">
+                  {chat.lastSeen === 'Never' ? 'Never' : chat.lastSeen}
                 </span>
               )}
             </div>

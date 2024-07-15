@@ -61,8 +61,8 @@ function App() {
     <BrowserRouter>
       {user && user.role === 'student' ? <TopNavbar  /> : <UserNavbar />}
       <Suspense fallback={
-        <div className='flex justify-center items-center'>
-          <FaTruckLoading className='loading-spinner' />
+        <div className='flex justify-center items-center bg-slate-50 w-screen h-screen'>
+          <FaTruckLoading className='loading-spinner w-20' />
         </div>}>
         <Routes>
           <Route
