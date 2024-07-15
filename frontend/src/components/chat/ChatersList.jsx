@@ -123,12 +123,12 @@ const ChatersList = ({ onUserSelect }) => {
               alt={chat.name}
               className="w-10 h-10 rounded-full mr-4 object-cover"
             />
-            <div className="flex-1">
+            <div className="flex-1 ">
               <div className="font-bold">{chat.name}</div>
-              <div className="text-sm text-gray-600">{chat.lastMessage}</div>
-              <div className="text-xs text-gray-500">{chat.time}</div>
+              <div className="text-sm text-gray-600 sm:hidden">{chat.lastMessage}</div>
+              <div className="text-xs text-gray-500 sm:hidden">{chat.time}</div>
             </div>
-            <div> 
+            <div className='sm:hidden'> 
               {onlineUsers.includes(chat.receiverId) ? (
                 <span className="text-green-500">Online</span>
               ) : (

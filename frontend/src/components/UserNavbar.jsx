@@ -18,7 +18,7 @@ const UserNavbar = ({ toggleSidebar }) => {
        <Link to='/'>
          <img className='w-16 ps-4' src={logo} alt="" />
          </Link>
-        <h1 className='text-3xl font-semibold '>E-tutor</h1>
+        <h1 className='text-3xl font-semibold '>E-tutor Frontend</h1>
       </div>
       <div className='w-1/2 justify-end flex items-center px-4'>
         {user ? (
