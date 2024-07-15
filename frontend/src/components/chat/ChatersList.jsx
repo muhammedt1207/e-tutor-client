@@ -163,10 +163,10 @@ const ChatersList = ({ onUserSelect }) => {
             />
             <div className="flex-1">
               <div className="font-bold">{chat.name}</div>
-              <div className="text-sm text-gray-600 sm:hidden">{renderLastMessage(chat.lastMessage)}</div>
-              <div className="text-xs text-gray-500 sm:hidden">{chat.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</div>
+              <div className="text-sm text-gray-600 ">{renderLastMessage(chat.lastMessage)}</div>
+              <div className="text-xs text-gray-500 ">{chat.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</div>
             </div>
-            <div className='sm:hidden'>
+            <div className=''>
               {onlineUsers.includes(chat.receiverId) ? (
                 <span className="text-green-500">Online</span>
               ) : (
