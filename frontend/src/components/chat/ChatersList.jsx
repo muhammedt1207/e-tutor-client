@@ -44,7 +44,7 @@ const ChatersList = ({ onUserSelect }) => {
             lastSeen: participantLastSeen ? new Date(participantLastSeen.seenAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }) : 'Never'
           };
         });
-
+        console.log(fetchedChats,'fetched chats....');
         // Sort chats based on the last message time
         fetchedChats.sort((a, b) => b.time - a.time);
 
@@ -92,6 +92,7 @@ const ChatersList = ({ onUserSelect }) => {
               : chat
           );
           updatedChats.sort((a, b) => b.time - a.time);
+          console.log(updatedChats,'updated chats....');
           return updatedChats;
         });
       });
