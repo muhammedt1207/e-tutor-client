@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PurchasedCourses from './components/PurchasedCourses';
 import TeacherComponent from './TeacherComponent';
+import SubscriptionDetails from './SubscriptionDetails';
 
 // Dummy components for demonstration purposes
 const DashboardComponent = () => <div>Dashboard Content</div>;
@@ -26,8 +27,8 @@ const UserProfile = () => {
                 return <PurchasedCourses user={user}/>;
             case 'teacher':
                 return <TeacherComponent />;
-            case 'message':
-                return <MessageComponent />;
+            case 'MemberShip':
+                return <SubscriptionDetails />;
             case 'wishlist':
                 return <WishlistComponent />;
             case 'settings':
@@ -80,13 +81,13 @@ const UserProfile = () => {
                     >
                         Teacher
                     </button>
-                    {/* <button
-                        className={`toggle-btn ${selectedOption === 'message' ? 'border-b-4 border-orange-500' : ''}`}
+                    <button
+                        className={`toggle-btn ${selectedOption === 'MemberShip' ? 'border-b-4 border-orange-500' : ''}`}
                         onClick={() => setSelectedOption('message')}
                     >
-                        Message
+                        MemberShip
                     </button>
-                    <button
+                    {/*<button
                         className={`toggle-btn ${selectedOption === 'settings' ? 'border-b-4 border-orange-500' : ''}`}
                         onClick={() => setSelectedOption('settings')}
                     >

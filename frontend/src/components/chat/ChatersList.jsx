@@ -8,7 +8,7 @@ import { useSocket } from '../../contexts/SocketContext';
 const ChatersList = ({ onUserSelect }) => {
   const [chats, setChats] = useState([]);
   const { user } = useSelector((state) => state.user);
-  const {socket}  = useSocket();
+  const { socket } = useSocket();
   const [isLoading, setIsLoading] = useState(true);
   const [isConnected, setIsConnected] = useState(false);
   const [onlineUsers, setOnlineUsers] = useState([]);
@@ -27,11 +27,11 @@ const ChatersList = ({ onUserSelect }) => {
           const participantLastSeen = chat.lastSeen.find(
             (ls) => ls.participant.toString() === participant._id
           );
-  
+
           return {
             name: participant.userName,
             chatId: chat._id,
-            time: new Date(chat.createdAt).toLocaleTimeString(),
+            time: new Date(chat.messages.length > 0 ? chat.messages[chat.messages.length - 1].createdAt : chat.createdAt),
             seen: chat.messages.length,
             lastMessage:
               chat.messages.length > 0
@@ -39,10 +39,13 @@ const ChatersList = ({ onUserSelect }) => {
                 : 'No messages yet',
             profileImageUrl: participant.profileImageUrl,
             receiverId: participant._id,
-            senderId:user._id,
+            senderId: user._id,
             lastSeen: participantLastSeen ? new Date(participantLastSeen.seenAt).toLocaleTimeString() : 'Never'
           };
         });
+
+        // Sort chats based on the last message time
+        fetchedChats.sort((a, b) => b.time - a.time);
 
         setChats(fetchedChats);
         setIsLoading(false);
@@ -59,7 +62,7 @@ const ChatersList = ({ onUserSelect }) => {
 
   useEffect(() => {
     console.log('Socket changed:', socket);
-    
+
     if (socket && typeof socket.connected === 'boolean') {
       setIsConnected(socket.connected);
       socket.on('connect', () => setIsConnected(true));
@@ -81,13 +84,15 @@ const ChatersList = ({ onUserSelect }) => {
 
     if (isConnected && typeof socket.on === 'function') {
       socket.on('new message', ({ chatId, message }) => {
-        setChats(prevChats =>
-          prevChats.map(chat =>
+        setChats(prevChats => {
+          const updatedChats = prevChats.map(chat =>
             chat.chatId === chatId
-              ? { ...chat, lastMessage: message.content, time: message.time, seen: chat.seen + 1 }
+              ? { ...chat, lastMessage: message.content, time: new Date(message.createdAt), seen: chat.seen + 1 }
               : chat
-          )
-        );
+          );
+          updatedChats.sort((a, b) => b.time - a.time);
+          return updatedChats;
+        });
       });
     }
 
@@ -103,7 +108,7 @@ const ChatersList = ({ onUserSelect }) => {
   }
 
   return (
-    <div className=" bg-gray-100 p-4">
+    <div className="bg-gray-100 p-4">
       <div className="flex items-center mb-4">
         <input
           type="text"
@@ -123,16 +128,18 @@ const ChatersList = ({ onUserSelect }) => {
               alt={chat.name}
               className="w-10 h-10 rounded-full mr-4 object-cover"
             />
-            <div className="flex-1 ">
+            <div className="flex-1">
               <div className="font-bold">{chat.name}</div>
               <div className="text-sm text-gray-600 sm:hidden">{chat.lastMessage}</div>
-              <div className="text-xs text-gray-500 sm:hidden">{chat.time}</div>
+              <div className="text-xs text-gray-500 sm:hidden">{chat.time.toLocaleTimeString()}</div>
             </div>
-            <div className='sm:hidden'> 
+            <div className='sm:hidden'>
               {onlineUsers.includes(chat.receiverId) ? (
                 <span className="text-green-500">Online</span>
               ) : (
-                <span className="text-gray-500">Last seen {chat.lastSeen}</span>
+                <span className="text-gray-500">  
+                 {chat.lastSeen === 'Never' ? 'Never' : chat.lastSeen.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+                </span>
               )}
             </div>
             {/* {chat.seen > 0 && (
