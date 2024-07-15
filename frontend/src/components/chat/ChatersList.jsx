@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useSocket } from '../../contexts/SocketContext';
+import { FaImage, FaVideo, FaAudioDescription } from 'react-icons/fa';
 
 const ChatersList = ({ onUserSelect }) => {
   const [chats, setChats] = useState([]);
@@ -29,22 +30,28 @@ const ChatersList = ({ onUserSelect }) => {
             (ls) => ls.participant.toString() === participant._id
           );
 
+          const lastMessage = chat.messages.length > 0
+            ? chat.messages[chat.messages.length - 1]
+            : null;
+
           return {
             name: participant.userName,
             chatId: chat._id,
-            time: new Date(chat.messages.length > 0 ? chat.messages[chat.messages.length - 1].createdAt : chat.createdAt),
+            time: new Date(lastMessage ? lastMessage.createdAt : chat.createdAt),
             seen: chat.messages.length,
-            lastMessage:
-              chat.messages.length > 0
-                ? chat.messages[chat.messages.length - 1].content
-                : 'No messages yet',
+            lastMessage: lastMessage
+              ? {
+                content: lastMessage.content,
+                contentType: lastMessage.contentType,
+              }
+              : { content: 'No messages yet', contentType: 'text' },
             profileImageUrl: participant.profileImageUrl,
             receiverId: participant._id,
             senderId: user._id,
             lastSeen: participantLastSeen ? new Date(participantLastSeen.seenAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }) : 'Never'
           };
         });
-        console.log(fetchedChats,'fetched chats....');
+
         // Sort chats based on the last message time
         fetchedChats.sort((a, b) => b.time - a.time);
 
@@ -88,11 +95,15 @@ const ChatersList = ({ onUserSelect }) => {
         setChats(prevChats => {
           const updatedChats = prevChats.map(chat =>
             chat.chatId === obj.chatId
-              ? { ...chat, lastMessage: obj.content, time: new Date(obj.time), seen: chat.seen + 1 }
+              ? {
+                ...chat,
+                lastMessage: { content: obj.content, contentType: obj.contentType },
+                time: new Date(obj.time),
+                seen: chat.seen + 1
+              }
               : chat
           );
           updatedChats.sort((a, b) => b.time - a.time);
-          console.log(updatedChats,'updated chats....');
           return updatedChats;
         });
       });
@@ -112,6 +123,20 @@ const ChatersList = ({ onUserSelect }) => {
   const filteredChats = chats.filter(chat =>
     chat.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const renderLastMessage = (lastMessage) => {
+    if (lastMessage.contentType === 'text') {
+      return lastMessage.content;
+    } else if (lastMessage.contentType === 'image') {
+      return <><FaImage /> Image</>;
+    } else if (lastMessage.contentType === 'video') {
+      return <><FaVideo /> Video</>;
+    } else if (lastMessage.contentType === 'audio') {
+      return <><FaAudioDescription /> Audio</>;
+    } else {
+      return 'Unknown message type';
+    }
+  };
 
   return (
     <div className="bg-gray-100 p-4">
@@ -138,10 +163,10 @@ const ChatersList = ({ onUserSelect }) => {
             />
             <div className="flex-1">
               <div className="font-bold">{chat.name}</div>
-              <div className="text-sm text-gray-600 ">{chat.lastMessage}</div>
-              <div className="text-xs text-gray-500 ">{chat.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</div>
+              <div className="text-sm text-gray-600 sm:hidden">{renderLastMessage(chat.lastMessage)}</div>
+              <div className="text-xs text-gray-500 sm:hidden">{chat.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</div>
             </div>
-            <div className=''>
+            <div className='sm:hidden'>
               {onlineUsers.includes(chat.receiverId) ? (
                 <span className="text-green-500">Online</span>
               ) : (
