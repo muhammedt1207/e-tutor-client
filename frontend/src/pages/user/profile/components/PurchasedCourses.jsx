@@ -1,11 +1,9 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { URL } from '../../../../Common/api'
 import { Link } from 'react-router-dom'
 
 const PurchasedCourses = ({user}) => {
-  const dispatch=useDispatch()
   const [courses,setCourses]=useState([])
   useEffect(()=>{
     const fetchCourse=async()=>{
@@ -34,7 +32,7 @@ const PurchasedCourses = ({user}) => {
               <Link to={`/course/${course?.courseId?._id}`}>
               <img class="rounded-t-lg" src={course?.courseId?.thumbnail} alt="" />
             <div class="p-5">     
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{course?.courseId?.title}</h5>
+                <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{course?.courseId?.title}</h5>
             
             </div>
               </Link>
