@@ -59,10 +59,10 @@ function App() {
 
   return (
     <BrowserRouter>
-      {user && user.role === 'student' ? <TopNavbar  /> : <UserNavbar />}
+      {user && user.role === 'student' ? <TopNavbar /> : <UserNavbar />}
       <Suspense fallback={
         <div className='flex justify-center items-center bg-slate-50 w-screen h-screen'>
-          <FaTruckLoading className='loading-spinner w-20' />
+          <span className="loading loading-ring loading-lg "></span>
         </div>}>
         <Routes>
           <Route
@@ -108,9 +108,9 @@ function App() {
           <Route path='/call' element={<VideoCallPage />} />
           <Route path='/membership/paymentSuccess' element={<MemberShipSuccess />} />
           {/* Instructor Routes */}
-      <Route path='/instructor' element={<DashBoard />} />
+          <Route path='/instructor' element={<DashBoard />} />
         </Routes>
-          <Footer/>
+        <Footer />
       </Suspense>
     </BrowserRouter>
   );

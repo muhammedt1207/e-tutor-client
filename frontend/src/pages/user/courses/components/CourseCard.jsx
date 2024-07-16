@@ -20,7 +20,7 @@ const CourseCard = ({ course }) => {
                     <div className='flex justify-between'>
                         <button className='bg-red-100 text-red-600 rounded-md p-1'>{course.category.categoryName}</button>
                         <div className='flex items-center'>
-                        <p className='text-orange-500'>{course.amount}</p>
+                        <p className='text-orange-500'>₹{course.amount}</p>
                         {
                             course.isOfferOngoing && course.offerDetails.offer>0&&
                             (<span className='text-green-400 rounded p-1'>{course.offerDetails.offer}% off</span>)

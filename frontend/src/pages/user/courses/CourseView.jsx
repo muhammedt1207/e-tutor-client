@@ -184,7 +184,7 @@ const CourseDetailPage = () => {
                                 <h2 className='text-xl font-semibold'>Buy Course</h2>
                                 <div className='flex justify-between pt-10'>
                                     <h1 className='font-semibold'>SubTotal</h1>
-                                    <h1>{course?.amount || '2500'}</h1>
+                                    <h1>₹ {course?.amount}</h1>
                                 </div>
                                 <Elements stripe={stripePromise}>
                                     <button onClick={handleBuyCourse} className='mt-4 px-4 py-2 my-4 bg-orange-600 text-white rounded-lg'>

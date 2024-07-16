@@ -45,7 +45,10 @@ const TeacherComponent = () => {
 
   return (
     <div className="flex h-screen">
-      <ChatersList onUserSelect={handleUserSelect} />
+      <div className='w-1/4'>
+
+      <ChatersList onUserSelect={handleUserSelect}  />
+      </div>
       <div className="flex-1 flex flex-col">
         {selectedChat ? (
           <>

@@ -99,7 +99,7 @@ const ChatersList = ({ onUserSelect }) => {
                 ...chat,
                 lastMessage: { content: obj.content, contentType: obj.contentType },
                 time: new Date(obj.time),
-                seen: chat.seen + 1
+                seen: true
               }
               : chat
           );
@@ -163,7 +163,7 @@ const ChatersList = ({ onUserSelect }) => {
             />
             <div className="flex-1">
               <div className="font-bold">{chat.name}</div>
-              <div className="text-sm text-gray-600 ">{renderLastMessage(chat.lastMessage)}</div>
+              <div className="text-sm text-gray-600 truncate w-12">{renderLastMessage(chat.lastMessage)}</div>
               <div className="text-xs text-gray-500 ">{chat.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</div>
             </div>
             <div className=''>
@@ -171,7 +171,7 @@ const ChatersList = ({ onUserSelect }) => {
                 <span className="text-green-500">Online</span>
               ) : (
                 <span className="text-gray-500">
-                  {chat.lastSeen === 'Never' ? 'Never' : chat.lastSeen}
+                  {chat.lastSeen == 'Never' ? 'Never' : chat.lastSeen}
                 </span>
               )}
             </div>

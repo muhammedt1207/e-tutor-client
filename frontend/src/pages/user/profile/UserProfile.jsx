@@ -83,7 +83,7 @@ const UserProfile = () => {
                     </button>
                     <button
                         className={`toggle-btn ${selectedOption === 'MemberShip' ? 'border-b-4 border-orange-500' : ''}`}
-                        onClick={() => setSelectedOption('message')}
+                        onClick={() => setSelectedOption('MemberShip')}
                     >
                         MemberShip
                     </button>
