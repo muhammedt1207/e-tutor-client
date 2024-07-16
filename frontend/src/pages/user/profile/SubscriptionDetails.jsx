@@ -18,7 +18,7 @@ const {user}=useSelector(state=>state.user)
     // Replace with your API endpoint
     const fetchSubscriptionDetails = async () => {
       try {
-        const response = await axios.get(`https://gizmocart.shop/api/payment/subscription/${user._id}`);
+        const response = await axios.get(`https://gizmocart.shop/api/payment/subscription/${user.email}`);
         const data = await response.data.data;
         console.log(data,response.data.data)
         setSubscription(data);

@@ -128,18 +128,18 @@ const ChatersList = ({ onUserSelect }) => {
     if (lastMessage.contentType === 'text') {
       return lastMessage.content;
     } else if (lastMessage.contentType === 'image') {
-      return <><FaImage /> Image</>;
+      return <div className='flex items-center'><FaImage /> Image</div>;
     } else if (lastMessage.contentType === 'video') {
-      return <><FaVideo /> Video</>;
+      return <div className='flex items-center'><FaVideo /> Video</div>;
     } else if (lastMessage.contentType === 'audio') {
-      return <><FaAudioDescription /> Audio</>;
+      return <div className='flex items-center'><FaAudioDescription /> Audio</div>;
     } else {
       return 'Unknown message type';
     }
   };
 
   return (
-    <div className="bg-gray-100 p-4">
+    <div className="bg-gray-100 p-4 h-full">
       <div className="flex items-center mb-4">
         <input
           type="text"
@@ -157,14 +157,14 @@ const ChatersList = ({ onUserSelect }) => {
             onClick={() => onUserSelect(chat)}
           >
             <img
-              src={chat.profileImageUrl}
+              src={chat.profileImageUrl || 'https://i.sstatic.net/l60Hf.png'}
               alt={chat.name}
               className="w-10 h-10 rounded-full mr-4 object-cover"
             />
             <div className="flex-1">
               <div className="font-bold">{chat.name}</div>
               <div className="text-sm text-gray-600 truncate w-12">{renderLastMessage(chat.lastMessage)}</div>
-              <div className="text-xs text-gray-500 ">{chat.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</div>
+              {/* <div className="text-xs text-gray-500 ">{chat.time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</div> */}
             </div>
             <div className=''>
               {onlineUsers.includes(chat.receiverId) ? (
