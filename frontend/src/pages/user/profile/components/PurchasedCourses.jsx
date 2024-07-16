@@ -31,10 +31,10 @@ const PurchasedCourses = ({user}) => {
             
               
             <div class="lg:w-1/5  bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">       
-              <Link to={`/course/${course?.courseId._id}`}>
-              <img class="rounded-t-lg" src={course.courseId.thumbnail} alt="" />
+              <Link to={`/course/${course?.courseId?._id}`}>
+              <img class="rounded-t-lg" src={course?.courseId?.thumbnail} alt="" />
             <div class="p-5">     
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{course.courseId.title}</h5>
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{course?.courseId?.title}</h5>
             
             </div>
               </Link>
