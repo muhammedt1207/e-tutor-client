@@ -92,6 +92,7 @@ const ChatersList = ({ onUserSelect }) => {
 
     if (isConnected && typeof socket.on === 'function') {
       socket.on('newMessage', ({ obj }) => {
+        console.log('new messages ',obj);
         setChats(prevChats => {
           const updatedChats = prevChats.map(chat =>
             chat.chatId === obj.chatId
@@ -139,7 +140,7 @@ const ChatersList = ({ onUserSelect }) => {
   };
 
   return (
-    <div className="bg-gray-100 p-4 h-full overflow-y-scroll">
+    <div className="bg-gray-100 p-4 h-full overflow-y-auto">
       <div className="flex items-center mb-4">
         <input
           type="text"
@@ -157,7 +158,7 @@ const ChatersList = ({ onUserSelect }) => {
             onClick={() => onUserSelect(chat)}
           >
             <img
-              src={chat.profileImageUrl || 'https://i.sstatic.net/l60Hf.png'}
+              src={chat.profileImageUrl || `https://i.sstatic.net/l60Hf.png'`}
               alt={chat.name}
               className="w-10 h-10 rounded-full mr-4 object-cover"
             />
