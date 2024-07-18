@@ -13,6 +13,7 @@ import Instructors from './pages/admin/instructors/Instructors.jsx';
 import CategoryLists from './pages/admin/Category/CategoryList.jsx';
 import Footer from './components/Footer.jsx';
 
+const EnrollmentDetails =lazy(() => import('./pages/tutor/enrollments/EnrollmentdeDetails.jsx'));
 const Signup = lazy(() => import('./pages/auth/Signup.jsx'));
 const UserHome = lazy(() => import('./pages/user/UserHome.jsx'));
 const Login = lazy(() => import('./pages/auth/Login.jsx'));
@@ -140,7 +141,7 @@ function InstrucorRoutes() {
       <Route path='/' element={<DashBoard />} />
       <Route index element={<DashBoard />} />
       <Route path='courses' element={<CourseList />} />
-      <Route path='notification' element={<Notifications />} />
+      <Route path='enrollments' element={<EnrollmentDetails />} />
       <Route path='addCourse' element={<AddCourseHome />} />
       <Route path='dashboard' element={<DashBoard />} />
       <Route path='createExam' element={<CreateExam />} />
