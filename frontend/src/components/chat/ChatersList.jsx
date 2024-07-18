@@ -139,7 +139,7 @@ const ChatersList = ({ onUserSelect }) => {
   };
 
   return (
-    <div className="bg-gray-100 p-4 h-full">
+    <div className="bg-gray-100 p-4 h-full overflow-y-scroll">
       <div className="flex items-center mb-4">
         <input
           type="text"

@@ -24,7 +24,7 @@ const SubscriptionDetails = () => {
 
         const instructorEmails = subscriptionData.map(sub => sub.instructorId);
 console.log(instructorEmails,'1111');
-        const instructorResponse = await axios.post(`${URL}/auth/getUsers`, { emails: instructorEmails });
+        const instructorResponse = await axios.post(`${URL}/auth/getUsers`, { userIds: instructorEmails });
         const instructorData = instructorResponse.data.data;
         console.log(instructorResponse,'22222');
 
