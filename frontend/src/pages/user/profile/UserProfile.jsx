@@ -8,10 +8,7 @@ import PurchasedCourses from './components/PurchasedCourses';
 import TeacherComponent from './TeacherComponent';
 import SubscriptionDetails from './SubscriptionDetails';
 
-// Dummy components for demonstration purposes
-const DashboardComponent = () => <div>Dashboard Content</div>;
-const CoursesComponent = () => <div>Courses Content</div>;
-const MessageComponent = () => <div>Message Content</div>;
+
 const WishlistComponent = () => <div>Wishlist Content</div>;
 const SettingsComponent = () => <div>Settings Content</div>;
 
@@ -69,6 +66,8 @@ const UserProfile = () => {
                     >
                         Dashboard
                     </button>
+                    {user?.role=='student' && (
+<>
                     <button
                         className={`toggle-btn ${selectedOption === 'courses' ? 'border-b-4 border-orange-500' : ''}`}
                         onClick={() => setSelectedOption('courses')}
@@ -87,6 +86,8 @@ const UserProfile = () => {
                     >
                         MemberShip
                     </button>
+                    </>
+                    )}
                     {/*<button
                         className={`toggle-btn ${selectedOption === 'settings' ? 'border-b-4 border-orange-500' : ''}`}
                         onClick={() => setSelectedOption('settings')}

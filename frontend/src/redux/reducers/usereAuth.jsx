@@ -31,7 +31,6 @@ const userSlice=createSlice({
         .addCase(signup.rejected,(state,{payload})=>{
             state.loading=false,
             state.error=payload,
-          
             state.user=null
         })
         .addCase(login.pending,(state)=>{

@@ -110,7 +110,7 @@ function App() {
           {/* Instructor Routes */}
           <Route path='/instructor' element={<DashBoard />} />
         </Routes>
-        <Footer />
+        {!user || window.location.pathname !== '/userprofile' ? <Footer /> : null}
       </Suspense>
     </BrowserRouter>
   );
