@@ -66,7 +66,7 @@ const Courses = () => {
             </div >
             <div className='flex flex-col lg:flex-row justify-center'>
                 <div className='lg:hidden flex justify-center p-4'>
-                    <button className='bg-blue-500 text-white px-4 py-2 rounded' onClick={toggleFilters}>
+                    <button className='bg-gray-500 w-full text-white px-4 py-2 rounded' onClick={toggleFilters}>
                         {showFilters ? 'Hide Filters' : 'Show Filters'}
                     </button>
                 </div>
@@ -79,11 +79,11 @@ const Courses = () => {
                     {showCategories && <CategoryList onCategorySelection={handleCategorySelection} selectedCategories={selectedCategories} />}
                 </div>
                 <div className='flex flex-wrap w-full gap-2'>
-                    <div className='w-full flex items-center'>
-                        <div className='w-1/2'>
+                    <div className='w-full flex items-center flex-col md:flex-row gap-4 mx-2 md:mx-0'>
+                        <div className='md:w-1/2 w-full'>
                             <SearchBar handleSearch={handleSearch} search={search} setSearch={setSearch} placeholder="Search courses" />
                         </div>
-                        <div className='flex items-center'>
+                        <div className='flex items-center '>
                             <label className="block mb-2 px-5 text-sm font-bold text-gray-700">Sort By:</label>
                             <select
                                 className="px-3 py-2 border rounded-md"

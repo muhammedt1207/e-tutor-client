@@ -29,7 +29,7 @@ console.log(instructorEmails,'1111');
         console.log(instructorResponse,'22222');
 
         const subscriptionsWithInstructors = subscriptionData.map(subscription => {
-          const instructor = instructorData.find(inst => inst.email === subscription.instructorId);
+          const instructor = instructorData.find(inst => inst?.email=== subscription.instructorId);
           return {
             ...subscription,
             instructor: instructor || {} 

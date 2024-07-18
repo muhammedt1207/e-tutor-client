@@ -19,15 +19,17 @@ const UserHome = () => {
       <div className='flex flex-col lg:flex-row'>
 
         <motion.div
-          className='w-1/2 flex p-36'
+          className='md:w-1/2 flex md:p-36 '
           initial={{ x: -1000 }}
           animate={{ x: 0 }}
           transition={{ duration: 1 }}
         >
-          <div className='lg:ps-28 ps-0 mr-2'>
-            <h1 className='text-6xl font-medium'>Learn with expert  <br />anytime anywhere</h1>
-            <p className='pt-7 text-lg py-10'>Our mission is to help people find the best courses online and learn with experts anytime, anywhere.</p>
-            <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">{user ? 'Courses' : 'Create Account'}</button>
+          <div className='lg:ps-28 ps-0 mr-2 px-5 flex-row justify-center'>
+         
+            <h1 className='md:text-6xl text-4xl pl-16 pt-10 md:pl-0 md:pt-0 font-medium '>Learn with expert  <br />anytime anywhere</h1>
+            
+            <p className='md:pt-7 text-lg py-10  pl-16 pt-10 md:pl-0 '>Our mission is to help people find the best courses online and learn with experts anytime, anywhere.</p>
+            <button className="bg-orange-500 hover:bg-orange-700 ml-16 my-10 md:ml-0 text-white font-bold py-2 px-4 rounded">{user ? 'Courses' : 'Create Account'}</button>
           </div>
         </motion.div>
 
@@ -44,7 +46,7 @@ const UserHome = () => {
         <h1 className='text-3xl font-medium'>Browse top categories</h1>
         <CategoryCard />
       </div>
-      <div className='bg- p-20'>
+      <div className='p-10 md:p-20'>
         <div className='flex flex-col justify-center items-center'>
           <h1 className='text-3xl font-bold'>Why You Learn With <span className='text-orange-400'>E-Tutor</span></h1>
           <p className='text-lg font-medium'>It is a long established fact that a reader will be distracted by the readable.</p>
@@ -110,14 +112,14 @@ const UserHome = () => {
           </motion.div>
         </div>
       </div>
-      <div className='flex mt-10'>
-        <div className='w-1/2 flex justify-center '>
+      <div className='flex mt-10  justify-center flex-col lg:flex-row md:flex-row p-4'>
+        <div className='lg:w-1/2 w-full flex justify-center '>
           <img src={mentor} alt="" className='w-1/2' />
         </div>
-        <div className='w-1/2 flex justify-center items-center'>
-          <div className='mt-8 w-full'>
-            <h1 className='text-4xl font-bold w-1/2'>Choose Your's Suitable Personal MentorShip</h1>
-            <p className='w-1/2 pt-6 font-normal'>You can Take MentorShip Suitable for you, You can chat with him and clear personal doubts. That You want to take member ship for that Instroctor. Only 129 ruppee for Month</p>
+        <div className='md:w-1/2 flex justify-center md:items-center'>
+          <div className='mt-8 w-full text-ce'>
+            <h1 className='text-4xl font-bold md:w-1/2 '>Choose Your's Suitable Personal MentorShip</h1>
+            <p className='md:w-1/2 pt-6 font-normal'>You can Take MentorShip Suitable for you, You can chat with him and clear personal doubts. That You want to take member ship for that Instroctor. Only 129 ruppee for Month</p>
           </div>
         </div>
       </div>
