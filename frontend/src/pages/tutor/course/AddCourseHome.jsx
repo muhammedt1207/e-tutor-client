@@ -11,7 +11,6 @@ import { getUserData } from '../../../redux/action/userAction';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 const AddCourseHome = () => {
-  // const {courseId}=useParams()
   const params=new URLSearchParams(window.location.search)
   const courseId=params.get('courseId')
   console.log(courseId,'course id fot editing courses');
