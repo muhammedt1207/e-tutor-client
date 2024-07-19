@@ -38,7 +38,6 @@ const Login = () => {
   };
 
   const loginWithGoogle = async (data) => {
-    console.log('google login data', data);
     dispatch(googleSignup(data));
     navigate('/');
   };
