@@ -43,14 +43,14 @@ const EnrollmentDetails = () => {
             </div>
           </div>
           <div className="mb-4">
-            <h3 className="text-xl font-semibold">Course ID: {enrollment.courseId}</h3>
+            <h3 className="text-xl font-semibold">Course : {enrollment.courseId?.title||''}</h3>
             {/* You can replace Course ID with Course Name if you have that data */}
           </div>
           <div className="mb-4">
             <h3 className="text-xl font-semibold">Progress</h3>
             <p>Current Lesson: {enrollment.progress.currentLesson || 'N/A'}</p>
             <p>Current SubLesson: {enrollment.progress.currentSubLesson || 'N/A'}</p>
-            <p>Total Time Watched: {enrollment.progress.totalTimeWatched} minutes</p>
+            {/* <p>Total Time Watched: {enrollment.progress.totalTimeWatched} minutes</p> */}
             <p>Completed Lessons: {enrollment.progress.completedLessons.length}</p>
           </div>
           <div className="text-gray-600">

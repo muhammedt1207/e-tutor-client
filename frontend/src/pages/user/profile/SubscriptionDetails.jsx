@@ -63,14 +63,19 @@ console.log(instructorEmails,'1111');
   return (
     <div>
       {subscriptions.map(subscription => (
-        <div key={subscription._id}>
-          <h2>{subscription.name}</h2>
-          <p>Membership taken on {subscription.startDate}</p>
-          <p>Remaining days: {calculateRemainingDays(subscription.endDate)}</p>
-          <h3>Instructor Details:</h3>
-          <p>Name: {subscription.instructor.name}</p>
-          <p>Email: {subscription.instructor.email}</p>
+        <>
+        <div className='p-2' key={subscription._id}>
+        <div className='flex items-center '>
+          <img className='rounded-full w-16 h-16 mx-6' src={subscription.instructor.profileImageUrl ||`https://i.sstatic.net/l60Hf.png`} alt="" />
+          <div >
+            <h1 className='text-xl font-semibold'>{subscription.instructor.userName}</h1>
+            {/* <p className='font-light'>Membership taken on {subscription.startDate}</p> */}
+            <p className='font-light'>Remaining days: {calculateRemainingDays(subscription.currentPeriodEnd)}</p>
+          </div>
         </div>
+      </div>
+      <hr />
+      </>
       ))}
     </div>
   )
