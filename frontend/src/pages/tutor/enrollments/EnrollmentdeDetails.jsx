@@ -13,6 +13,7 @@ const EnrollmentDetails = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${URL}/course/enrollment/instructor/${user.email}`);
+        console.log('Enrollment Data:', response.data);
         setEnrollmentData(response.data);
         setLoading(false);
       } catch (error) {
@@ -29,7 +30,8 @@ const EnrollmentDetails = () => {
 
   return (
     <div className="container mx-auto p-4">
-      {enrollmentData && enrollmentData.data.map((enrollment, index) => (
+    {enrollmentData && Array.isArray(enrollmentData.data) ? (
+       enrollmentData.data.map((enrollment, index) => (
         <div key={index} className="bg-white shadow-md rounded-lg p-6 mb-4">
           <div className="flex items-center mb-4">
             <img
@@ -43,8 +45,7 @@ const EnrollmentDetails = () => {
             </div>
           </div>
           <div className="mb-4">
-            <h3 className="text-xl font-semibold">Course : {enrollment.courseId?.title||''}</h3>
-            {/* You can replace Course ID with Course Name if you have that data */}
+          <h3 className="text-xl font-semibold">Course : {enrollment.courseId?.title || 'No Title'}</h3>            {/* You can replace Course ID with Course Name if you have that data */}
           </div>
           <div className="mb-4">
             <h3 className="text-xl font-semibold">Progress</h3>
@@ -57,7 +58,10 @@ const EnrollmentDetails = () => {
             <p>Enrolled At: {new Date(enrollment.enrolledAt).toLocaleString()}</p>
           </div>
         </div>
-      ))}
+      ))
+    ) : (
+        <p>No enrollment data available.</p>
+      )}
     </div>
   );
 };
