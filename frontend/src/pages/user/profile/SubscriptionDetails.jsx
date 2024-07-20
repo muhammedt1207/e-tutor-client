@@ -32,7 +32,7 @@ console.log(instructorEmails,'1111');
           const instructor = instructorData.find(inst => inst?.email=== subscription.instructorId);
           return {
             ...subscription,
-            instructor: instructor || {} 
+            instructor: instructor || null
           };
         });
         console.log(subscriptionsWithInstructors,'33333');
@@ -62,7 +62,7 @@ console.log(instructorEmails,'1111');
 
   return (
     <div>
-      {subscriptions.map(subscription => (
+      {subscriptions.instructor &&subscriptions.map(subscription => (
         <>
         <div className='p-2' key={subscription._id}>
         <div className='flex items-center '>

@@ -26,7 +26,7 @@ const UserHome = () => {
         >
           <div className='lg:ps-28 ps-0 mr-2 px-5 flex-row justify-center'>
          
-            <h1 className='md:text-6xl text-4xl pl-16 pt-10 md:pl-0 md:pt-0 font-medium '>Learn with expert  <br />anytime anywhere</h1>
+            <h1 className='md:text-5xl text-4xl pl-16 pt-10 md:pl-0 md:pt-0 font-medium '>Learn with expert  <br />anytime anywhere</h1>
             
             <p className='md:pt-7 text-lg py-10  pl-16 pt-10 md:pl-0 '>Our mission is to help people find the best courses online and learn with experts anytime, anywhere.</p>
             <button className="bg-orange-500 hover:bg-orange-700 ml-16 my-10 md:ml-0 text-white font-bold py-2 px-4 rounded">{user ? 'Courses' : 'Create Account'}</button>

@@ -149,8 +149,8 @@ const CourseDetailPage = () => {
                         {isPurchased && (
                             <div className='block lg:hidden w-full h-auto '>
                                 {course.lessons ? (
-                                    <LessonList lessons={course.lessons} onSubLessonClick={(videoUrl) => setVideo(videoUrl)} courseId={course._id}
-                                        userId={user._id} />
+                                    <LessonList lessons={course?.lessons} onSubLessonClick={(videoUrl) => setVideo(videoUrl)} courseId={course?._id}
+                                        userId={user?._id} />
                                 ) : (
                                     <p>No lessons available</p>
                                 )}

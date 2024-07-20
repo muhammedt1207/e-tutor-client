@@ -8,10 +8,14 @@ const PurchasedCourses = ({ user }) => {
 
   useEffect(() => {
     const fetchCourse = async () => {
-      const response = await axios.get(`${URL}/course/enrollment/${user._id}`);
-      console.log(response, 'purchased data');
-      if (response.data) {
-        setCourses(response.data.data);
+      try {
+        const response = await axios.get(`${URL}/course/enrollment/${user._id}`);
+        console.log(response, 'purchased data');
+        if (response.data) {
+          setCourses(response.data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching courses:', error);
       }
     };
     fetchCourse();
@@ -24,14 +28,19 @@ const PurchasedCourses = ({ user }) => {
   };
 
   console.log(courses);
+
   return (
     <div>
       <h1 className='text-2xl font-bold p-10'>
         Purchased Courses
       </h1>
-      <div>
+      {courses.length === 0 ? (
+        <div className="p-10 text-center">
+          <p className="text-lg text-gray-600 dark:text-gray-400">No courses purchased yet.</p>
+        </div>
+      ) : (
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 p-10'>
-          {courses && courses.map(course => (
+          {courses.map(course => (
             course.courseId && (
               <div key={course._id} className="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <Link to={`/course/${course?.courseId?._id}`}>
@@ -53,7 +62,7 @@ const PurchasedCourses = ({ user }) => {
             )
           ))}
         </div>
-      </div>
+      )}
     </div>
   );
 }

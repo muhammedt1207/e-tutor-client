@@ -29,6 +29,9 @@ const EnrollmentDetails = () => {
   if (error) return <div className="container mx-auto p-4">Error: {error.message}</div>;
 
   return (
+    <div className="flex">
+    <SideBar />
+    <div className="sm:rounded-lg flex flex-col lg:ml-44 ml-52 w-[85vw] h-full pe-4 ps-16">
     <div className="container mx-auto p-4">
     {enrollmentData && Array.isArray(enrollmentData.data) ? (
        enrollmentData.data.map((enrollment, index) => (
@@ -45,7 +48,7 @@ const EnrollmentDetails = () => {
             </div>
           </div>
           <div className="mb-4">
-          <h3 className="text-xl font-semibold">Course : {enrollment.courseId?.title || 'No Title'}</h3>            {/* You can replace Course ID with Course Name if you have that data */}
+          <h3 className="text-xl font-semibold">Course : {enrollment.courseId?.title || ''}</h3>            {/* You can replace Course ID with Course Name if you have that data */}
           </div>
           <div className="mb-4">
             <h3 className="text-xl font-semibold">Progress</h3>
@@ -62,6 +65,8 @@ const EnrollmentDetails = () => {
     ) : (
         <p>No enrollment data available.</p>
       )}
+    </div>
+    </div>
     </div>
   );
 };
