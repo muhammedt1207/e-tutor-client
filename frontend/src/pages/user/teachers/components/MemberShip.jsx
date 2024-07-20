@@ -43,7 +43,6 @@ const MemberShip = ({ instructorId }) => {
       };
       const response = await axios.post(`${URL}/payment/subscription/create-checkout-session`, postData);
 
-      console.log(response, 'response from post');
       const data = {
         customerId: email || user.email,
         instructorId:instructorId.email
