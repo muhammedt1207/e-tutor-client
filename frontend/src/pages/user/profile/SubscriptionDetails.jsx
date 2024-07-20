@@ -23,19 +23,19 @@ const SubscriptionDetails = () => {
         const subscriptionData = response.data.data;
 
         const instructorEmails = subscriptionData.map(sub => sub.instructorId);
-console.log(instructorEmails,'1111');
+        console.log(instructorEmails, '1111');
         const instructorResponse = await axios.post(`${URL}/auth/getUsers`, { userIds: instructorEmails });
         const instructorData = instructorResponse.data.data;
-        console.log(instructorResponse,'22222');
+        console.log(instructorResponse, '22222');
 
         const subscriptionsWithInstructors = subscriptionData.map(subscription => {
-          const instructor = instructorData.find(inst => inst?.email=== subscription.instructorId);
+          const instructor = instructorData.find(inst => inst?.email === subscription.instructorId);
           return {
             ...subscription,
             instructor: instructor || null
           };
         });
-        console.log(subscriptionsWithInstructors,'33333');
+        console.log(subscriptionsWithInstructors, '33333');
         setSubscriptions(subscriptionsWithInstructors);
       } catch (error) {
         console.error('Error fetching subscription details:', error);
@@ -60,22 +60,21 @@ console.log(instructorEmails,'1111');
     );
   }
 
+  const filteredSubscriptions = subscriptions.filter(subscription => subscription.instructor !== null);
+
   return (
     <div>
-      {subscriptions.instructor &&subscriptions.map(subscription => (
-        <>
+      {filteredSubscriptions.map(subscription => (
         <div className='p-2' key={subscription._id}>
-        <div className='flex items-center '>
-          <img className='rounded-full w-16 h-16 mx-6' src={subscription.instructor.profileImageUrl ||`https://i.sstatic.net/l60Hf.png`} alt="" />
-          <div >
-            <h1 className='text-xl font-semibold'>{subscription.instructor.userName}</h1>
-            {/* <p className='font-light'>Membership taken on {subscription.startDate}</p> */}
-            <p className='font-light'>Remaining days: {calculateRemainingDays(subscription.currentPeriodEnd)}</p>
+          <div className='flex items-center'>
+            <img className='rounded-full w-16 h-16 mx-6' src={subscription.instructor.profileImageUrl || `${"https://i.sstatic.net/l60Hf.png"}`} alt="" />
+            <div>
+              <h1 className='text-xl font-semibold'>{subscription.instructor.userName}</h1>
+              <p className='font-light'>Remaining days: {calculateRemainingDays(subscription.currentPeriodEnd)}</p>
+            </div>
           </div>
+          <hr />
         </div>
-      </div>
-      <hr />
-      </>
       ))}
     </div>
   )
