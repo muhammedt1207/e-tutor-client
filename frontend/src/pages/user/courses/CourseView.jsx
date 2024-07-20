@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { AiFillBook, AiFillStar } from 'react-icons/ai';
-import { MdOutlineCheckCircle } from 'react-icons/md';
 import LessonList from '../../user/courses/components/LessonList';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,19 +11,15 @@ import { loadStripe } from '@stripe/stripe-js';
 import CourseOverView from './components/CourseOverView';
 import InstroctorDetails from './components/InstroctorDetails';
 import Reviews from './components/Reviews';
-import { getUserData } from '../../../redux/action/userAction';
 
 const stripePromise = loadStripe('pk_test_51PHmWaSCFxhihy8IolYTxCsIFbRNHGc2byVYCqYRLo1aFs1XzXRnZ32zsE7fevPERYFgskgZvJME9IIBDQryioFp00F3kHHaTy');
 
 const CourseDetailPage = () => {
     const stripe = useStripe();
     const elements = useElements();
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
     const [isProcessing, setProcessingTo] = useState(false);
     const { user } = useSelector((state) => state.user);
     const { id } = useParams();
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [course, setCourse] = useState({});
     const [video, setVideo] = useState('');
@@ -163,7 +158,6 @@ const CourseDetailPage = () => {
                                     <button onClick={() => setActiveTab('overview')} className={`px-4 py-2 rounded-lg ${setActiveTab === 'overview' ? 'bg-blue-600 text-white' : 'bg-gray-300'}`}>Overview</button>
                                     <button onClick={() => setActiveTab('instructor')} className={`px-4 py-2 rounded-lg ${setActiveTab === 'instructor' ? 'bg-blue-600 text-white' : 'bg-gray-300'}`}>Instructor</button>
                                     <button onClick={() => setActiveTab('reviews')} className={`px-4 py-2 rounded-lg ${setActiveTab === 'reviews' ? 'bg-blue-600 text-white' : 'bg-gray-300'}`}>Reviews</button>
-                                    {/* <button onClick={() => setActiveTab('qna')} className={`px-4 py-2 rounded-lg ${setActiveTab === 'qna' ? 'bg-blue-600 text-white' : 'bg-gray-300'}`}>Q&A</button> */}
                                 </div>
                                 {renderContent()}
                             </div>
