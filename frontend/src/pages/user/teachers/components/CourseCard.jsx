@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 const CourseCard = ({ course }) => {
     const navigate = useNavigate();
-console.log(course.course);
     const handleReadMore = () => {
         navigate(`/course/${course.id}`);
     };
