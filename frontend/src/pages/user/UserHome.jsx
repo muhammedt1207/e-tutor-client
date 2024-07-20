@@ -2,13 +2,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import imager from '../../assets/Images.png';
 import CategoryCard from '../../components/CategoryCard';
-import UserNavbar from '../../components/UserNavbar';
 import { useSelector } from 'react-redux';
-import { AiFillAccountBook, AiFillBook } from 'react-icons/ai';
 import { PiBookOpenBold } from 'react-icons/pi';
 import { ChatBubbleBottomCenterTextIcon } from '@heroicons/react/24/solid';
 import { BsFillLaptopFill } from 'react-icons/bs';
-import { BiSupport } from 'react-icons/bi';
 import { MdOutlineSupport } from 'react-icons/md';
 import mentor from '../../assets/mentorship.png'
 const UserHome = () => {

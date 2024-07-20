@@ -9,7 +9,7 @@ const calculateRemainingDays = (endDate) => {
   const end = new Date(endDate);
   const diffTime = end - currentDate;
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  return diffDays > 0 ? diffDays : 0; // Ensure it doesn't show negative days
+  return diffDays > 0 ? diffDays : 0;
 }
 
 const SubscriptionDetails = () => {
