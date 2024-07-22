@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { URL } from '../../../Common/api';
 import { useSelector } from 'react-redux';
+import SideBar from '../components/SideBar';
 
 const EnrollmentDetails = () => {
   const [enrollmentData, setEnrollmentData] = useState(null);
