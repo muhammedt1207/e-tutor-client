@@ -2,7 +2,8 @@ import { isRejectedWithValue } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // export const URL='http://localhost:8080/api';
-export const URL='https://gizmocart.shop/api'
+// export const URL='https://gizmocart.shop/api'
+export const URL='https://e-tutor-server-api-gateway.onrender.com'
 const apiInstance=axios.create({baseURL:URL});
 
 apiInstance.interceptors.response.use((response)=>{
