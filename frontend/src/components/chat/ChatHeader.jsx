@@ -87,7 +87,7 @@ const ChatHeader = ({ user }) => {
           <div className="text-sm text-gray-600">{renderStatus()}</div>
         </div>
       </div>
-      <div className="flex space-x-2">
+      {/* <div className="flex space-x-2">
         {!isCalling ? (
           <button className="btn btn-circle btn-outline" onClick={startCall}>
             <BsFillCameraVideoFill />
@@ -95,7 +95,7 @@ const ChatHeader = ({ user }) => {
         ) : (
           <span className="text-gray-600">Calling...</span>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

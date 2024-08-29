@@ -24,7 +24,7 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     if (user && user._id) {
-      const newSocket = io("https://gizmocart.shop", {
+      const newSocket = io("https://e-tutor-server.onrender.com", {
         // const newSocket = io("http://localhost:8087", {
         query: { userId: user._id },
         withCredentials: true,
