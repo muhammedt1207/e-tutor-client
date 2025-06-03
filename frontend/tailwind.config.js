@@ -7,8 +7,18 @@ export default {
   theme: {
     extend: {},
   },
+  darkMode: false, // 👈 turn off dark mode completely
   plugins: [
     require('daisyui'),
   ],
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+          ...require("daisyui/src/theming/themes")["[data-theme=light]"],
+          "base-100": "#ffffff", // set bg to white
+        },
+      },
+    ],
+  },
 }
-
